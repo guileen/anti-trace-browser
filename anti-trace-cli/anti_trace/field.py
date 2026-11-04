@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from . import client, profile
+from .measure import chromium_executable
 
 SITES: list[dict[str, str]] = [
     {"host": "nowsecure.nl", "url": "https://nowsecure.nl/", "vendor": "Cloudflare Turnstile"},
@@ -117,7 +118,7 @@ def control(
     directory.mkdir(parents=True, exist_ok=True)
     target = {"mode": "cdp", "cdp_url": cdp_url} if cdp_url else {
         "mode": "launch", "browser": browser, "headless": True,
-        "executable": __import__("anti_trace.measure", fromlist=["chromium_executable"]).chromium_executable(),
+        "executable": chromium_executable(),
         "profile": "unmodified Chromium with automation defaults - a control, not a hardened browser",
     }
 
@@ -128,8 +129,6 @@ def control(
                 context = connected.contexts[0] if connected.contexts else await connected.new_context()
                 page = context.pages[0] if context.pages else await context.new_page()
             else:
-                from .measure import chromium_executable
-
                 executed = chromium_executable()
                 launched = await play.chromium.launch(headless=True, executable_path=executed) if executed \
                     else await play.chromium.launch(headless=True)

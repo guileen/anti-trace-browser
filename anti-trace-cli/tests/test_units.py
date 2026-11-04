@@ -104,10 +104,21 @@ class ScriptParsingTest(unittest.TestCase):
                          {"action": "goto", "args": {"url": "https://a.test/x"}})
         self.assertEqual(step_from_line("type @2 hello world"),
                          {"action": "type", "args": {"target": "@2", "text": "hello world"}})
+        # Playwright selector quoting survives verbatim; only a fully quoted
+        # argument is unquoted.
         self.assertEqual(step_from_line('click text="Log in"'),
-                         {"action": "click", "args": {"target": "text=Log in"}})
+                         {"action": "click", "args": {"target": 'text="Log in"'}})
+        self.assertEqual(step_from_line("click 'Log in'"),
+                         {"action": "click", "args": {"target": "Log in"}})
         self.assertEqual(step_from_line("wait --ms 500"),
                          {"action": "wait", "args": {"ms": 500}})
+
+    def test_javascript_keeps_its_own_quotes(self):
+        from anti_trace.cli import step_from_line
+
+        line = "eval JSON.stringify({a:document.title.includes('x')})"
+        self.assertEqual(step_from_line(line)["args"]["js"],
+                         "JSON.stringify({a:document.title.includes('x')})")
 
     def test_script_skips_comments_and_detects_json(self):
         from anti_trace.cli import parse_script

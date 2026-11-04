@@ -541,37 +541,49 @@ STEP_FLAGS = {"wait": {"--ms": "ms", "--selector": "selector", "--url-substring"
 def step_from_line(line: str) -> dict[str, Any]:
     """`goto https://x` -> {"action": "goto", "args": {"url": "https://x"}}.
 
-    One action per line, quoting only where a value contains spaces. This is the
-    same shape Playwright CLI users already type, so an agent needs no new model.
+    One action per line. Only the action keyword and the first argument are
+    tokenised: everything after them is taken verbatim, so JavaScript keeps its
+    quotes and string literals instead of being re-split by a shell lexer.
     """
-    tokens = shlex.split(line)
-    action, rest = tokens[0], tokens[1:]
+    stripped = line.strip()
+    action, _, remainder = stripped.partition(" ")
+    remainder = remainder.strip()
     args: dict[str, Any] = {}
-    if action in {"goto", "tab_new", "eval"}:
-        key = {"goto": "url", "tab_new": "url", "eval": "js"}[action]
-        args[key] = " ".join(rest)
-    elif action in {"click", "hover", "press"}:
-        key = "keys" if action == "press" else "target"
-        args[key] = " ".join(rest)
+
+    if action in {"goto", "tab_new"}:
+        args["url"] = remainder
+    elif action == "eval":
+        args["js"] = remainder
+    elif action == "press":
+        args["keys"] = remainder
+    elif action == "click":
+        args["target"] = _unquote(remainder)
+    elif action == "hover":
+        args["target"] = _unquote(remainder)
     elif action == "type":
-        if len(rest) < 2:
+        target, _, text = remainder.partition(" ")
+        if not target or not text:
             raise ValueError("type needs: <target> <text>")
-        args["target"], args["text"] = rest[0], " ".join(rest[1:])
+        args["target"], args["text"] = _unquote(target), text
     elif action == "select":
-        if len(rest) < 1:
+        target, _, value = remainder.partition(" ")
+        if not target:
             raise ValueError("select needs: <target> [value]")
-        args["target"] = rest[0]
-        if len(rest) > 1:
-            args["value"] = " ".join(rest[1:])
-    elif action in {"screenshot", "use"}:
-        args["file" if action == "screenshot" else "index"] = rest[0] if rest else None
+        args["target"] = _unquote(target)
+        if value:
+            args["value"] = value
+    elif action == "screenshot":
+        args["file"] = _unquote(remainder) if remainder else None
+    elif action == "use":
+        args["index"] = remainder or None
     elif action in STEP_FLAGS:
         index = 0
-        while index < len(rest):
-            token = rest[index]
-            if token.startswith("--") and token in STEP_FLAGS[action] and index + 1 < len(rest):
+        tokens = remainder.split()
+        while index < len(tokens):
+            token = tokens[index]
+            if token.startswith("--") and token in STEP_FLAGS[action] and index + 1 < len(tokens):
                 key = STEP_FLAGS[action][token]
-                value: Any = rest[index + 1]
+                value: Any = tokens[index + 1]
                 args[key] = int(value) if key in {"ms", "amount"} else value
                 index += 2
             else:
@@ -582,6 +594,14 @@ def step_from_line(line: str) -> dict[str, Any]:
     else:
         raise ValueError(f"unknown action {action!r}")
     return {"action": action, "args": args}
+
+
+def _unquote(value: str) -> str:
+    """Keep `text=Log in` intact while allowing `"Log in"` for clarity."""
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+        return value[1:-1]
+    return value
 
 
 def parse_script(text: str) -> list[dict[str, Any]]:
