@@ -106,24 +106,30 @@ anti-trace exec <name> <action> [args] [flags]
 
 ### Header 模型：没有“未审视的默认值”
 
-一次文档导航实测 12 个 Header。每个都必须属于一个声明的类别，并由此决定谁能改它：
+实测（同机、同一站点）：
 
-| 类别 | Header | 数量 | 谁决定 |
-|---|---|---|---|
-| identity（随环境） | `user-agent`、`accept-language` | 2 | 指纹＋OS＋locale；改 locale，`accept-language` 立即跟着变（实测 `en-US,en;q=0.9` → `ja-JP,ja;q=0.9`） |
-| build（随浏览器版本） | `accept-encoding`、`priority`、`connection` | 3 | Firefox 构建能力，跨环境必须一致 |
-| universal（所有真实用户一致） | `accept`、`upgrade-insecure-requests`、`sec-fetch-dest/mode/site/user` | 6 | 浏览器规范，随机化即露馅 |
-| request（每次请求） | `host` | 1 | 目标站点 |
-| family（按浏览器家族，当前应为空） | `sec-ch-ua`、`sec-ch-ua-mobile`、`sec-ch-ua-platform`、`dnt`、`sec-gpc` | 5 | Firefox 不发 Client Hints，发了就是 Chromium 伪装失败 |
-| origin（按站点状态） | `cookie`、`referer`、`origin`、`if-none-match`、`range` | 5 | 会话与页面，未固定值 |
+| 客户端 | 协议 | Header 数 |
+|---|---|---:|
+| Camoufox（Firefox 158） | HTTP/2（example.com） | 11 |
+| Camoufox（Firefox 158） | HTTP/1.1（本机靶场） | 12（多 `priority`） |
+| Chrome 156（CDP 附加） | HTTP/1.1（本机靶场） | 14（多 `sec-ch-ua` 三项） |
+
+每个 Header 都有归属，谁能改它由类别决定：
+
+| 类别 | Header | 规则 |
+|---|---|---|
+| identity | `user-agent`、`accept-language` | 随指纹／OS／locale；改 locale，`accept-language` 立即跟着变（实测 `en-US,en;q=0.9` → `ja-JP,ja;q=0.9`） |
+| build | `accept`、`accept-encoding` | 随浏览器构建，同族跨环境一致；Firefox 与 Chrome 的 `accept` 本就不同 |
+| universal | `upgrade-insecure-requests`、`sec-fetch-dest/mode/site/user` | 规范固定，改动即异常 |
+| family | `sec-ch-ua`、`sec-ch-ua-mobile`、`sec-ch-ua-platform` | Chromium 必须有且平台与 OS 一致；Firefox 必须缺席 |
+| protocol | `connection`、`priority` | 只在 HTTP/1.1 出现，H2 下消失——不是指纹，不要按环境改 |
+| request / origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 由请求与站点状态决定 |
 
 ```sh
 ./bin/anti-trace audit work --headers
 ```
 
-规则：未登记的 header 会被标成 `unknown` 并列出——**新增的浏览器默认值不会静默通过**。
-
-`user-agent` 同时检查平台 token（`Macintosh`/`Windows NT`/`X11; Linux`）与家族（`Firefox/`），并拒绝 `Headless`、`Chrome/` 混入；`accept-language` 的主语言必须等于环境 locale。
+判定按 UA 识别家族：Firefox 身份下出现 Client Hints 即失败；Chromium 身份下缺少 Client Hints、或 `sec-ch-ua-platform` 与 OS 不符也失败。未登记的 Header 标 `unknown` 并列出——**新增默认值不会静默通过**。
 
 ### 网络模型
 

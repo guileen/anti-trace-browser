@@ -73,10 +73,11 @@ PROBE = """(async () => {
 
 HEADER_RULES = {
     "identity": ["user-agent", "accept-language"],
-    "build": ["accept-encoding"],
-    "universal": ["accept", "upgrade-insecure-requests", "sec-fetch-dest", "sec-fetch-mode", "sec-fetch-site"],
-    "client_hints": ["sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform"],
+    "build": ["accept", "accept-encoding"],
+    "universal": ["upgrade-insecure-requests", "sec-fetch-dest", "sec-fetch-mode", "sec-fetch-site", "sec-fetch-user"],
+    "chromium_family": ["sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform"],
 }
+CH_PLATFORM = {"macos": "macOS", "windows": "Windows", "linux": "Linux"}
 
 KNOWN_HEADERS = {
     "host": "request",
@@ -88,6 +89,7 @@ KNOWN_HEADERS = {
     "sec-fetch-dest": "universal", "sec-fetch-mode": "universal",
     "sec-fetch-site": "universal", "sec-fetch-user": "universal",
     "sec-ch-ua": "family", "sec-ch-ua-mobile": "family", "sec-ch-ua-platform": "family",
+    "priority": "protocol",
     "dnt": "build", "sec-gpc": "build",
 }
 
@@ -115,10 +117,10 @@ def evaluate_headers(headers: dict[str, str], ident: dict[str, Any]) -> list[dic
 
     agent = lower.get("user-agent", "")
     tokens = PLATFORM_TOKENS.get(os_name, PLATFORM_TOKENS["macos"])
-    check("user-agent", any(token in agent for token in tokens) and "Firefox/" in agent,
+    family = "chromium" if "Chrome/" in agent else "firefox"
+    check("user-agent", any(token in agent for token in tokens) and (family == "chromium" or "Firefox/" in agent),
           f"{agent[:80]}", "identity")
-    check("user-agent:no-headless", "Headless" not in agent and "Chrome/" not in agent,
-          "no Headless/Chrome badge", "identity")
+    check("user-agent:no-headless", "Headless" not in agent, "no Headless badge", "identity")
 
     languages = lower.get("accept-language", "")
     primary = languages.split(",")[0].split(";")[0].strip() if languages else ""
@@ -131,8 +133,15 @@ def evaluate_headers(headers: dict[str, str], ident: dict[str, Any]) -> list[dic
     for name in HEADER_RULES["universal"]:
         check(name, bool(lower.get(name)), lower.get(name) or "(missing)", "universal")
 
-    hints = [name for name in HEADER_RULES["client_hints"] if name in lower]
-    check("client-hints", not hints, "absent (Firefox family)" if not hints else f"present: {hints}", "client_hints")
+    hints = {name: lower[name] for name in HEADER_RULES["chromium_family"] if name in lower}
+    if family == "firefox":
+        check("client-hints", not hints, "absent (Firefox family)" if not hints else f"present: {hints}", "family")
+    else:
+        missing = [name for name in HEADER_RULES["chromium_family"] if name not in hints]
+        check("client-hints", not missing, f"missing: {missing}" if missing else "present (Chromium family)", "family")
+        platform = hints.get("sec-ch-ua-platform", "").strip('"')
+        expected = CH_PLATFORM.get(os_name, "macOS")
+        check("sec-ch-ua-platform", platform == expected, f"{platform or '(missing)'} expected {expected}", "family")
 
     check("dnt", "dnt" not in lower, lower.get("dnt") or "absent", "build")
     check("sec-gpc", "sec-gpc" not in lower, lower.get("sec-gpc") or "absent", "build")

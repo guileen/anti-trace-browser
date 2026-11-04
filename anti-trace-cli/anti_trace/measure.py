@@ -29,6 +29,8 @@ def chromium_executable() -> str | None:
     """
     candidates = [
         os.environ.get("ANTI_TRACE_CHROMIUM") or "",
+        *[os.path.expanduser(f"~/Applications/{name}.app/Contents/MacOS/{name}") for name in
+          ("Google Chrome", "Brave Browser", "Microsoft Edge")],
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
         "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",

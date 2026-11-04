@@ -131,12 +131,51 @@ class HeaderAuditTest(unittest.TestCase):
     def test_language_drift_is_caught(self):
         self.assertEqual(self._results(**{"accept-language": "ja-JP,ja;q=0.9"})["accept-language"]["result"], "fail")
 
-    def test_chromium_badge_is_caught(self):
+    def test_chromium_ua_without_client_hints_is_caught(self):
         ua = self.GOOD["user-agent"].replace("rv:158.0", "Chrome/158.0.0.0")
-        self.assertEqual(self._results(**{"user-agent": ua})["user-agent:no-headless"]["result"], "fail")
+        rows = self._results(**{"user-agent": ua})
+        self.assertEqual(rows["client-hints"]["result"], "fail")
 
     def test_client_hints_break_a_firefox_identity(self):
         rows = self._results(**{"sec-ch-ua": '"(brave)";v="158"'})
+        self.assertEqual(rows["client-hints"]["result"], "fail")
+
+    CHROME = {
+        "host": "example.com",
+        "connection": "keep-alive",
+        "sec-ch-ua": '"Chromium";v="156", "Google Chrome";v="156"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"macOS"',
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/jxl,*/*;q=0.8",
+        "sec-fetch-site": "none", "sec-fetch-mode": "navigate", "sec-fetch-user": "?1",
+        "sec-fetch-dest": "document",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "en-US,en;q=0.9",
+    }
+
+    def test_chromium_headers_are_judged_as_chromium(self):
+        from anti_trace.audit import evaluate_headers
+
+        rows = {row["header"]: row for row in evaluate_headers(dict(self.CHROME), self.IDENT)}
+        self.assertEqual(rows["client-hints"]["result"], "pass")
+        self.assertEqual(rows["sec-ch-ua-platform"]["result"], "pass")
+        self.assertTrue(all(row["result"] == "pass" for row in rows.values()), rows)
+
+    def test_chromium_platform_mismatch_is_caught(self):
+        from anti_trace.audit import evaluate_headers
+
+        headers = dict(self.CHROME, **{"sec-ch-ua-platform": '"Windows"'})
+        rows = {row["header"]: row for row in evaluate_headers(headers, self.IDENT)}
+        self.assertEqual(rows["sec-ch-ua-platform"]["result"], "fail")
+
+    def test_firefox_identity_with_chromium_hints_fails(self):
+        from anti_trace.audit import evaluate_headers
+
+        headers = dict(self.GOOD, **{"sec-ch-ua": '"Chromium";v="156"'})
+        rows = {row["header"]: row for row in evaluate_headers(headers, self.IDENT)}
         self.assertEqual(rows["client-hints"]["result"], "fail")
 
     def test_unclassified_header_is_reported(self):

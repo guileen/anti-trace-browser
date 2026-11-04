@@ -346,17 +346,18 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 
 ### 5.5 Header 模型
 
-一次文档导航实测 12 个 Header，每个都必须有归属，不留未审视的默认值：
+实测（同机）：Camoufox 在 HTTP/2 下发 11 个 Header，本机 HTTP/1.1 下 12 个；Chrome 156 经 CDP 在 HTTP/1.1 下发 14 个。差异集中在 `sec-ch-ua` 三项（Chromium 独有）与 `priority`（H1 独有）。
 
 | 类别 | Header | 谁决定 |
 |---|---|---|
 | identity | `user-agent`、`accept-language` | 指纹／OS／locale |
-| build | `accept-encoding`、`priority`、`connection` | Firefox 构建，跨环境一致 |
-| universal | `accept`、`upgrade-insecure-requests`、`sec-fetch-*` | 规范，所有真实用户一致 |
-| family | `sec-ch-ua*`、`dnt`、`sec-gpc` | Firefox 下必须缺席 |
+| build | `accept`、`accept-encoding` | 浏览器构建，同族跨环境一致 |
+| universal | `upgrade-insecure-requests`、`sec-fetch-*` | 规范 |
+| family | `sec-ch-ua*` | Chromium 必有，Firefox 必无 |
+| protocol | `connection`、`priority` | HTTP/1.1 才有，H2 下消失 |
 | request / origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 请求与站点状态 |
 
-`anti-trace audit <env> --headers` 读取真实发出的请求头逐项判定；未登记项标 `unknown`，新出现的浏览器默认值不会静默通过。
+`audit <env> --headers` 按 UA 识别家族后逐项判定；未登记项标 `unknown`。
 
 ### 5.6 靶场
 
