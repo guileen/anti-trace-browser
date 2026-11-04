@@ -1,0 +1,9 @@
+# Public lab: SEO page at /, Cloudflare challenge on /check.
+name = "anti-trace-lab"
+main = "src/public.mjs"
+compatibility_date = "2026-01-01"
+workers_dev = false
+
+routes = [
+  { pattern = "fingerprint-test.ipub.io/*", zone_name = "ipub.io" }
+]

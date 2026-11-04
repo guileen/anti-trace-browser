@@ -33,6 +33,35 @@ curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8788/          # 403
 
 没有 JS 的客户端停在 `403`；改 Cookie 会被签名校验拒绝；nonce 重放返回 `400`。
 
+## 已部署：fingerprint-test.ipub.io
+
+| 路径 | 行为 |
+|---|---|
+| `/` | 可索引的说明页（title/description/canonical/JSON-LD/sitemap/robots），**不放挑战**，给爬虫与读者 |
+| `/check` | 判定页：返回实际收到的请求头与 `cf-ray`；WAF 的 Managed Challenge 规则应挂在这一条路径上 |
+| `/robots.txt`、`/sitemap.xml` | 已生成 |
+
+部署命令：
+
+```sh
+cd lab
+export CLOUDFLARE_API_TOKEN=...   # 或使用 ~/.cf 里的 token
+export CLOUDFLARE_ACCOUNT_ID=...
+npx wrangler@4 deploy -c wrangler.public.toml
+```
+
+DNS：`fingerprint-test.ipub.io` → 代理的 A 记录（占位 `192.0.2.1`），由 Worker 路由接管。
+
+**2026-11-04 实际部署结果**：`/` 与 `/check` 均 200，`anti-trace field` 判定 `reached`。**Managed Challenge 尚未启用**：当前 token 的权限足以部署 Workers 与写 DNS，但创建 Turnstile 组件与编辑 Zone WAF 均返回 `Authentication error`。补齐这两项后，只需一条规则：
+
+```sh
+# 需要 Zone WAF:Edit
+curl -X PUT .../zones/$ZONE/rulesets/phases/http_request_firewall_custom/entrypoint \
+  -d '{"rules":[{"action":"managed_challenge","expression":"(http.host eq \"fingerprint-test.ipub.io\" and starts_with(http.request.uri.path, \"/check\"))","enabled":true}]}'
+```
+
+之后同一命令 `anti-trace field <env> --sites https://fingerprint-test.ipub.io/check` 会给出 `challenge` / `cleared`，而不是 `reached`。
+
 ## 部署 Turnstile 版本对账号的影响
 
 - 这是 Turnstile 的**正常用法**：一个子域、一个探测页、免费额度足够；

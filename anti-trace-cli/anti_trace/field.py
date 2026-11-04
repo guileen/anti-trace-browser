@@ -29,8 +29,13 @@ MARKERS_JS = """(() => {
   const lower = html.toLowerCase();
   const found = [];
   const add = (name, hit) => { if (hit) found.push(name); };
-  add('turnstile', /turnstile/.test(lower) || !!document.querySelector('iframe[src*="challenges.cloudflare.com"]'));
-  add('challenge-platform', /challenge-platform/.test(lower));
+  // A widget, not prose: marketing copy often contains these words.
+  const scripts = [...document.scripts].map(s => s.src || '');
+  add('turnstile', !!document.querySelector('.cf-turnstile, [data-sitekey]')
+    || !!document.querySelector('iframe[src*="challenges.cloudflare.com"]')
+    || scripts.some(src => src.includes('challenges.cloudflare.com/turnstile')));
+  add('challenge-platform', scripts.some(src => src.includes('/challenge-platform'))
+    || !!document.querySelector('#challenge-stage'));
   add('hcaptcha', /hcaptcha/.test(lower) || !!document.querySelector('iframe[src*="hcaptcha.com"]'));
   add('recaptcha', /recaptcha/.test(lower));
   add('datadome', /datadome/.test(lower));

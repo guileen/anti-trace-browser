@@ -375,7 +375,18 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 
 实测：`curl` 拿到 `403`，Camoufox 与 Chromium 都能 `cleared`，说明门禁区分的是“能否执行挑战”，而不是“像谁”。
 
-### 5.8 交付物
+### 5.8 内核路线与 Camoufox 收尾
+
+**Camoufox 收尾**：配置层已到极限，冻结在 `158.0.1-beta.41`。剩余差距是原生能力（音频 seed 已由上游移除、Canvas 随机读回会破坏重启稳定）与人群占比（桌面 Firefox 约 3%）。继续调配置不会改变结论，因此停止投入。
+
+**自建内核要求（修订）**与两个候选的实测代价见 [`skills/kernel-port/SKILL.md`](skills/kernel-port/SKILL.md)。要点：
+
+- 两者代码量同量级（Rust ~186k＋19.5k JS；Zig ~302k），**语言不是主要成本，能力缺口才是**。
+- Obscura：身份逻辑在 JS 层，改动与上游方向一致，但无真实 WebGL/音频。
+- Lightpanda：`Config.zig` 主动拒绝 Mozilla UA，改造等于与作者意图长期对抗；且没有渲染栈。
+- 分工：Tier B（真值渲染/音频）留 Camoufox；Tier A（Header/时区/存储/驱动/抓取）做 Obscura fork；Lightpanda 保持抓取引擎。
+
+### 5.9 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
 - `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。
