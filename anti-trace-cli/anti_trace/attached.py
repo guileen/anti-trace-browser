@@ -83,11 +83,18 @@ async def _call(cdp_url: str, action: str, args: dict[str, Any], workdir: Path, 
 
 
 def call(name: str, action: str, args: dict[str, Any] | None = None, timeout: float = 90.0) -> dict[str, Any]:
+    from .client import EngineError
+
     cfg = profile.require(name)
     cdp = str(cfg.get("cdp") or "")
     if not cdp:
         raise profile.ProfileError(f"{name} is an attached environment without a cdp endpoint")
-    return asyncio.run(_call(cdp, action, args or {}, profile.profile_dir(name), timeout))
+    try:
+        return asyncio.run(_call(cdp, action, args or {}, profile.profile_dir(name), timeout))
+    except EngineError:
+        raise
+    except Exception as exc:  # noqa: BLE001 - a dead endpoint must not crash callers
+        raise EngineError(f"cannot reach the attached browser at {cdp}: {exc}") from exc
 
 
 def attach(name: str, cdp: str) -> dict[str, Any]:

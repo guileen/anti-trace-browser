@@ -14,7 +14,15 @@ from typing import Any, Iterator
 
 SCHEMA = 2
 BASE = Path(os.environ.get("ANTI_TRACE_HOME", Path.home() / ".anti-trace"))
-PROFILES = BASE / "profiles"
+
+
+def store() -> Path:
+    """The profile root, resolved at call time so ANTI_TRACE_HOME and tests work."""
+    return BASE / "profiles"
+
+
+def _profiles() -> Path:
+    return store()
 TRANSIENT = {"engine.log", "engine.sock", ".lock", ".spawn", "state.json"}
 LOCK_FILES = {"engine": ".lock", "spawn": ".spawn"}
 
@@ -31,7 +39,7 @@ def sanitize(name: str) -> str:
 
 
 def profile_dir(name: str) -> Path:
-    return PROFILES / sanitize(name)
+    return store() / sanitize(name)
 
 
 def _read(path: Path) -> dict[str, Any] | None:
@@ -108,9 +116,9 @@ def exclusive(name: str, timeout: float = 0.0, kind: str = "engine") -> Iterator
 
 
 def list_profiles() -> list[dict[str, Any]]:
-    PROFILES.mkdir(parents=True, exist_ok=True)
+    _profiles().mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, Any]] = []
-    for entry in sorted(PROFILES.iterdir()):
+    for entry in sorted(_profiles().iterdir()):
         if not entry.is_dir() or not (entry / "config.json").is_file():
             continue
         cfg = load_config(entry.name) or {}
@@ -193,17 +201,17 @@ def export(name: str, dest: Path | None = None) -> Path:
 def import_archive(archive: Path, rename: str | None = None) -> str:
     if not archive.is_file():
         raise ProfileError(f"archive not found: {archive}")
-    PROFILES.mkdir(parents=True, exist_ok=True)
+    _profiles().mkdir(parents=True, exist_ok=True)
     with tarfile.open(archive, "r:gz") as tar:
         members = [m for m in tar.getmembers() if m.name and not m.name.startswith("/")]
         if not members:
             raise ProfileError("archive is empty")
         root = Path(members[0].name).parts[0]
         dest_name = sanitize(rename or root)
-        dest = PROFILES / dest_name
+        dest = _profiles() / dest_name
         if dest.exists():
             raise ProfileError(f"environment {dest_name!r} already exists")
-        staging = PROFILES / f".import-{dest_name}-{int(time.time() * 1000)}"
+        staging = _profiles() / f".import-{dest_name}-{int(time.time() * 1000)}"
         staging.mkdir(parents=True)
         try:
             tar.extractall(staging, members=members, filter="data")

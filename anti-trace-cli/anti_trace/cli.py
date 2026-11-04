@@ -377,7 +377,11 @@ def cmd_reset(args: argparse.Namespace) -> int:
 
 def cmd_rm(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
-    profile.require(name)
+    cfg = profile.require(name)
+    if cfg.get("mode") == "attached":
+        profile.remove(name)
+        print(json.dumps({"status": "ok", "removed": name}) if args.json else f"[ok] {name} removed")
+        return 0
     if client.running(name) and not args.force:
         print(f"[error] {name} is running; stop it first or pass --force", file=sys.stderr)
         return 1

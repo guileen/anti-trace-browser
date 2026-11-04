@@ -352,7 +352,7 @@ def doctor() -> dict[str, Any]:
         "result": "pass" if cache.is_file() else "warn",
         "detail": str(cache) if cache.is_file() else "not calibrated; 'create --fonts subset:N' will calibrate",
     })
-    rows.append({"check": "store", "result": "pass" if profile.PROFILES.parent.is_dir() else "warn", "detail": str(profile.PROFILES)})
+    rows.append({"check": "store", "result": "pass" if profile.store().parent.is_dir() else "warn", "detail": str(profile.store())})
     try:
         import camoufox
         from importlib.metadata import version
