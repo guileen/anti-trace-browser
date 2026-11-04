@@ -9,6 +9,8 @@
 | 本地门禁 | `node src/local.mjs --port 8788` | 离线、确定、可进 CI；无 JS 客户端拿 `403`，浏览器靠解 SHA-256 前缀拿到签名 Cookie |
 | Cloudflare Turnstile | `wrangler deploy` | 真实 Turnstile 判定，独立子域，不影响主站 |
 
+对照组只用本机真实安装的浏览器或 `--cdp`；Playwright 自带的 Chrome for Testing 已删除，它的 `HeadlessChrome` UA 与 `navigator.webdriver` 会污染结论。
+
 ```sh
 npm start                      # 本地，默认 8788
 npm test                        # 单测 + 一次完整门禁流程
@@ -16,7 +18,7 @@ npm test                        # 单测 + 一次完整门禁流程
 # 用环境去打靶
 ../anti-trace start <env> --headless
 ../anti-trace field <env> --sites http://127.0.0.1:8788/
-../anti-trace field --browser chromium --sites http://127.0.0.1:8788/    # 对照组
+../anti-trace field --cdp ws://127.0.0.1:9222/devtools/browser/... --sites http://127.0.0.1:8788/  # 对照组
 curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8788/          # 403
 ```
 

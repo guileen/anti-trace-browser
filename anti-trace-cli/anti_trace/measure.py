@@ -71,8 +71,12 @@ async def measure(
             target = {"mode": "cdp", "cdp_url": cdp_url}
         elif browser == "chromium":
             executed = chromium_executable()
-            launched = await play.chromium.launch(headless=headless, executable_path=executed) if executed \
-                else await play.chromium.launch(headless=headless)
+            if not executed:
+                raise ValueError(
+                    "no installed Chromium found; install Chrome/Brave/Edge, set ANTI_TRACE_CHROMIUM, "
+                    "or attach with --cdp. Playwright's Chrome for Testing is deliberately not used."
+                )
+            launched = await play.chromium.launch(headless=headless, executable_path=executed)
             context = await launched.new_context()
             page = await context.new_page()
             target = {"mode": "launch", "browser": "chromium", "headless": headless,

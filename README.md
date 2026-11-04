@@ -342,13 +342,29 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 
 能力面因此分成两个独立命令：`field <env>` 测我们管理的环境，`field --browser/--cdp` 测任意浏览器（Fury、Chrome、Cloak），共用同一套判定。
 
-### 5.5 靶场
+**对照组不使用 Playwright 自带的 Chrome for Testing**：它报 `HeadlessChrome` 且 `navigator.webdriver=true`，数字对人群没有意义，已从发现逻辑与磁盘删除。对照组只用本机真实安装的浏览器或 `--cdp` 端点。
+
+### 5.5 Header 模型
+
+一次文档导航实测 12 个 Header，每个都必须有归属，不留未审视的默认值：
+
+| 类别 | Header | 谁决定 |
+|---|---|---|
+| identity | `user-agent`、`accept-language` | 指纹／OS／locale |
+| build | `accept-encoding`、`priority`、`connection` | Firefox 构建，跨环境一致 |
+| universal | `accept`、`upgrade-insecure-requests`、`sec-fetch-*` | 规范，所有真实用户一致 |
+| family | `sec-ch-ua*`、`dnt`、`sec-gpc` | Firefox 下必须缺席 |
+| request / origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 请求与站点状态 |
+
+`anti-trace audit <env> --headers` 读取真实发出的请求头逐项判定；未登记项标 `unknown`，新出现的浏览器默认值不会静默通过。
+
+### 5.6 靶场
 
 [`lab/`](lab/README.md)：本地 PoW 门禁（`npm start`，`403` → 解挑战 → 签名 Cookie → `200`）与可部署的 Cloudflare Turnstile 版本（`wrangler deploy`，独立子域）。本地形态离线可跑、可进 CI；Turnstile 形态给出真实判定。
 
 实测：`curl` 拿到 `403`，Camoufox 与 Chromium 都能 `cleared`，说明门禁区分的是“能否执行挑战”，而不是“像谁”。
 
-### 5.6 交付物
+### 5.7 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
 - `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。

@@ -130,8 +130,11 @@ def control(
                 page = context.pages[0] if context.pages else await context.new_page()
             else:
                 executed = chromium_executable()
-                launched = await play.chromium.launch(headless=True, executable_path=executed) if executed \
-                    else await play.chromium.launch(headless=True)
+                if not executed:
+                    raise ValueError(
+                        "no installed Chromium found; install Chrome/Brave/Edge or pass --cdp"
+                    )
+                launched = await play.chromium.launch(headless=True, executable_path=executed)
                 context = await launched.new_context()
                 page = await context.new_page()
 

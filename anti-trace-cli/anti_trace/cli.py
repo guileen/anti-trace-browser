@@ -276,6 +276,9 @@ def cmd_stop(args: argparse.Namespace) -> int:
         return 0
     try:
         client.stop(name)
+    except ValueError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
     except client.EngineError as exc:
         print(f"[warn] {exc}", file=sys.stderr)
     pid = state.get("pid")
@@ -453,6 +456,9 @@ def cmd_exec(args: argparse.Namespace) -> int:
 
     try:
         response = client.call(name, action, payload, timeout=float(args.timeout or 60))
+    except ValueError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
     except client.EngineError as exc:
         print(json.dumps({"status": "error", "action": action, "message": str(exc)}) if args.json else f"[error] {exc}",
               file=sys.stdout if args.json else sys.stderr)
@@ -890,6 +896,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[error] {exc}", file=sys.stderr)
         return 1
     except net.NetworkError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
+    except ValueError as exc:
         print(f"[error] {exc}", file=sys.stderr)
         return 1
     except client.EngineError as exc:
