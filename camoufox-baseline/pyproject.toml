@@ -1,0 +1,13 @@
+[project]
+name = "anti-trace-browser"
+version = "0.1.0"
+description = "Isolated Camoufox baseline for the local browser audit suite"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "camoufox==0.5.9",
+  "playwright==1.62.0",
+  "psutil==7.2.2",
+]
+
+[tool.uv]
+package = false

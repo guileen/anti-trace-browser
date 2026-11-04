@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+.local/
+__pycache__/
+*.pyc
+.DS_Store
+obscura-upstream/
+*.egg-info/
+.atb.tar.gz

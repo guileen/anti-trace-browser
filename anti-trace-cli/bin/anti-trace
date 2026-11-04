@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Launcher: uses this project's own virtualenv, never another project's.
+set -e
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+CLI_DIR="$(cd -P "$(dirname "$SOURCE")/.." >/dev/null 2>&1 && pwd)"
+
+if [ -x "$CLI_DIR/.venv/bin/python" ]; then
+  PYTHON="$CLI_DIR/.venv/bin/python"
+elif [ -x "$CLI_DIR/../.venv/bin/python" ]; then
+  PYTHON="$CLI_DIR/../.venv/bin/python"
+else
+  echo "no virtualenv found; run: (cd \"$CLI_DIR\" && uv sync)" >&2
+  exit 1
+fi
+
+export PYTHONPATH="$CLI_DIR${PYTHONPATH:+:$PYTHONPATH}"
+exec "$PYTHON" -m anti_trace.cli "$@"

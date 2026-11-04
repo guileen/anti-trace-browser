@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="本机浏览器隐私、自动化一致性、功能与性能的证据审判台。真实探针，服务器判分，功能、性能与证据完整度独立评价。">
+  <title>TRACE LAB · 浏览器证据审判台</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/probes.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="shell topbar-inner">
+    <a class="brand" href="/" aria-label="Trace Lab 首页"><span class="brand-mark">T<span>·</span></span><span>TRACE<span class="brand-light"> / LAB</span><small>浏览器证据审判台</small></span></a>
+    <div class="top-meta"><span class="local-badge"><i></i> LOCAL RESEARCH</span><span id="suite-version">连接规则服务…</span></div>
+  </div></header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div><p class="eyebrow">BROWSER AUDIT / 从主张出发，用证据作答</p><h1 id="hero-title">把保护主张，<br>交给<span>真实证据。</span></h1><p class="hero-copy">同一测试站、同一组探针、四条独立评分轴。<br class="desktop-break">功能、性能与证据完整度，分别测量、共同解读。</p></div>
+      <aside class="method-note"><span class="note-number">01—04</span><h2>分开测量，才能公平比较。</h2><p>隐私局部证据 · 自动化一致性<br>功能正确性 · 确定性任务性能</p><div class="method-footer"><span>固定分母</span><span>服务端重算</span><span>原始证据可查</span></div></aside>
+    </section>
+    <section class="run-panel" aria-labelledby="run-title">
+      <div class="run-description"><div class="section-kicker">开始一次本机实验</div><h2 id="run-title">使用合成任务，记录当前浏览器的暴露信息。</h2><p>读取浏览器声明、屏幕、字体与媒体设备暴露信息；绘制 Canvas / WebGL、合成离线音频，创建并清理测试存储，执行有界 CPU / DOM 任务。设备权限仅查询状态，网络请求限本机同源，报告保存在此本机服务。</p><label class="consent"><input id="consent" type="checkbox"><span>我已了解采集范围，同意开始本次测试</span></label><p class="automation-note">采集启动方式：勾选后点击按钮，或自动化显式调用 <code>window.runAudit()</code>。</p></div>
+      <div class="run-controls"><button id="start-button" class="button primary" disabled>开始浏览器审计 <span aria-hidden="true">↗</span></button><button id="download-button" class="button secondary" disabled>下载完整 JSON <span aria-hidden="true">↓</span></button><div class="runtime-line"><span id="run-state">等待授权</span><span id="progress-count">0 / 0</span></div><progress id="run-progress" max="100" value="0" aria-label="审计进度"></progress><p id="run-message" class="run-message" role="status" aria-live="polite">可随时查看规则；开始后每个探针独立计时，失败不阻断后续项目。</p></div>
+    </section>
+    <div id="error-box" class="error-box" role="alert" hidden></div>
+    <section class="results" aria-labelledby="result-title">
+      <div class="section-heading"><div><p class="eyebrow">THE VERDICT / 独立评分</p><h2 id="result-title">四条评分轴，让结论更清晰。</h2></div><span id="report-meta" class="muted">尚未生成报告</span></div>
+      <div id="score-grid" class="score-grid">
+        <article class="score-card privacy"><div class="card-top"><span>01 / 本地隐私证据下界</span><span class="axis-symbol">◈</span></div><div class="score"><strong id="score-privacy">—</strong><span>/ 100</span></div><div class="score-track"><i id="bar-privacy"></i></div><p id="detail-privacy">已验证的局部暴露收敛；跨站与公网项目单列覆盖</p></article>
+        <article class="score-card automation"><div class="card-top"><span>02 / 自动化与一致性</span><span class="axis-symbol">◎</span></div><div class="score"><strong id="score-automation">—</strong><span>/ 100</span></div><div class="score-track"><i id="bar-automation"></i></div><p id="detail-automation">可见标志与上下文声明；真实挑战结果由外部实验补充</p></article>
+        <article class="score-card functionality"><div class="card-top"><span>03 / 功能正确性</span><span class="axis-symbol">▧</span></div><div class="score"><strong id="score-functionality">—</strong><span>/ 100</span></div><div class="score-track"><i id="bar-functionality"></i></div><p id="detail-functionality">实际绘制、读回、事务与事件结果逐项验证</p></article>
+        <article class="score-card performance"><div class="card-top"><span>04 / 任务性能</span><span class="axis-symbol">↗</span></div><div class="score"><strong id="score-performance">—</strong><span>/ 100</span></div><div class="score-track"><i id="bar-performance"></i></div><p id="detail-performance">固定预算分；原始耗时与完整性控制同时保留</p></article>
+      </div>
+      <div class="coverage-strip"><div><span class="status-dot"></span><strong id="coverage-main">证据覆盖 —</strong><span class="muted">覆盖计入已验证的通过与失败；不支持、错误与未测分别登记。</span></div><div id="status-counts" class="status-counts"></div></div>
+    </section>
+    <section class="evidence-panel" aria-labelledby="evidence-title">
+      <div class="evidence-header"><div><p class="eyebrow">OPEN EVIDENCE / 可追溯观察</p><h2 id="evidence-title">每一分，都有来由。</h2></div><span class="muted">展开项目查看实际值与判分理由</span></div>
+      <div id="filters" class="filters" role="group" aria-label="按评分轴筛选"><button data-category="all" class="active" aria-pressed="true">全部项目</button><button data-category="privacy" aria-pressed="false">隐私证据</button><button data-category="automation" aria-pressed="false">自动化一致性</button><button data-category="functionality" aria-pressed="false">功能</button><button data-category="performance" aria-pressed="false">性能</button></div>
+      <div class="evidence-columns"><span>探针 / 规则</span><span>状态</span><span>得分 / 固定权重</span></div><div id="observations" class="observations"><p class="empty-message">正在加载公开规则…</p></div>
+    </section>
+    <section class="limits-section" aria-labelledby="limits-title"><div><p class="eyebrow">SCOPE OF THE CONCLUSION</p><h2 id="limits-title">记录测量范围，<br>让每个结论可追溯。</h2><p>测量结果、证据来源与适用条件，<br>共同构成一份完整的实验报告。</p></div><div class="limits-copy"><div class="warning-note"><strong>结论适用范围</strong><p>隐私分展示已证实局部暴露收敛的严格证据下界。同源像素、音频重复性与 PNG 字节分别记录；跨站作用域与公网项目单列覆盖。</p></div><ul id="limitations"><li>跨站隔离、公网 IP / DNS / TLS 与真实挑战结果由外部实验补充。</li><li>固定分母涵盖所有规则；未测与缺失证据计零分。</li><li>报告来源：浏览器观察；评分：服务端版本化规则。</li></ul></div></section>
+    <footer><span>TRACE / LAB <span class="footer-divider">·</span> 本机研究工具</span><span>无外部请求 · 无第三方统计 · 可导出完整证据</span></footer>
+  </main>
+</body>
+</html>

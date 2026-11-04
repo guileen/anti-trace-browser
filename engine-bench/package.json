@@ -1,0 +1,11 @@
+{
+  "name": "anti-trace-engine-bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "setup": "node scripts/setup-runtimes.mjs",
+    "compare": "node scripts/compare.mjs"
+  }
+}
