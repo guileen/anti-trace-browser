@@ -1,5 +1,6 @@
 import { spawn, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { lstatSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -134,10 +135,20 @@ async function terminate(child) {
 const activeChildren = new Set();
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, async () => { await Promise.all([...activeChildren].map(terminate)); process.exit(signal === 'SIGINT' ? 130 : 143); });
 
+function whichSync(binary) {
+  for (const directory of (process.env.PATH || '').split(':')) {
+    if (!directory) continue;
+    const candidate = join(directory, binary);
+    try { if (lstatSync(candidate).isFile()) return candidate; } catch { /* not here */ }
+  }
+  return null;
+}
+
 async function engineConfig(id, session, port) {
   let metadata;
   if (id === 'moli-installed') {
-    const executable = process.env.MOLI_INSTALLED_PATH || '/Users/gl/.local/bin/moli';
+    const executable = process.env.MOLI_INSTALLED_PATH || whichSync('moli');
+    if (!executable) throw new Error('moli is not on PATH; set MOLI_INSTALLED_PATH to an existing binary');
     const version = await exec(executable, ['--version'], { timeout: 10_000 });
     metadata = { executable, installed_executable: executable, executable_sha256: sha256(await readFile(executable)), version_probe: { stdout: version.stdout, stderr: version.stderr }, source: 'Existing local binary; never modified; version and SHA256 observed' };
   } else {
