@@ -96,6 +96,7 @@ cd anti-trace-cli && uv sync && ./bin/anti-trace setup
 ./bin/anti-trace start work --url https://example.com
 ./bin/anti-trace exec work axtree
 ./bin/anti-trace audit work --local
+./bin/anti-trace run work flow.at              # 一行一动作的步骤脚本，一次 IPC
 ./bin/anti-trace field work                    # 四个厂商站，留下报告、截图与无障碍快照
 ./bin/anti-trace stop work
 

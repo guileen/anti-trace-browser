@@ -41,6 +41,7 @@ anti-trace stop <name>
 anti-trace list | info <name> | reset <name> | rm <name> [--force]
 anti-trace export <name> [file] | import <archive> [--name N]
 anti-trace audit <name> [--local] [--leaks] [--fp] [--all]
+anti-trace run <name> <script|-> [--json]
 anti-trace field <name> [--sites URL,URL] [--out DIR] [--settle S] [--timeout S]
 anti-trace doctor
 anti-trace exec <name> <action> [args] [flags]
@@ -61,7 +62,6 @@ anti-trace exec <name> <action> [args] [flags]
 | `scroll` | `--direction up\|down\|top\|bottom` `--amount N` | |
 | `wait` | `--selector` / `--url-substring` / `--ms` | |
 | `back` / `reload` / `screenshot` / `cookies` | | `screenshot --full-page` |
-| `batch` | `steps.json` / `-` | 一次 IPC 执行一串动作，返回每步结果；失败时 `status=partial` 并给出 `failed_step` |
 | `eval` | `js` | 默认隔离世界；`--main-world` 需环境开启 |
 | `tabs` / `use <index>` / `tab_new <url>` | | 人机同一窗口多标签协作 |
 
@@ -119,6 +119,30 @@ flowchart LR
 - **默认固定身份**：出口地理位置是身份的一部分，随出口漂移会让「日本 IP + 日语」之类的组合在下次启动变成矛盾。用地理稳定的代理，或显式 `--follow-egress` 接受漂移。
 - WebRTC 默认 `spoof`（把候选地址换成出口 IP），`--webrtc block` 直接关闭 `RTCPeerConnection`。
 - 地理位置权限默认 `denied`：`permissions.query` 与 `getCurrentPosition` 同向，不会出现「声称已授权却拿不到位置」的矛盾。
+
+### 步骤脚本：`run`
+
+一行一动作，与 Playwright CLI 同形，不引入新语法；整段走**一次** IPC。
+
+```text
+# flow.at
+goto https://example.com/
+axtree
+click @1
+type @2 hello world
+wait --ms 500
+eval document.title
+```
+
+```sh
+./bin/anti-trace run work flow.at          # 文件
+printf 'goto https://example.com/\neval document.title\n' | ./bin/anti-trace run work -
+./bin/anti-trace run work '[{"action":"axtree","args":{}}]'   # JSON 形式同样接受
+```
+
+动作集合与 `exec` 相同：`goto axtree click type press hover select scroll wait back reload screenshot eval cookies tabs use tab_new`。`--ms`、`--direction`、`--amount`、`--selector`、`--url-substring` 支持 `wait`/`scroll`。解析错误报行号，例如 `line 2: unknown action 'frobnicate'`；执行中失败返回 `status=partial` 与 `failed_step`。
+
+**为什么是脚本而不是 JSON**:同样一次往返，脚本可 diff、可注释、可复制自 Playwright 文档；JSON 只作为机器生成形式保留。
 
 ### 实验场：`field`
 

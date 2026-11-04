@@ -96,6 +96,35 @@ class FontTests(unittest.TestCase):
         self.assertNotEqual(a, b)
 
 
+class ScriptParsingTest(unittest.TestCase):
+    def test_line_to_step(self):
+        from anti_trace.cli import step_from_line
+
+        self.assertEqual(step_from_line("goto https://a.test/x"),
+                         {"action": "goto", "args": {"url": "https://a.test/x"}})
+        self.assertEqual(step_from_line("type @2 hello world"),
+                         {"action": "type", "args": {"target": "@2", "text": "hello world"}})
+        self.assertEqual(step_from_line('click text="Log in"'),
+                         {"action": "click", "args": {"target": "text=Log in"}})
+        self.assertEqual(step_from_line("wait --ms 500"),
+                         {"action": "wait", "args": {"ms": 500}})
+
+    def test_script_skips_comments_and_detects_json(self):
+        from anti_trace.cli import parse_script
+
+        steps = parse_script("# note\ngoto https://a.test/\n\naxtree\n")
+        self.assertEqual([step["action"] for step in steps], ["goto", "axtree"])
+        self.assertEqual(parse_script('[{"action": "axtree", "args": {}}]')[0]["action"], "axtree")
+
+    def test_script_reports_line_numbers(self):
+        from anti_trace.cli import parse_script
+
+        with self.assertRaisesRegex(ValueError, "line 2"):
+            parse_script("goto https://a.test/\nfrobnicate x\n")
+        with self.assertRaisesRegex(ValueError, "no steps"):
+            parse_script("# only a comment\n")
+
+
 class FieldVerdictTest(unittest.TestCase):
     def test_blocked_status_wins(self):
         from anti_trace.field import _verdict

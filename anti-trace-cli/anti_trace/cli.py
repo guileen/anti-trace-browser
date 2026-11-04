@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import os
 import signal
 import subprocess
@@ -18,7 +19,7 @@ from . import audit, client, field, identity, net, profile
 EXEC_ARGUMENT_COUNT = {
     "goto": 1, "axtree": 0, "click": 1, "type": 2, "press": 1, "hover": 1,
     "select": 2, "scroll": 0, "wait": 0, "back": 0, "reload": 0, "screenshot": 1,
-    "eval": 1, "cookies": 0, "tabs": 0, "use": 1, "tab_new": 1, "batch": 1,
+    "eval": 1, "cookies": 0, "tabs": 0, "use": 1, "tab_new": 1,
 }
 
 
@@ -420,16 +421,6 @@ def cmd_exec(args: argparse.Namespace) -> int:
             payload["value"] = " ".join(values[1:])
     elif action == "screenshot":
         payload["file"] = values[0] if values else None
-    elif action == "batch":
-        source = " ".join(values)
-        if source in {"", "-"}:
-            source = sys.stdin.read()
-        text = Path(source).expanduser().read_text() if source and os.path.isfile(os.path.expanduser(source)) else source
-        try:
-            payload["steps"] = json.loads(text)
-        except ValueError as exc:
-            print(f"[error] batch needs a JSON list of steps: {exc}", file=sys.stderr)
-            return 1
     elif action == "use":
         payload["index"] = int(values[0]) if values else -1
     elif action in {"scroll", "wait", "axtree", "back", "reload", "cookies", "tabs"}:
@@ -539,6 +530,104 @@ def cmd_audit(args: argparse.Namespace) -> int:
         for line in (fp.get("headline") or [])[:12]:
             print(f"  {line}")
     return code
+
+
+STEP_FLAGS = {"wait": {"--ms": "ms", "--selector": "selector", "--url-substring": "url_substring"},
+              "scroll": {"--direction": "direction", "--amount": "amount"}}
+
+
+def step_from_line(line: str) -> dict[str, Any]:
+    """`goto https://x` -> {"action": "goto", "args": {"url": "https://x"}}.
+
+    One action per line, quoting only where a value contains spaces. This is the
+    same shape Playwright CLI users already type, so an agent needs no new model.
+    """
+    tokens = shlex.split(line)
+    action, rest = tokens[0], tokens[1:]
+    args: dict[str, Any] = {}
+    if action in {"goto", "tab_new", "eval"}:
+        key = {"goto": "url", "tab_new": "url", "eval": "js"}[action]
+        args[key] = " ".join(rest)
+    elif action in {"click", "hover", "press"}:
+        key = "keys" if action == "press" else "target"
+        args[key] = " ".join(rest)
+    elif action == "type":
+        if len(rest) < 2:
+            raise ValueError("type needs: <target> <text>")
+        args["target"], args["text"] = rest[0], " ".join(rest[1:])
+    elif action == "select":
+        if len(rest) < 1:
+            raise ValueError("select needs: <target> [value]")
+        args["target"] = rest[0]
+        if len(rest) > 1:
+            args["value"] = " ".join(rest[1:])
+    elif action in {"screenshot", "use"}:
+        args["file" if action == "screenshot" else "index"] = rest[0] if rest else None
+    elif action in STEP_FLAGS:
+        index = 0
+        while index < len(rest):
+            token = rest[index]
+            if token.startswith("--") and token in STEP_FLAGS[action] and index + 1 < len(rest):
+                key = STEP_FLAGS[action][token]
+                value: Any = rest[index + 1]
+                args[key] = int(value) if key in {"ms", "amount"} else value
+                index += 2
+            else:
+                args.setdefault("direction" if action == "scroll" else "ms", token)
+                index += 1
+    elif action in {"axtree", "back", "reload", "cookies", "tabs"}:
+        pass
+    else:
+        raise ValueError(f"unknown action {action!r}")
+    return {"action": action, "args": args}
+
+
+def parse_script(text: str) -> list[dict[str, Any]]:
+    stripped = text.strip()
+    if stripped.startswith("["):
+        steps = json.loads(stripped)
+        if not isinstance(steps, list):
+            raise ValueError("JSON form must be a list of steps")
+        return steps
+    steps = []
+    for number, raw in enumerate(text.splitlines(), 1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        try:
+            steps.append(step_from_line(line))
+        except ValueError as exc:
+            raise ValueError(f"line {number}: {exc}") from exc
+    if not steps:
+        raise ValueError("script has no steps")
+    return steps
+
+
+def cmd_run(args: argparse.Namespace) -> int:
+    name = profile.sanitize(args.name)
+    profile.require(name)
+    source = args.script
+    if source in {"", "-"}:
+        text = sys.stdin.read()
+    else:
+        expanded = os.path.expanduser(source)
+        text = Path(expanded).read_text(encoding="utf-8") if os.path.isfile(expanded) else source
+    try:
+        steps = parse_script(text)
+    except ValueError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
+    reply = client.call(name, "batch", {"steps": steps}, timeout=args.timeout)
+    if args.json:
+        print(json.dumps(reply, indent=2, ensure_ascii=False, default=str))
+        return 0 if reply.get("status") == "ok" else 1
+    for item in reply.get("results") or []:
+        detail = item.get("result")
+        if isinstance(detail, (dict, list)):
+            detail = f"{len(detail)} items" if isinstance(detail, list) else ""
+        print(f"  {str(item.get('step')).rjust(2)}  {str(item.get('action')).ljust(9)} {item.get('status')}"
+              f"  {str(detail or item.get('message') or '')[:90]}")
+    return 0 if reply.get("status") == "ok" else 1
 
 
 def cmd_field(args: argparse.Namespace) -> int:
@@ -682,6 +771,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--all", action="store_true")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_audit)
+
+    p = add("run", "run a step script against a running environment")
+    p.add_argument("name")
+    p.add_argument("script", help="path, inline text, or '-' for stdin")
+    p.add_argument("--json", action="store_true")
+    p.add_argument("--timeout", type=float, default=300.0)
+    p.set_defaults(func=cmd_run)
 
     p = add("field", "visit strict sites and keep human-reviewable evidence")
     p.add_argument("name")
