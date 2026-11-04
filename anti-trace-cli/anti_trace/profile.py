@@ -115,12 +115,15 @@ def list_profiles() -> list[dict[str, Any]]:
             continue
         cfg = load_config(entry.name) or {}
         state = load_state(entry.name) or {}
+        attached = cfg.get("mode") == "attached"
         running = bool(state.get("pid")) and _alive(state["pid"])
         if not running:
             state = {}
         rows.append({
             "name": entry.name,
-            "status": "RUNNING" if running else "IDLE",
+            "status": "ATTACHED" if attached else ("RUNNING" if running else "IDLE"),
+            "mode": "attached" if attached else "managed",
+            "cdp": cfg.get("cdp"),
             "pid": state.get("pid"),
             "socket": state.get("socket"),
             "proxy": (cfg.get("network") or {}).get("proxy") or "DIRECT",

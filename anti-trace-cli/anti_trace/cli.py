@@ -96,6 +96,7 @@ def cmd_create(args: argparse.Namespace) -> int:
     cfg = {
         "schema": profile.SCHEMA,
         "name": name,
+        "mode": "managed",
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "runtime": {"camoufox": _version("camoufox"), "playwright": _version("playwright")},
         "identity": ident,
@@ -185,6 +186,11 @@ def _wait_ready(name: str, proc: subprocess.Popen | None, timeout: float) -> dic
 
 def cmd_start(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
+    if (profile.require(name).get("mode") == "attached"):
+        print(f"[error] {name} is an attached browser; its lifecycle belongs to that browser. "
+              f"Use run/field/audit, or re-attach with a new --cdp.", file=sys.stderr)
+        return 1
+
     profile.require(name)
     state = client.running(name)
     if state:
@@ -270,6 +276,13 @@ def _run_foreground(name: str, args: argparse.Namespace) -> int:
 
 def cmd_stop(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
+    if profile.require(name).get("mode") == "attached":
+        if args.json:
+            print(json.dumps({"status": "ok", "environment": name, "message": "attached browser is owned externally"}))
+        else:
+            print(f"[ok] {name} is attached; nothing to stop")
+        return 0
+
     state = client.running(name)
     if not state:
         print(json.dumps({"status": "not_running", "environment": name}) if args.json else f"[info] {name} is not running")
@@ -675,6 +688,19 @@ def cmd_measure(args: argparse.Namespace) -> int:
     return 0 if report.get("status") == "ok" else 1
 
 
+def cmd_attach(args: argparse.Namespace) -> int:
+    from . import attached
+
+    result = attached.attach(profile.sanitize(args.name), args.cdp)
+    if args.json:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 0
+    print(f"[ok] {result['environment']} attached")
+    print(f"[cdp] {result['cdp']}")
+    print("[note] lifecycle belongs to that browser; run/field/audit work as usual")
+    return 0
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
     profile.require(name)
@@ -852,6 +878,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--all", action="store_true")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_audit)
+
+    p = add("attach", "register a browser you launched yourself (CDP)")
+    p.add_argument("name")
+    p.add_argument("--cdp", required=True, help="ws:// or http:// devtools endpoint")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_attach)
 
     p = add("run", "run a step script against a running environment")
     p.add_argument("name")

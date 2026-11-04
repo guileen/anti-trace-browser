@@ -96,6 +96,32 @@ class FontTests(unittest.TestCase):
         self.assertNotEqual(a, b)
 
 
+class AttachTest(unittest.TestCase):
+    def test_attach_requires_a_scheme_and_respects_managed(self):
+        import tempfile
+        from pathlib import Path
+
+        from anti_trace import attached, profile
+
+        with tempfile.TemporaryDirectory() as home:
+            original = profile.BASE
+            profile.BASE = (Path(home) / "store")
+            try:
+                with self.assertRaises(profile.ProfileError):
+                    attached.attach("fury", "127.0.0.1:9222")
+
+                profile.save_config("managed-one", {"schema": 2, "name": "managed-one", "mode": "managed"})
+                with self.assertRaises(profile.ProfileError):
+                    attached.attach("managed-one", "ws://127.0.0.1:9222/x")
+
+                result = attached.attach("fury", "ws://127.0.0.1:9222/devtools/browser/abc")
+                self.assertEqual(result["mode"], "attached")
+                self.assertEqual(profile.load_config("fury")["cdp"], "ws://127.0.0.1:9222/devtools/browser/abc")
+                self.assertEqual(profile.load_state("fury")["status"], "READY")
+            finally:
+                profile.BASE = original
+
+
 class HeaderAuditTest(unittest.TestCase):
     GOOD = {
         "host": "example.com",

@@ -16,6 +16,8 @@ class EngineError(RuntimeError):
 
 def running(name: str) -> dict[str, Any] | None:
     state = profile.load_state(name)
+    if state and state.get("mode") == "attached" and state.get("cdp"):
+        return state
     if not state:
         return None
     pid = state.get("pid") or 0
@@ -28,6 +30,11 @@ def running(name: str) -> dict[str, Any] | None:
 
 
 def call(name: str, action: str, args: dict[str, Any] | None = None, timeout: float = 60.0) -> dict[str, Any]:
+    cfg = profile.load_config(name) or {}
+    if cfg.get("mode") == "attached":
+        from . import attached
+
+        return attached.call(name, action, args, timeout=max(timeout, 90.0))
     state = running(name)
     if state is None:
         raise EngineError(f"environment {name!r} is not running; start it with: anti-trace start {name}")

@@ -359,13 +359,23 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 
 `audit <env> --headers` 按 UA 识别家族后逐项判定；未登记项标 `unknown`。
 
-### 5.6 靶场
+### 5.6 内核对照（附加模式实测）
+
+| 浏览器 | attach | 脚本驱动 | Header 审计 | 本地身份审计 |
+|---|---|---|---|---|
+| Chrome 156（真实安装，CDP） | 通过 | 通过 | **全过**（Chromium 家族：CH 三件套＋平台一致） | — |
+| Obscura 0.2.6（Rust） | 通过 | 通过 | `unsupported`（CDP 不返回请求头） | 通过 3 项，失败 6 项：时区 `Europe/Berlin` 与 `en-US` 矛盾、无 WebGL、`geolocation=prompt`、存储不可用、UA 说 Windows 而 CDP 自称 Linux |
+| Lightpanda 1.0.2（Zig） | 连接成功 | **失败**：只有 STARTUP 目标，Playwright 无法建页 | 未取到 | 未取到 |
+
+这条通道把「内核好坏」从口碑变成可核对的检查项。**轻内核的真正门槛是 CDP/DOM 语义完整度，而不是语言。** Rust/Zig 两条都在“能连上”这一步通过，在“能驱动/能取证据”这一步分出高下。
+
+### 5.7 靶场
 
 [`lab/`](lab/README.md)：本地 PoW 门禁（`npm start`，`403` → 解挑战 → 签名 Cookie → `200`）与可部署的 Cloudflare Turnstile 版本（`wrangler deploy`，独立子域）。本地形态离线可跑、可进 CI；Turnstile 形态给出真实判定。
 
 实测：`curl` 拿到 `403`，Camoufox 与 Chromium 都能 `cleared`，说明门禁区分的是“能否执行挑战”，而不是“像谁”。
 
-### 5.7 交付物
+### 5.8 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
 - `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。

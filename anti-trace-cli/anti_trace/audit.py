@@ -83,13 +83,14 @@ KNOWN_HEADERS = {
     "host": "request",
     "cookie": "origin", "referer": "origin", "origin": "origin",
     "if-none-match": "origin", "if-modified-since": "origin", "range": "origin",
+    "cache-control": "origin", "pragma": "origin",
     "connection": "build", "priority": "build", "te": "build",
     "user-agent": "identity", "accept-language": "identity", "accept": "universal",
     "accept-encoding": "build", "upgrade-insecure-requests": "universal",
     "sec-fetch-dest": "universal", "sec-fetch-mode": "universal",
     "sec-fetch-site": "universal", "sec-fetch-user": "universal",
     "sec-ch-ua": "family", "sec-ch-ua-mobile": "family", "sec-ch-ua-platform": "family",
-    "priority": "protocol",
+    "priority": "optional",
     "dnt": "build", "sec-gpc": "build",
 }
 
@@ -153,6 +154,31 @@ def evaluate_headers(headers: dict[str, str], ident: dict[str, Any]) -> list[dic
     return rows
 
 
+NAVIGATOR_JS = """JSON.stringify({
+  language: navigator.language,
+  languages: navigator.languages,
+  platform: navigator.platform,
+  ua: navigator.userAgent,
+})"""
+
+PLATFORM_OS = {"MacIntel": "macos", "Win32": "windows", "Linux armv8l": "linux", "Linux x86_64": "linux"}
+
+
+def _identity_from_browser(name: str) -> dict[str, Any]:
+    """An attached browser defines its own identity; read it instead of assuming."""
+    data = client.call(name, "eval", {"js": NAVIGATOR_JS}, timeout=60).get("result") or "{}"
+    try:
+        parsed = json.loads(data)
+    except ValueError:
+        parsed = {}
+    platform_name = str(parsed.get("platform") or "")
+    return {
+        "os": PLATFORM_OS.get(platform_name, "linux" if "Linux" in platform_name else "macos"),
+        "locale": str(parsed.get("language") or ""),
+        "source": "browser",
+    }
+
+
 def headers(name: str) -> dict[str, Any]:
     """What the browser really sent, labelled by class."""
     cfg = profile.require(name)
@@ -162,11 +188,14 @@ def headers(name: str) -> dict[str, Any]:
     capture = client.call(name, "headers", timeout=30)
     requests = capture.get("requests") or []
     if not requests:
-        return {"status": "error", "environment": name, "checks": [],
-                "verdict": "fail", "message": "no document request captured"}
+        return {"status": "unsupported", "environment": name, "checks": [], "verdict": "unsupported",
+                "message": capture.get("reason") or "no document request captured"}
     last = requests[-1]
-    ident = dict(cfg.get("identity") or {})
-    ident.setdefault("locale", ((cfg.get("network") or {}).get("egress") or {}).get("locale"))
+    if cfg.get("mode") == "attached":
+        ident = _identity_from_browser(name)
+    else:
+        ident = dict(cfg.get("identity") or {})
+        ident.setdefault("locale", ((cfg.get("network") or {}).get("egress") or {}).get("locale"))
     checks = evaluate_headers(last["headers"], ident)
     failures = [row for row in checks if row["result"] == "fail"]
     return {

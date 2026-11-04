@@ -41,6 +41,7 @@ anti-trace stop <name>
 anti-trace list | info <name> | reset <name> | rm <name> [--force]
 anti-trace export <name> [file] | import <archive> [--name N]
 anti-trace audit <name> [--local] [--leaks] [--fp] [--all]
+anti-trace attach <name> --cdp URL      # 登记你自己启动的浏览器（Fury/Chrome/Obscura/Lightpanda）
 anti-trace run <name> <script|-> [--json]
 anti-trace measure <script|-> [--browser chromium] [--cdp URL]
 anti-trace field [name] [--sites URL,URL] [--out DIR] [--browser chromium] [--cdp URL]
@@ -147,6 +148,22 @@ flowchart LR
 - **默认固定身份**：出口地理位置是身份的一部分，随出口漂移会让「日本 IP + 日语」之类的组合在下次启动变成矛盾。用地理稳定的代理，或显式 `--follow-egress` 接受漂移。
 - WebRTC 默认 `spoof`（把候选地址换成出口 IP），`--webrtc block` 直接关闭 `RTCPeerConnection`。
 - 地理位置权限默认 `denied`：`permissions.query` 与 `getCurrentPosition` 同向，不会出现「声称已授权却拿不到位置」的矛盾。
+
+### 附加模式：`attach`
+
+```sh
+# 任何暴露 CDP 的浏览器都能变成一等环境
+./bin/anti-trace attach chrome --cdp ws://127.0.0.1:9335/devtools/browser/...
+./bin/anti-trace attach rust-lab --cdp ws://127.0.0.1:9224/devtools/browser
+./bin/anti-trace run chrome flow.at
+./bin/anti-trace audit chrome --headers
+./bin/anti-trace field chrome --sites https://nowsecure.nl/
+```
+
+- 生命周期归那个浏览器；`start`/`stop` 会明确拒绝。
+- 每次调用建立一次 CDP 连接，代价是 ~0.3s，换来的是一致命令面。
+- 身份由浏览器自己声明：`audit --headers` 会读 `navigator.language`／`platform`／UA 再判定，不套用托管环境的配置。
+- 内核缺少能力时如实报告：Obscura 的 CDP 不返回请求头 → `unsupported`；Lightpanda 只有 STARTUP 目标，Playwright 无法建页 → 这一步记录为驱动缺口。
 
 ### 步骤脚本：`run`
 
