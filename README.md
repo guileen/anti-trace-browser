@@ -313,7 +313,7 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 ### 5.3 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
-- `anti-trace-cli/tests/unit`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。
+- `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。
 - `anti-trace-cli/tests/acceptance.py`：上表六组不变量，`PASS: all acceptance checks`。
 - 证据目录：每个环境内 `config.json`、`state.json`、`engine.log`、审计截图。
 
