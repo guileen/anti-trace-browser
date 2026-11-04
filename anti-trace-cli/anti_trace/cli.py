@@ -493,9 +493,9 @@ def cmd_exec(args: argparse.Namespace) -> int:
 def cmd_audit(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
     profile.require(name)
-    kinds = [kind for kind in ("local", "leaks", "fp") if getattr(args, kind)]
+    kinds = [kind for kind in ("local", "headers", "leaks", "fp") if getattr(args, kind)]
     if not kinds or args.all:
-        kinds = ["local", "leaks", "fp"]
+        kinds = ["local", "headers", "leaks", "fp"]
     if kinds != ["local"]:
         print("[note] audit navigates the environment's active tab", file=sys.stderr)
     report: dict[str, Any] = {"environment": name, "kinds": kinds}
@@ -504,6 +504,9 @@ def cmd_audit(args: argparse.Namespace) -> int:
         if kind == "local":
             report["local"] = audit.local(name)
             code = code or (1 if report["local"]["verdict"] == "fail" else 0)
+        elif kind == "headers":
+            report["headers"] = audit.headers(name)
+            code = code or (1 if report["headers"]["verdict"] == "fail" else 0)
         elif kind == "leaks":
             report["leaks"] = audit.leaks(name)
             if report["leaks"].get("egress_matches") is False:
@@ -519,6 +522,11 @@ def cmd_audit(args: argparse.Namespace) -> int:
         print(f"[local] {local['verdict']}")
         for item in local["checks"]:
             print(f"  {item['result'].ljust(7)} {item['check']}: {item['detail']}")
+    heads = report.get("headers")
+    if heads:
+        print(f"[headers] {heads['verdict']}  {heads.get('url')}")
+        for row in heads["checks"]:
+            print(f"  {row['result'].ljust(4)} {row['class'].ljust(12)} {row['header']}: {row['detail'][:90]}")
     leaks = report.get("leaks")
     if leaks:
         print(f"[leaks] egress expected={leaks.get('expected_egress')} observed={leaks.get('observed_egress')} match={leaks.get('egress_matches')}")
@@ -832,6 +840,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = add("audit", "verify what the environment presents and leaks")
     p.add_argument("name")
     p.add_argument("--local", action="store_true", help="identity coherence and stability")
+    p.add_argument("--headers", action="store_true", help="classify the headers actually sent")
     p.add_argument("--leaks", action="store_true", help="WebRTC/DNS/IP leak pages")
     p.add_argument("--fp", action="store_true", help="AmIUnique fingerprint page")
     p.add_argument("--all", action="store_true")

@@ -12,7 +12,6 @@ Two modes:
 from __future__ import annotations
 
 import asyncio
-import glob
 import os
 import time
 from pathlib import Path
@@ -22,11 +21,14 @@ from . import actions
 
 
 def chromium_executable() -> str | None:
-    """A Chromium build already on this machine, so no download is implied."""
+    """A real Chromium-family browser the user installed.
+
+    Playwright's bundled Chrome for Testing is deliberately excluded: it reports
+    HeadlessChrome and navigator.webdriver, so its numbers say nothing about the
+    Chromium population.
+    """
     candidates = [
         os.environ.get("ANTI_TRACE_CHROMIUM") or "",
-        *sorted(glob.glob(os.path.expanduser(
-            "~/Library/Caches/ms-playwright/chromium-*/chrome-mac*/*.app/Contents/MacOS/*"))),
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
         "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",

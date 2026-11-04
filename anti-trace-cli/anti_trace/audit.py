@@ -71,6 +71,106 @@ PROBE = """(async () => {
 })()"""
 
 
+HEADER_RULES = {
+    "identity": ["user-agent", "accept-language"],
+    "build": ["accept-encoding"],
+    "universal": ["accept", "upgrade-insecure-requests", "sec-fetch-dest", "sec-fetch-mode", "sec-fetch-site"],
+    "client_hints": ["sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform"],
+}
+
+KNOWN_HEADERS = {
+    "host": "request",
+    "cookie": "origin", "referer": "origin", "origin": "origin",
+    "if-none-match": "origin", "if-modified-since": "origin", "range": "origin",
+    "connection": "build", "priority": "build", "te": "build",
+    "user-agent": "identity", "accept-language": "identity", "accept": "universal",
+    "accept-encoding": "build", "upgrade-insecure-requests": "universal",
+    "sec-fetch-dest": "universal", "sec-fetch-mode": "universal",
+    "sec-fetch-site": "universal", "sec-fetch-user": "universal",
+    "sec-ch-ua": "family", "sec-ch-ua-mobile": "family", "sec-ch-ua-platform": "family",
+    "dnt": "build", "sec-gpc": "build",
+}
+
+PLATFORM_TOKENS = {
+    "macos": ("Macintosh", "Mac OS X"),
+    "windows": ("Windows NT",),
+    "linux": ("X11; Linux", "Linux x86_64"),
+}
+
+
+def evaluate_headers(headers: dict[str, str], ident: dict[str, Any]) -> list[dict[str, Any]]:
+    """Classify the headers a document request carried and judge each class.
+
+    Three classes: identity-derived (must follow the environment), build-derived
+    (must equal what this browser build really sends), universal (must be the
+    canonical value every real user of that build sends).
+    """
+    lower = {key.lower(): value for key, value in headers.items()}
+    os_name = str(ident.get("os") or "macos")
+    locale = str(ident.get("locale") or "")
+    rows: list[dict[str, Any]] = []
+
+    def check(name: str, ok: bool, detail: str, klass: str) -> None:
+        rows.append({"header": name, "class": klass, "result": "pass" if ok else "fail", "detail": detail})
+
+    agent = lower.get("user-agent", "")
+    tokens = PLATFORM_TOKENS.get(os_name, PLATFORM_TOKENS["macos"])
+    check("user-agent", any(token in agent for token in tokens) and "Firefox/" in agent,
+          f"{agent[:80]}", "identity")
+    check("user-agent:no-headless", "Headless" not in agent and "Chrome/" not in agent,
+          "no Headless/Chrome badge", "identity")
+
+    languages = lower.get("accept-language", "")
+    primary = languages.split(",")[0].split(";")[0].strip() if languages else ""
+    check("accept-language", bool(primary) and primary.lower() == locale.lower(),
+          f"{languages or '(none)'} locale={locale or '(unset)'}", "identity")
+
+    encoding = lower.get("accept-encoding", "")
+    check("accept-encoding", "gzip" in encoding and "br" in encoding, encoding or "(none)", "build")
+
+    for name in HEADER_RULES["universal"]:
+        check(name, bool(lower.get(name)), lower.get(name) or "(missing)", "universal")
+
+    hints = [name for name in HEADER_RULES["client_hints"] if name in lower]
+    check("client-hints", not hints, "absent (Firefox family)" if not hints else f"present: {hints}", "client_hints")
+
+    check("dnt", "dnt" not in lower, lower.get("dnt") or "absent", "build")
+    check("sec-gpc", "sec-gpc" not in lower, lower.get("sec-gpc") or "absent", "build")
+
+    # Every header must belong to a declared class; an unclassified one is a
+    # default nobody has looked at yet.
+    for name in sorted(set(lower) - set(KNOWN_HEADERS)):
+        check(name, True, "unclassified - add it to KNOWN_HEADERS with an owner", "unknown")
+    return rows
+
+
+def headers(name: str) -> dict[str, Any]:
+    """What the browser really sent, labelled by class."""
+    cfg = profile.require(name)
+    info = client.call(name, "info", timeout=15)
+    if str(info.get("url") or "").startswith("about:"):
+        client.call(name, "goto", {"url": "https://example.com/"}, timeout=90)
+    capture = client.call(name, "headers", timeout=30)
+    requests = capture.get("requests") or []
+    if not requests:
+        return {"status": "error", "environment": name, "checks": [],
+                "verdict": "fail", "message": "no document request captured"}
+    last = requests[-1]
+    ident = dict(cfg.get("identity") or {})
+    ident.setdefault("locale", ((cfg.get("network") or {}).get("egress") or {}).get("locale"))
+    checks = evaluate_headers(last["headers"], ident)
+    failures = [row for row in checks if row["result"] == "fail"]
+    return {
+        "status": "ok",
+        "environment": name,
+        "url": last["url"],
+        "headers": last["headers"],
+        "checks": checks,
+        "failures": [row["header"] for row in failures],
+        "verdict": "pass" if not failures else "fail",
+    }
+
+
 def local(name: str, screenshot: bool = True) -> dict[str, Any]:
     cfg = profile.require(name)
     info = client.call(name, "info", timeout=15)

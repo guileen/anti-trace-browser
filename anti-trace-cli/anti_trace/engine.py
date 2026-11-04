@@ -124,6 +124,7 @@ class Engine:
         self.active: Any = None
         self.server: asyncio.AbstractServer | None = None
         self.stopping = asyncio.Event()
+        self.seen_headers: list[dict[str, Any]] = []
         self.workdir = profile.profile_dir(name)
 
     def page(self) -> Any:
@@ -135,6 +136,16 @@ class Engine:
             raise RuntimeError("no page available")
         return self.active
 
+    def _record(self, request: Any) -> None:
+        """Keep the headers the browser itself sent for a document navigation."""
+        try:
+            if request.resource_type != "document":
+                return
+        except Exception:  # noqa: BLE001 - older API shapes
+            return
+        self.seen_headers.append({"url": request.url, "headers": dict(request.headers)})
+        del self.seen_headers[:-20]
+
     async def _launch(self, cfg: dict[str, Any]) -> None:
         from camoufox.async_api import AsyncNewBrowser
         from playwright.async_api import async_playwright
@@ -142,6 +153,7 @@ class Engine:
         options = build_options(cfg, browser_path(), self.headless, self.workdir / "data")
         self.playwright = await async_playwright().start()
         self.context = await AsyncNewBrowser(self.playwright, from_options=options, persistent_context=True)
+        self.context.on("request", self._record)
         self.active = self.context.pages[0] if self.context.pages else await self.context.new_page()
 
     async def _teardown_browser(self) -> None:
@@ -250,7 +262,9 @@ class Engine:
             action = str(request.get("action") or "")
             args = request.get("args") or {}
 
-            if action == "info":
+            if action == "headers":
+                response = {"status": "ok", "action": "headers", "requests": list(self.seen_headers[-10:])}
+            elif action == "info":
                 page = self.page()
                 response = {
                     "status": "ok",

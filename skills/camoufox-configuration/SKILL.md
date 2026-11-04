@@ -43,6 +43,20 @@ description: 为 anti-trace-browser 选择、持久化和验证 Camoufox 配置�
 | 快照不写 DOM | `actions.SNAPSHOT_JS` 只读遍历，返回唯一 CSS 路径 | 写 `data-atb-ref` 会被页面脚本观测，且不是无障碍树 |
 | `eval` 默认隔离世界 | `--main-world` 需环境开启 | 隔离世界读页面 TypedArray 会触发 Xray 限制；音频 RMS 需 `buf.copyFromChannel` 到自有数组 |
 
+## Header：三类归属与验收
+
+一次文档导航 12 个 Header，全部要有归属，没有“未审视的默认值”：
+
+| 类别 | Header | 规则 |
+|---|---|---|
+| identity | `user-agent`、`accept-language` | 由指纹/OS/locale 派生；改环境必须跟着变。实测 locale `en-US`→`ja-JP` 使 `accept-language` 从 `en-US,en;q=0.9` 变为 `ja-JP,ja;q=0.9` |
+| build | `accept-encoding`、`priority`、`connection` | 由 Firefox 构建决定，跨环境一致；不要试图逐环境随机化 |
+| universal | `accept`、`upgrade-insecure-requests`、`sec-fetch-*` | 所有真实用户一致，改动即异常 |
+| family | `sec-ch-ua*`、`dnt`、`sec-gpc` | Firefox 身份下必须缺席 |
+| request / origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 每次请求或站点状态决定 |
+
+Camoufox 只暴露三个 header 配置项：`headers.User-Agent`、`headers.Accept-Language`、`headers.Accept-Encoding`；其余由 Gecko 固定发出。因此验收用 `audit <env> --headers` 读取真实请求头，未登记项标 `unknown`。
+
 ## Canvas：固定环境的稳定输出
 
 本项目主线为**稳定环境身份**。相同浏览器/OS/驱动/字体/渲染策略版本，相同顶层站点、绘制输入、尺寸和色彩条件下：

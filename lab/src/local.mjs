@@ -59,6 +59,12 @@ const server = createServer((request, response) => {
   const cookies = Object.fromEntries(String(request.headers.cookie || '')
     .split(';').map(part => part.trim().split('=')).filter(pair => pair.length === 2));
 
+  if (url.pathname === '/echo') {
+    response.writeHead(200, { 'content-type': 'application/json' });
+    response.end(JSON.stringify({ method: request.method, headers: request.headers }, null, 2));
+    return;
+  }
+
   if (url.pathname === '/health') {
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ status: 'ok', difficulty: DIFFICULTY }));

@@ -96,6 +96,54 @@ class FontTests(unittest.TestCase):
         self.assertNotEqual(a, b)
 
 
+class HeaderAuditTest(unittest.TestCase):
+    GOOD = {
+        "host": "example.com",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0",
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "accept-language": "en-US,en;q=0.9",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "connection": "keep-alive",
+        "upgrade-insecure-requests": "1",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
+        "priority": "u=0, i",
+    }
+    IDENT = {"os": "macos", "locale": "en-US"}
+
+    def _results(self, **overrides):
+        from anti_trace.audit import evaluate_headers
+
+        headers = dict(self.GOOD)
+        for key, value in overrides.items():
+            if value is None:
+                headers.pop(key, None)
+            else:
+                headers[key] = value
+        return {row["header"]: row for row in evaluate_headers(headers, self.IDENT)}
+
+    def test_canonical_firefox_headers_pass(self):
+        rows = self._results()
+        self.assertTrue(all(row["result"] == "pass" for row in rows.values()), rows)
+
+    def test_language_drift_is_caught(self):
+        self.assertEqual(self._results(**{"accept-language": "ja-JP,ja;q=0.9"})["accept-language"]["result"], "fail")
+
+    def test_chromium_badge_is_caught(self):
+        ua = self.GOOD["user-agent"].replace("rv:158.0", "Chrome/158.0.0.0")
+        self.assertEqual(self._results(**{"user-agent": ua})["user-agent:no-headless"]["result"], "fail")
+
+    def test_client_hints_break_a_firefox_identity(self):
+        rows = self._results(**{"sec-ch-ua": '"(brave)";v="158"'})
+        self.assertEqual(rows["client-hints"]["result"], "fail")
+
+    def test_unclassified_header_is_reported(self):
+        rows = self._results(**{"x-new-fingerprint": "1"})
+        self.assertEqual(rows["x-new-fingerprint"]["class"], "unknown")
+
+
 class ScriptParsingTest(unittest.TestCase):
     def test_line_to_step(self):
         from anti_trace.cli import step_from_line
