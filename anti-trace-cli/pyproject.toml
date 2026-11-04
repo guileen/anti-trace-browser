@@ -3,6 +3,8 @@ name = "anti-trace"
 version = "0.2.0"
 description = "Anti-tracking, anti-censorship multi-environment manager with AI headless automation"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12,<3.13"
 keywords = ["fingerprint", "privacy", "browser-automation", "camoufox", "playwright"]
 classifiers = [

@@ -1,9 +1,12 @@
 {
   "name": "anti-trace-audit-service",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24" },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "start": "node src/server.mjs",
     "test": "node --test"

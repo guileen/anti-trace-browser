@@ -41,6 +41,7 @@ anti-trace stop <name>
 anti-trace list | info <name> | reset <name> | rm <name> [--force]
 anti-trace export <name> [file] | import <archive> [--name N]
 anti-trace audit <name> [--local] [--leaks] [--fp] [--all]
+anti-trace field <name> [--sites URL,URL] [--out DIR] [--settle S] [--timeout S]
 anti-trace doctor
 anti-trace exec <name> <action> [args] [flags]
 ```
@@ -104,6 +105,19 @@ flowchart LR
 - **默认固定身份**：出口地理位置是身份的一部分，随出口漂移会让「日本 IP + 日语」之类的组合在下次启动变成矛盾。用地理稳定的代理，或显式 `--follow-egress` 接受漂移。
 - WebRTC 默认 `spoof`（把候选地址换成出口 IP），`--webrtc block` 直接关闭 `RTCPeerConnection`。
 - 地理位置权限默认 `denied`：`permissions.query` 与 `getCurrentPosition` 同向，不会出现「声称已授权却拿不到位置」的矛盾。
+
+### 实验场：`field`
+
+四个厂商自家站，各自跑自己的机器人防御，业务流量本就被预期为自动化，`robots.txt` 亦放行：
+
+| 站点 | 厂商 | 实测（2026-11-03） |
+|---|---|---|
+| `nowsecure.nl` | Cloudflare Turnstile | `200`，页面含 `challenge-platform`＋`turnstile` |
+| `kasada.io` | Kasada | `200`，页面含 57 个可交互元素 |
+| `humansecurity.com` | HUMAN `px-captcha` | `403`，页面要求“Press & Hold to confirm you are a human” |
+| `datadome.co` | DataDome | `200`，页面含 `datadome` 与 `recaptcha` |
+
+每次运行写入 `<profile>/field/<timestamp>/`：`report.json`、每个站点的 `*.png` 与 `*.ax.txt`（无障碍快照），供人工逐项复核。判定为 `reached` / `challenge` / `blocked` 三类，只描述观测到的状态。
 
 ## 5. 验证
 

@@ -96,5 +96,25 @@ class FontTests(unittest.TestCase):
         self.assertNotEqual(a, b)
 
 
+class FieldVerdictTest(unittest.TestCase):
+    def test_blocked_status_wins(self):
+        from anti_trace.field import _verdict
+
+        self.assertEqual(_verdict(403, ["px-captcha"]), "blocked")
+        self.assertEqual(_verdict(500, []), "blocked")
+
+    def test_challenge_markers(self):
+        from anti_trace.field import _verdict
+
+        self.assertEqual(_verdict(200, ["turnstile"]), "challenge")
+        self.assertEqual(_verdict(200, ["captcha-text"]), "challenge")
+
+    def test_reached_ignores_passive_vendor_markers(self):
+        from anti_trace.field import _verdict
+
+        self.assertEqual(_verdict(200, ["kasada", "datadome"]), "reached")
+        self.assertEqual(_verdict(None, []), "reached")
+
+
 if __name__ == "__main__":
     unittest.main()

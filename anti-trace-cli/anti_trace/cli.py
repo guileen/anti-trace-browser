@@ -11,8 +11,9 @@ import sys
 import time
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
-from . import audit, client, identity, net, profile
+from . import audit, client, field, identity, net, profile
 
 EXEC_ARGUMENT_COUNT = {
     "goto": 1, "axtree": 0, "click": 1, "type": 2, "press": 1, "hover": 1,
@@ -532,6 +533,34 @@ def cmd_audit(args: argparse.Namespace) -> int:
     return code
 
 
+def cmd_field(args: argparse.Namespace) -> int:
+    name = profile.sanitize(args.name)
+    profile.require(name)
+    sites = None
+    if args.sites:
+        sites = [{"host": urlparse(url).netloc or url, "url": url, "vendor": "custom"}
+                 for url in (item.strip() for item in args.sites.split(",")) if url]
+    report = field.run(
+        name,
+        sites=sites,
+        out=Path(args.out).expanduser() if args.out else None,
+        settle=args.settle,
+        timeout=args.timeout,
+    )
+    if args.json:
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+        return 0 if not any(row["verdict"] == "blocked" for row in report["sites"]) else 1
+    print(table(report["sites"], [("host", "HOST"), ("vendor", "VENDOR"), ("verdict", "VERDICT"),
+                                 ("http_status", "HTTP"), ("markers", "MARKERS"), ("interactive", "AX")]))
+    for row in report["sites"]:
+        if row.get("error"):
+            print(f"  {row['host']}: {row['error']}")
+        elif row.get("markers"):
+            print(f"  {row['host']}: {', '.join(row['markers'])}")
+    print(f"[evidence] {report['output']}")
+    return 0 if not any(row["verdict"] == "blocked" for row in report["sites"]) else 1
+
+
 def cmd_doctor(args: argparse.Namespace) -> int:
     report = audit.doctor()
     if args.json:
@@ -645,6 +674,15 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--all", action="store_true")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_audit)
+
+    p = add("field", "visit strict sites and keep human-reviewable evidence")
+    p.add_argument("name")
+    p.add_argument("--sites", help="comma-separated URLs (default: the four vendor sites)")
+    p.add_argument("--out", help="evidence directory (default: <profile>/field/<timestamp>)")
+    p.add_argument("--settle", type=float, default=6.0, help="seconds to let a challenge settle")
+    p.add_argument("--timeout", type=float, default=90.0, help="navigation timeout in seconds")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_field)
 
     p = add("doctor", "check the local installation")
     p.add_argument("--json", action="store_true")
