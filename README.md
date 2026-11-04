@@ -327,7 +327,28 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 - **当前被拦的主因在网络层，不在指纹**：出口是洛杉矶数据中心 ASN（AS8796），HUMAN 与 DataDome 对机房 IP 直接给挑战。同一环境换住宅出口需要单独一轮对照才能归因。
 - **Firefox 的人群占比是结构性劣势**：桌面 Firefox 份额约 3%，Chrome 约 65%。指纹自洽只能做到“像一个真实 Firefox 用户”，做不到“像一个普通用户”。若目标是融入人群，Chromium 系运行时应进入候选。
 
-### 5.4 交付物
+### 5.4 归因与对照组
+
+同一出口、同一脚本、两套引擎（2026-11-03，AS8796 洛杉矶机房）：
+
+| 站点 | Camoufox 158 | Chromium（自动化默认） | 读法 |
+|---|---|---|---|
+| nowsecure.nl | `challenge` | `challenge` | 两者都停在 Turnstile |
+| kasada.io | `challenge` | `challenge` | 同上 |
+| humansecurity.com | `blocked` 403 | `blocked` 403 | **与引擎无关 → 出口问题** |
+| datadome.co | `challenge` | `blocked` 403 | 对照组带 `HeadlessChrome`，不作人群结论 |
+
+结论：严格站点的首层拦截主要来自**出口 ASN**，不是指纹。要验证这一点，把同一环境换到住宅出口再跑同一张表；Chromium 人群占比的结论需要真实 Chrome＋真实 Profile，不能用 Playwright 构建代替。
+
+能力面因此分成两个独立命令：`field <env>` 测我们管理的环境，`field --browser/--cdp` 测任意浏览器（Fury、Chrome、Cloak），共用同一套判定。
+
+### 5.5 靶场
+
+[`lab/`](lab/README.md)：本地 PoW 门禁（`npm start`，`403` → 解挑战 → 签名 Cookie → `200`）与可部署的 Cloudflare Turnstile 版本（`wrangler deploy`，独立子域）。本地形态离线可跑、可进 CI；Turnstile 形态给出真实判定。
+
+实测：`curl` 拿到 `403`，Camoufox 与 Chromium 都能 `cleared`，说明门禁区分的是“能否执行挑战”，而不是“像谁”。
+
+### 5.6 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
 - `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。

@@ -42,7 +42,8 @@ anti-trace list | info <name> | reset <name> | rm <name> [--force]
 anti-trace export <name> [file] | import <archive> [--name N]
 anti-trace audit <name> [--local] [--leaks] [--fp] [--all]
 anti-trace run <name> <script|-> [--json]
-anti-trace field <name> [--sites URL,URL] [--out DIR] [--settle S] [--timeout S]
+anti-trace measure <script|-> [--browser chromium] [--cdp URL]
+anti-trace field [name] [--sites URL,URL] [--out DIR] [--browser chromium] [--cdp URL]
 anti-trace doctor
 anti-trace exec <name> <action> [args] [flags]
 ```
@@ -144,6 +145,20 @@ printf 'goto https://example.com/\neval document.title\n' | ./bin/anti-trace run
 
 **为什么是脚本而不是 JSON**:同样一次往返，脚本可 diff、可注释、可复制自 Playwright 文档；JSON 只作为机器生成形式保留。
 
+### 对照组：`measure` / `field --browser`
+
+同一套步骤可以打在**我们不管理的浏览器**上，用于归因：
+
+```sh
+./bin/anti-trace measure flow.at --browser chromium      # 启动本机已有 Chromium
+./bin/anti-trace measure flow.at --cdp ws://127.0.0.1:9222/devtools/browser/...  # 接 Fury/Chrome/Cloak
+./bin/anti-trace field --browser chromium                # 四个厂商站跑对照组
+```
+
+自动发现顺序：`ANTI_TRACE_CHROMIUM` → Playwright 缓存里的 Chromium → `/Applications/Google Chrome.app`、Brave、Edge → `/usr/bin/google-chrome`。找不到时回退到 Playwright 自带构建。
+
+报告会显式记录 `executable`、`user_agent`、`webdriver`，并在 `target.profile` 标注“未加固的对照组，不代表 Chromium 人群”。
+
 ### 实验场：`field`
 
 四个厂商自家站，各自跑自己的机器人防御，业务流量本就被预期为自动化，`robots.txt` 亦放行：
@@ -155,7 +170,25 @@ printf 'goto https://example.com/\neval document.title\n' | ./bin/anti-trace run
 | `humansecurity.com` | HUMAN `px-captcha` | `403`，页面要求“Press & Hold to confirm you are a human” |
 | `datadome.co` | DataDome | `200`，页面含 `datadome` 与 `recaptcha` |
 
-每次运行写入 `<profile>/field/<timestamp>/`：`report.json`、每个站点的 `*.png` 与 `*.ax.txt`（无障碍快照），供人工逐项复核。判定为 `reached` / `challenge` / `blocked` 三类，只描述观测到的状态。
+每次运行写入 `<profile>/field/<timestamp>/`：`report.json`、每个站点的 `*.png` 与 `*.ax.txt`（无障碍快照），供人工逐项复核。判定四类，只描述观测到的状态：
+
+| 判定 | 含义 |
+|---|---|
+| `reached` | 未遇挑战，直接拿到内容 |
+| `cleared` | 先被拦，随后解开并跳转（本机靶场即此例） |
+| `challenge` | 停在挑战页，HTTP 2xx |
+| `blocked` | 停在挑战页且 HTTP 4xx/5xx |
+
+2026-11-03 同出口（AS8796 机房）双引擎对照：
+
+| 站点 | Camoufox 158 | Chromium（自动化默认，对照组） |
+|---|---|---|
+| nowsecure.nl | `challenge` 200 | `challenge` 200 |
+| kasada.io | `challenge` 200 | `challenge` 200 |
+| humansecurity.com | `blocked` 403 | `blocked` 403 |
+| datadome.co | `challenge` 200 | `blocked` 403 |
+
+`humansecurity.com` 两引擎同为 403 → 该站的主因在出口（机房 ASN），不在浏览器。`datadome.co` 出现分叉，但对照组带 `HeadlessChrome` UA 与 `navigator.webdriver=true`，这一格不能用来推断“Chrome 比 Firefox 差”。
 
 ## 5. 验证
 

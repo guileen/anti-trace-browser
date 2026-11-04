@@ -1,0 +1,11 @@
+# Deploy on its own subdomain: normal Turnstile usage, no effect on the main site.
+name = "anti-trace-lab"
+main = "src/worker.mjs"
+compatibility_date = "2026-01-01"
+
+[vars]
+LAB_ORIGIN = "https://lab.example.com"
+
+# TURNSTILE_SITEKEY and TURNSTILE_SECRET come from the dashboard:
+#   wrangler secret put TURNSTILE_SECRET
+#   wrangler secret put TURNSTILE_SITEKEY

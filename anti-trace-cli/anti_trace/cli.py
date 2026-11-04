@@ -421,6 +421,8 @@ def cmd_exec(args: argparse.Namespace) -> int:
             payload["value"] = " ".join(values[1:])
     elif action == "screenshot":
         payload["file"] = values[0] if values else None
+    elif action == "eval":
+        payload["js"] = " ".join(values)
     elif action == "use":
         payload["index"] = int(values[0]) if values else -1
     elif action in {"scroll", "wait", "axtree", "back", "reload", "cookies", "tabs"}:
@@ -603,6 +605,42 @@ def parse_script(text: str) -> list[dict[str, Any]]:
     return steps
 
 
+def cmd_measure(args: argparse.Namespace) -> int:
+    from . import measure
+
+    source = args.script
+    text = sys.stdin.read() if source in {"", "-"} else (
+        Path(os.path.expanduser(source)).read_text(encoding="utf-8")
+        if os.path.isfile(os.path.expanduser(source)) else source
+    )
+    try:
+        steps = parse_script(text)
+    except ValueError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
+    report = measure.run_sync(
+        steps=steps, cdp_url=args.cdp, browser=args.browser, headless=not args.headful,
+        workdir=Path(args.out).expanduser() if args.out else Path.cwd(),
+    )
+    if args.json:
+        print(json.dumps(report, indent=2, ensure_ascii=False, default=str))
+        return 0 if report.get("status") == "ok" else 1
+    print(table([{"k": key, "v": value} for key, value in (
+        ("target", report["target"].get("mode")),
+        ("ua", report.get("user_agent")),
+        ("webdriver", report.get("webdriver")),
+        ("status", report.get("status")),
+        ("seconds", report.get("seconds")),
+    )], [("k", "KEY"), ("v", "VALUE")]))
+    for item in report.get("results") or []:
+        detail = item.get("result")
+        if isinstance(detail, (dict, list)):
+            detail = f"{len(detail)} items" if isinstance(detail, list) else ""
+        print(f"  {str(item.get('step')).rjust(2)}  {str(item.get('action')).ljust(9)} {item.get('status')}"
+              f"  {str(detail or item.get('message') or '')[:90]}")
+    return 0 if report.get("status") == "ok" else 1
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     name = profile.sanitize(args.name)
     profile.require(name)
@@ -630,20 +668,28 @@ def cmd_run(args: argparse.Namespace) -> int:
     return 0 if reply.get("status") == "ok" else 1
 
 
+def _sites_from(value: str | None) -> list[dict[str, str]] | None:
+    if not value:
+        return None
+    return [{"host": urlparse(url).netloc or url, "url": url, "vendor": "custom"}
+            for url in (item.strip() for item in value.split(",")) if url]
+
+
 def cmd_field(args: argparse.Namespace) -> int:
-    name = profile.sanitize(args.name)
-    profile.require(name)
-    sites = None
-    if args.sites:
-        sites = [{"host": urlparse(url).netloc or url, "url": url, "vendor": "custom"}
-                 for url in (item.strip() for item in args.sites.split(",")) if url]
-    report = field.run(
-        name,
-        sites=sites,
-        out=Path(args.out).expanduser() if args.out else None,
-        settle=args.settle,
-        timeout=args.timeout,
-    )
+    sites = _sites_from(args.sites)
+    out = Path(args.out).expanduser() if args.out else None
+    if args.cdp or args.browser:
+        report = field.control(
+            sites=sites, cdp_url=args.cdp, browser=args.browser or "chromium",
+            out=out, settle=args.settle, timeout=args.timeout,
+        )
+    else:
+        if not args.name:
+            print("[error] name an environment, or pass --browser/--cdp for a control run", file=sys.stderr)
+            return 1
+        name = profile.sanitize(args.name)
+        profile.require(name)
+        report = field.run(name, sites=sites, out=out, settle=args.settle, timeout=args.timeout)
     if args.json:
         print(json.dumps(report, indent=2, ensure_ascii=False))
         return 0 if not any(row["verdict"] == "blocked" for row in report["sites"]) else 1
@@ -779,10 +825,21 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--timeout", type=float, default=300.0)
     p.set_defaults(func=cmd_run)
 
+    p = add("measure", "run a step script on a control browser (Chromium or a CDP endpoint)")
+    p.add_argument("script", nargs="?", default="-", help="path, inline text, or '-' for stdin")
+    p.add_argument("--browser", choices=["chromium"], help="launch the Playwright Chromium build")
+    p.add_argument("--cdp", help="attach to an existing CDP endpoint (Fury, Chrome, Cloak)")
+    p.add_argument("--headful", action="store_true")
+    p.add_argument("--out", help="directory for screenshots")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_measure)
+
     p = add("field", "visit strict sites and keep human-reviewable evidence")
-    p.add_argument("name")
+    p.add_argument("name", nargs="?")
     p.add_argument("--sites", help="comma-separated URLs (default: the four vendor sites)")
     p.add_argument("--out", help="evidence directory (default: <profile>/field/<timestamp>)")
+    p.add_argument("--browser", choices=["chromium"], help="score a control browser instead of an environment")
+    p.add_argument("--cdp", help="score an existing CDP endpoint instead of an environment")
     p.add_argument("--settle", type=float, default=6.0, help="seconds to let a challenge settle")
     p.add_argument("--timeout", type=float, default=90.0, help="navigation timeout in seconds")
     p.add_argument("--json", action="store_true")

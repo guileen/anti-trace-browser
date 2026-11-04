@@ -132,6 +132,12 @@ class FieldVerdictTest(unittest.TestCase):
         self.assertEqual(_verdict(403, ["px-captcha"]), "blocked")
         self.assertEqual(_verdict(500, []), "blocked")
 
+    def test_solved_gate_is_cleared_not_blocked(self):
+        from anti_trace.field import _verdict
+
+        self.assertEqual(_verdict(403, [], moved=True), "cleared")
+        self.assertEqual(_verdict(403, [], moved=False), "blocked")
+
     def test_challenge_markers(self):
         from anti_trace.field import _verdict
 
