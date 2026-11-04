@@ -61,10 +61,24 @@ anti-trace exec <name> <action> [args] [flags]
 | `scroll` | `--direction up\|down\|top\|bottom` `--amount N` | |
 | `wait` | `--selector` / `--url-substring` / `--ms` | |
 | `back` / `reload` / `screenshot` / `cookies` | | `screenshot --full-page` |
+| `batch` | `steps.json` / `-` | 一次 IPC 执行一串动作，返回每步结果；失败时 `status=partial` 并给出 `failed_step` |
 | `eval` | `js` | 默认隔离世界；`--main-world` 需环境开启 |
 | `tabs` / `use <index>` / `tab_new <url>` | | 人机同一窗口多标签协作 |
 
 `axtree` 的引用不写入 DOM：它按确定顺序遍历，返回每条元素唯一的 CSS 路径，`click @3` 时重新计算同一映射。页面在两次调用之间变化时引用可能指向别处，重新 `axtree` 即可。
+
+### headless 实测开销（本机，M5/64GB，单环境）
+
+| 操作 | 耗时 | 说明 |
+|---|---:|---|
+| `start --headless`（冷启动，含出口校验） | 5.9s | 浏览器启动为主，出口探测约 1.5s |
+| `exec <env> eval "1"` | 36ms | 进程边界＋Unix socket 往返 |
+| `exec <env> axtree` | 55ms | 扫描当前 DOM 并截图 |
+| `exec <env> screenshot` | 55ms | |
+| `exec <env> goto <url>` | 2.2s | 网络与 `domcontentloaded` 为主 |
+| `exec <env> batch`（4 步） | 156ms | 对照 4 次独立调用 230ms |
+
+模式：**环境常驻，动作批处理**。真实耗时在网络与模型侧，本地往返已降到 100ms 以下；`batch` 把 N 次调用压成 1 次，适合“导航→快照→点击→读值”这类固定序列。
 
 ## 4. 环境存储（自解释）
 

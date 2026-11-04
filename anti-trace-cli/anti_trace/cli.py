@@ -18,7 +18,7 @@ from . import audit, client, field, identity, net, profile
 EXEC_ARGUMENT_COUNT = {
     "goto": 1, "axtree": 0, "click": 1, "type": 2, "press": 1, "hover": 1,
     "select": 2, "scroll": 0, "wait": 0, "back": 0, "reload": 0, "screenshot": 1,
-    "eval": 1, "cookies": 0, "tabs": 0, "use": 1, "tab_new": 1,
+    "eval": 1, "cookies": 0, "tabs": 0, "use": 1, "tab_new": 1, "batch": 1,
 }
 
 
@@ -420,8 +420,16 @@ def cmd_exec(args: argparse.Namespace) -> int:
             payload["value"] = " ".join(values[1:])
     elif action == "screenshot":
         payload["file"] = values[0] if values else None
-    elif action == "eval":
-        payload["js"] = " ".join(values)
+    elif action == "batch":
+        source = " ".join(values)
+        if source in {"", "-"}:
+            source = sys.stdin.read()
+        text = Path(source).expanduser().read_text() if source and os.path.isfile(os.path.expanduser(source)) else source
+        try:
+            payload["steps"] = json.loads(text)
+        except ValueError as exc:
+            print(f"[error] batch needs a JSON list of steps: {exc}", file=sys.stderr)
+            return 1
     elif action == "use":
         payload["index"] = int(values[0]) if values else -1
     elif action in {"scroll", "wait", "axtree", "back", "reload", "cookies", "tabs"}:

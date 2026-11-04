@@ -139,6 +139,23 @@ async def run(page: Page, action: str, args: dict[str, Any], workdir: Path) -> d
             "http_status": response.status if response is not None else None,
         }
 
+    if action == "batch":
+        # One IPC call for a whole sequence: the round trip a caller pays is the
+        # process boundary, not the browser work.
+        steps = args.get("steps") or []
+        if not isinstance(steps, list) or not steps:
+            raise ActionError("batch needs a non-empty list of steps")
+        results: list[dict[str, Any]] = []
+        for index, step in enumerate(steps):
+            if not isinstance(step, dict) or "action" not in step:
+                raise ActionError(f"step {index} needs an 'action'")
+            try:
+                results.append({"step": index, **await run(page, str(step["action"]), step.get("args") or {}, workdir)})
+            except Exception as exc:  # noqa: BLE001 - report the failing step, keep the rest
+                results.append({"step": index, "status": "error", "action": step.get("action"), "message": str(exc)})
+                return {"status": "partial", "action": "batch", "failed_step": index, "results": results}
+        return {"status": "ok", "action": "batch", "results": results}
+
     if action == "axtree":
         return await axtree(page, workdir / "axtree.png")
 

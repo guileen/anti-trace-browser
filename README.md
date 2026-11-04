@@ -311,7 +311,22 @@ A/B 首次均取得官方新响应并显示 Unique，当时样本集合分别为
 | 快照 | `querySelectorAll` 后写 `data-atb-ref` | 只读遍历 + 唯一 CSS 路径 | 写入属性会被页面脚本观测，且不是无障碍树 |
 | 地域权限 | `auto_detected` 时放行 | 默认 `denied` | 放行但拿不到位置时，`permissions.query` 与实际行为矛盾（已实测） |
 
-### 5.3 交付物
+### 5.3 实验场实测（2026-11-03，headless，出口 154.23.172.9 / AS8796）
+
+| 站点 | 厂商 | 判定 | 观测 |
+|---|---|---|---|
+| nowsecure.nl | Cloudflare Turnstile | `challenge` | `.cf-turnstile` 存在，iframe 1×1（managed 模式），15s 后无任何 Cookie，无 `cf_clearance` |
+| kasada.io | Kasada | `challenge` | 57 个可交互元素 |
+| humansecurity.com | HUMAN | `blocked` | 403，页面文案 “Press & Hold to confirm you are a human…not a bot”＋`Reference ID` |
+| datadome.co | DataDome | `challenge` | `datadome`＋`recaptcha` |
+
+两条结论：
+
+- **Cloudflare 是覆盖最广的检测面**。WebTechSurvey 统计 3,147,620 个启用机器人防护的站点中，Cloudflare Bot Management 1,794,740（57.02%）、Akamai 1,261,434（40.08%）、Imperva 1.33%、DataDome 样本内不足 0.1%（其渗透集中在少量高价值站点，DNS 指纹统计会低估）。
+- **当前被拦的主因在网络层，不在指纹**：出口是洛杉矶数据中心 ASN（AS8796），HUMAN 与 DataDome 对机房 IP 直接给挑战。同一环境换住宅出口需要单独一轮对照才能归因。
+- **Firefox 的人群占比是结构性劣势**：桌面 Firefox 份额约 3%，Chrome 约 65%。指纹自洽只能做到“像一个真实 Firefox 用户”，做不到“像一个普通用户”。若目标是融入人群，Chromium 系运行时应进入候选。
+
+### 5.4 交付物
 
 - `anti-trace-cli/anti_trace/`：`profile`（目录/锁/归档）、`identity`（设备类别/字体/区域语言）、`net`（代理/出口）、`engine`（引擎与 Unix socket）、`actions`（页面原语）、`cli`、`audit`。
 - `anti-trace-cli/tests/test_units.py`：代理解析、名称清洗、区域语言、设备类别、字体子集确定性。
