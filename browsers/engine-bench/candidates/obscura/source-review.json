@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "candidate": "obscura",
+  "reviewed_source_commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+  "language_conclusion": "Rust host and JavaScript Web API bindings are legitimate architecture choices. bootstrap.js has a private IIFE capturing the privileged core, and _fpSeed is a closure-local let, not established as a public page global. Correctness depends on real input-responsive semantics and ownership, not implementation language or [native code] labels.",
+  "boundaries": [
+    {
+      "area": "configuration",
+      "paths": [
+        "crates/obscura-browser/src/environment.rs",
+        "crates/obscura-browser/src/context.rs",
+        "crates/obscura-browser/src/page.rs:init_js",
+        "crates/obscura-js/src/runtime.rs:copy_identity_to_realm",
+        "crates/obscura-js/js/bootstrap.js:__obscura_init"
+      ],
+      "classification": "host-owned initialization binding",
+      "finding": "Typed input is resolved/persisted in the context constructor before the HTTP client and page creation (not before the CDP server socket binds). Runtime fills its existing private identity slots before __obscura_init/page scripts. Snapshot bootstrap code itself executes at build time, not per-environment; this patch does not replace public page APIs via CDP. Explicit overrides precede seed-selected defaults. Page and same-origin iframe fields and borrowed Worker navigator agree in smoke. Stealth and separate CLI UA conflict fail closed. This is slice schema=1, not full product EnvironmentSpec schema=3."
+    },
+    {
+      "area": "HTTP",
+      "paths": [
+        "crates/obscura-net/src/client.rs:ObscuraHttpClient",
+        "crates/obscura-js/src/ops.rs:op_fetch_url",
+        "crates/obscura-browser/src/context.rs:isolated_copy"
+      ],
+      "classification": "real host transport",
+      "finding": "Baseline op_fetch_url hardcoded UA independently of configured navigation UA. Patch reads configured client UA/Accept-Language for scripted requests and inherited contexts. HTTP/1.1 local server independently observes navigation, redirect, iframe, stylesheet, Worker script, fetch. TLS/H2/Client-Hints and cross-site policy remain unverified. Browser.getVersion metadata remains static and is not wire or page-identity evidence."
+    },
+    {
+      "area": "page and iframe ownership",
+      "paths": [
+        "crates/obscura-js/src/runtime.rs:make_realm_context,copy_identity_to_realm,share_resources_with",
+        "crates/obscura-browser/src/context.rs"
+      ],
+      "classification": "real V8 contexts with shared host resources",
+      "finding": "Page runtime has its own isolate; child frame contexts restore the snapshot in the same isolate, receive identity and shared host resources, and use origin security tokens. Tested only same-origin iframe; cross-origin and sandbox isolation not established by this smoke."
+    },
+    {
+      "area": "Worker",
+      "paths": [
+        "crates/obscura-js/js/bootstrap.js:16780-16930"
+      ],
+      "classification": "same-realm scoped implementation, not isolated Worker runtime",
+      "finding": "Worker scope borrows navigator/fetch/indexedDB and executes new Function plus with(scope)/eval. Matching identity is not proof of Worker isolation, structured clone, scheduling or transferable semantics. Optimized smoke additionally observed documentType=object and windowType=object inside Worker script: ambient page DOM is reachable, not merely inferred."
+    },
+    {
+      "area": "page renderer",
+      "paths": [
+        "crates/obscura-render/src/dom.rs",
+        "crates/obscura-render/src/inline.rs:1282-1502,3621-3655",
+        "crates/obscura-render/src/paint.rs:7398-7580"
+      ],
+      "classification": "real native CSS/layout/text rasterizer behind render feature",
+      "finding": "Taffy layouts DOM, cosmic-text FontSystem and SwashCache shape/rasterize text, tiny-skia paints. Actual screenshots and coordinate/text input succeed. Screenshot inspected: Latin text and layout rendered, CJK tofu without additional fonts; image, scroll and live viewer not accepted by this narrow smoke."
+    },
+    {
+      "area": "Canvas text",
+      "paths": [
+        "crates/obscura-js/js/bootstrap.js:16218-16248",
+        "crates/obscura-js/src/ops.rs:7710-7799",
+        "crates/obscura-js/src/runtime.rs:RuntimeCanvasSurfaceSource"
+      ],
+      "classification": "existing fabricated pseudo-glyph algorithm, not font rendering",
+      "finding": "fillText draws _fpRand 5x7 cells. strokeText delegates fillText; measureText uses character count. Page font renderer is separate. Actual text pixels change across A restarts; not a stable real Canvas result. Patch does not stabilize or extend these fabricated outputs."
+    },
+    {
+      "area": "Audio",
+      "paths": [
+        "crates/obscura-js/js/bootstrap.js:16620-16701"
+      ],
+      "classification": "existing synthetic/no-op graph placeholder",
+      "finding": "connect/start/parameter scheduling are no-ops. Offline rendering generates a fixed 10kHz triangle and rescales toward a hardcoded Chrome fingerprint target. 512-frame smoke produced identical all-zero buffers at 440/880Hz. This is not real graph/DSP behavior. No substitute fake output was introduced. Optimized8192-frame smoke produced exactly identical nonzero buffers for440Hz and880Hz, confirming no oscillator-frequency response."
+    },
+    {
+      "area": "graphics object semantics",
+      "paths": [
+        "crates/obscura-js/js/bootstrap.js:8499-8500,16508-16524"
+      ],
+      "classification": "WebGL unsupported truthfully returns null",
+      "finding": "Empty constructor labels are not backend support. getContext(webgl/webgl2) returns null; required GL shader/pixel/object gates remain outstanding."
+    },
+    {
+      "area": "durable storage",
+      "paths": [
+        "crates/obscura-browser/src/context.rs:load_web_storage,save_storage",
+        "crates/obscura-js/src/indexed_db.rs:IndexedDbStorage"
+      ],
+      "classification": "context stores; added cold-profile IndexedDB snapshot",
+      "finding": "Cookies/localStorage already persist upstream. Added IndexedDB snapshot excludes live handles/transactions, reconstructs quota accounting on restore, writes temp+sync+rename on storage save, and errors on malformed restore. Clean CDP connection closure plus process restart preserves all three stores. It is not write-through transaction durability, crash recovery, multi-process lease, or portable storage migration."
+    }
+  ],
+  "reuse_cost_map": [
+    {
+      "work": "Canvas real text",
+      "reuse": "Existing cosmic-text FontSystem, bundled font database, SwashCache, variable font cache, tiny-skia; existing zero-copy JsBuffer registration and coalesced Canvas damage ops.",
+      "required_change": "Extract text-run API from DOM-oriented TextEngine shaping without synthetic DOM creation; add native text measure/draw ops against existing pixel backing store; wire Canvas font parsing, baseline, align, maxWidth, transforms, clipping, compositing, real TextMetrics and async font loads. Separate RGBA/premultiplied-alpha handling is required.",
+      "cost_class": "reuse plus semantic bridge; no replacement page renderer necessary",
+      "confidence": "source-backed architecture; no implementation estimate or completion claim"
+    },
+    {
+      "work": "Audio real semantics",
+      "reuse": "V8/op binding infrastructure and typed array transport only; no real audio graph discovered.",
+      "required_change": "Integrate a real offline DSP graph/AudioParam timeline, channel mixing, graph nodes, decodeAudioData and event scheduling; decide platform device output support, evaluate dependencies/licenses, independent multiple-input buffers. Delete existing synthetic implementations on cutover.",
+      "cost_class": "new backend integration, not identity getters",
+      "confidence": "source-backed gap; duration unknown"
+    },
+    {
+      "work": "WebGL",
+      "reuse": "Canvas surface ownership and screenshot composition only.",
+      "required_change": "Integrate real graphics backend/context and object lifetime/state/errors, shader compilation, drawing/readPixels, loss behavior and limits; keep null until genuine backend exists.",
+      "cost_class": "new backend integration",
+      "confidence": "source-backed gap"
+    },
+    {
+      "work": "Basic viewer",
+      "reuse": "Native page renderer, screenshot/CDP transport, real coordinate hit testing and Input.insertText verified in smoke.",
+      "required_change": "Same-session visible viewer, frame updates, resize/scale/scroll and focus routing, lease/mode handoff, stale-frame protection, font assets and human acceptance.",
+      "cost_class": "viewer/control integration instead of new CSS/image renderer",
+      "confidence": "screenshot/input observed; live viewer not implemented"
+    },
+    {
+      "work": "Product persistence/security",
+      "reuse": "Context cookie/localStorage and experimental IndexedDB cold snapshot.",
+      "required_change": "Runtime-owned lease, explicit commit/failure propagation, write-through/crash semantics, archive integrity/migration/rollback and malicious-page isolation audit.",
+      "cost_class": "product hardening; experiment is not production storage",
+      "confidence": "narrow graceful restart proof only"
+    }
+  ],
+  "security_limits": [
+    "No OS sandbox/malicious-page isolation assessment completed. V8 realm security token is not an OS sandbox.",
+    "Worker runs in the page isolate/scope and is not a security boundary.",
+    "Plaintext identity and profile stores; no secret content used. Local/private network explicitly opted in only for loopback smoke.",
+    "Configuration revision changes are rejected against persisted resolved record, but lease/concurrent first-write and crash-atomic config creation are not productized.",
+    "Bootstrap private closure is source-backed, not full reflection/detectability or privileged-boundary acceptance. Public Web API object/error semantics and cross-realm behavior require independent runtime checks.",
+    "Cold IDB snapshot writes committed state on graceful storage save; errors logged, not a transaction durable-commit receipt.",
+    "No anti-bot clearance, anonymity, TLS consistency, proxy leak resistance or production promotion claim.",
+    "CDP upstream publishes ready-file before constructing its default context; the initial missing-storage config failure left a ready record before panic. Product READY must move after config/storage validation and emit a typed receipt. Current experimental resolver reports invalid_config via constructor panic, not the final product error protocol."
+  ],
+  "licenses": {
+    "root": "Apache-2.0",
+    "cargo_inventory": "licenses.json (335 declared package licenses; optional packages may be present)",
+    "font_assets": "Noto Color Emoji provenance lists SIL OFL 1.1 plus exact source commit/hash; Liberation/DejaVu redistribution notices require release audit beyond Cargo metadata",
+    "v8": "Prebuilt rusty_v8 150.4.0 with upstream V8 third-party notices still required for distribution",
+    "legal_release_status": "outstanding"
+  }
+}

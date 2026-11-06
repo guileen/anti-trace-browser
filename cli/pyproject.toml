@@ -1,0 +1,35 @@
+[project]
+name = "anti-trace"
+version = "0.2.0"
+description = "Anti-tracking, anti-censorship multi-environment manager with AI headless automation"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12,<3.13"
+keywords = ["fingerprint", "privacy", "browser-automation", "camoufox", "playwright"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security",
+  "Topic :: Internet :: WWW/HTTP :: Browsers",
+]
+dependencies = [
+  "camoufox==0.5.9",
+  "playwright==1.62.0",
+  "psutil==7.2.2",
+  "pysocks==1.7.1",
+]
+
+[project.scripts]
+anti-trace = "anti_trace.cli:main"
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+anti_trace = ["public/*.html", "public/*.css", "public/*.js"]

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "runtime": "obscura",
+  "source_commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+  "artifact": {
+    "path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/target/release/obscura",
+    "bytes": 111912576,
+    "sha256": "f5acf336bf4700e7fbe40f8ad6f414548a85f7477680389a22c1bd00b6a64ad1"
+  },
+  "patch": {
+    "path": "engine-bench/candidates/obscura/runtime-environment.patch",
+    "sha256": "866c282271dbc27aed1bf48e19f10095c7b092556b4bf1fa1613de73df56d3c2"
+  },
+  "build_receipt": "engine-bench/.local/obscura-cost/build-schema3-release-1793865811958.json",
+  "qualification": "Successful compilation with unchanged source inputs; functionality and release acceptance are separate."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "lightpanda-cost-slice",
+  "private": true,
+  "type": "module",
+  "scripts": { "smoke": "node smoke.mjs", "build-cost": "node build-cost.mjs" },
+  "dependencies": { "puppeteer-core": "24.31.0" }
+}

@@ -1,0 +1,69 @@
+{
+  "query_error": 0,
+  "renderer_count": 2,
+  "renderers": [
+    {
+      "index": 0,
+      "renderer_id": {
+        "error": 0,
+        "value": 16940800
+      },
+      "accelerated": {
+        "error": 0,
+        "value": 1
+      },
+      "online": {
+        "error": 0,
+        "value": 1
+      },
+      "max_samples": {
+        "error": 0,
+        "value": 8
+      },
+      "max_gl_major": {
+        "error": 0,
+        "value": 4
+      }
+    },
+    {
+      "index": 1,
+      "renderer_id": {
+        "error": 0,
+        "value": 16909312
+      },
+      "accelerated": {
+        "error": 0,
+        "value": 0
+      },
+      "online": {
+        "error": 0,
+        "value": 1
+      },
+      "max_samples": {
+        "error": 0,
+        "value": 16
+      },
+      "max_gl_major": {
+        "error": 0,
+        "value": 4
+      }
+    }
+  ],
+  "source": "CGLQueryRendererInfo/CGLDescribeRenderer; SDK constants CGLTypes.h",
+  "pixel_formats": [
+    {
+      "requested_renderer_id": 16940800,
+      "choose_error": 0,
+      "pixel_format_count": 2,
+      "actual_renderer_id": 16940800,
+      "describe_error": 0
+    },
+    {
+      "requested_renderer_id": 16909312,
+      "choose_error": 0,
+      "pixel_format_count": 1,
+      "actual_renderer_id": 16909312,
+      "describe_error": 0
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" width="960" height="280">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.88"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.96"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#334155" stroke-width="0.6" stroke-opacity="0.35"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="280" rx="18" fill="url(#bg)"/>
+  <rect width="960" height="280" rx="18" fill="url(#grid)"/>
+  <rect x="1" y="1" width="958" height="278" rx="17" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top accent bar -->
+  <rect x="44" y="38" width="68" height="4" rx="2" fill="url(#accent)"/>
+
+  <!-- Left Column: Brand & Tagline -->
+  <g transform="translate(44, 56)">
+    <!-- Shield/Prism Icon -->
+    <g transform="translate(0, 6)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#0f172a" stroke="url(#accent)" stroke-width="2"/>
+      <path d="M24 10 L36 16 L36 25 C36 32.5 30.8 37.8 24 40 C17.2 37.8 12 32.5 12 25 L12 16 Z" fill="none" stroke="#10b981" stroke-width="2"/>
+      <circle cx="24" cy="24" r="4" fill="#38bdf8"/>
+      <path d="M24 16 L24 20 M24 28 L24 32 M16 24 L20 24 M28 24 L32 24" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+
+    <text x="64" y="32" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="29" font-weight="800" letter-spacing="-0.5">anti-trace-browser</text>
+    <text x="64" y="54" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12.5">CLI · Multi-Engine Runtime · Verification Lab</text>
+
+    <text x="0" y="96" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="15.5" font-weight="600">
+      Persistent, isolated browser environments for AI &amp; devs.
+    </text>
+    <text x="0" y="122" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="13.5">
+      One CLI across Camoufox, Lightpanda &amp; Obscura — with
+    </text>
+    <text x="0" y="142" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="13.5">
+      human takeover and a 4-axis verification lab.
+    </text>
+
+    <!-- Feature Pills -->
+    <g transform="translate(0, 164)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5" font-weight="600">
+      <rect x="0" y="0" width="140" height="28" rx="6" fill="#064e3b" fill-opacity="0.55" stroke="#10b981" stroke-width="1"/>
+      <text x="70" y="18" fill="#6ee7b7" text-anchor="middle">Deterministic Seed</text>
+
+      <rect x="150" y="0" width="144" height="28" rx="6" fill="#0c4a6e" fill-opacity="0.55" stroke="#06b6d4" stroke-width="1"/>
+      <text x="222" y="18" fill="#67e8f9" text-anchor="middle">Human+Agent Lease</text>
+
+      <rect x="304" y="0" width="132" height="28" rx="6" fill="#1e3a8a" fill-opacity="0.55" stroke="#3b82f6" stroke-width="1"/>
+      <text x="370" y="18" fill="#93c5fd" text-anchor="middle">4-Axis Audit Lab</text>
+    </g>
+  </g>
+
+  <!-- Right Column: Engine & Terminal Preview Card -->
+  <g transform="translate(520, 34)">
+    <rect x="0" y="0" width="396" height="212" rx="12" fill="url(#card)" stroke="#334155" stroke-width="1.5"/>
+    <!-- Window Controls -->
+    <circle cx="20" cy="18" r="5" fill="#ef4444"/>
+    <circle cx="36" cy="18" r="5" fill="#f59e0b"/>
+    <circle cx="52" cy="18" r="5" fill="#10b981"/>
+    <text x="198" y="22" fill="#64748b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" text-anchor="middle">anti-trace — session lifecycle</text>
+    <line x1="0" y1="34" x2="396" y2="34" stroke="#334155" stroke-width="1"/>
+
+    <!-- Terminal Lines -->
+    <g transform="translate(18, 54)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">
+      <text x="0" y="0" fill="#10b981">$</text>
+      <text x="14" y="0" fill="#f1f5f9">anti-trace create work --seed s1 --proxy DIRECT</text>
+
+      <text x="0" y="24" fill="#10b981">$</text>
+      <text x="14" y="24" fill="#f1f5f9">anti-trace start work --url https://example.com</text>
+
+      <text x="0" y="48" fill="#10b981">$</text>
+      <text x="14" y="48" fill="#f1f5f9">anti-trace axtree work --json</text>
+      <text x="0" y="68" fill="#38bdf8">→ status: "ok", elements: [@e1 "More info..."]</text>
+
+      <!-- Runtime Badges inside Card -->
+      <line x1="0" y1="88" x2="360" y2="88" stroke="#1e293b" stroke-width="1"/>
+      <text x="0" y="108" fill="#94a3b8" font-size="11">RUNTIMES</text>
+
+      <g transform="translate(0, 118)">
+        <rect x="0" y="0" width="110" height="28" rx="6" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+        <circle cx="14" cy="14" r="4" fill="#f97316"/>
+        <text x="24" y="18" fill="#fdba74" font-size="11" font-weight="600">Camoufox</text>
+
+        <rect x="122" y="0" width="114" height="28" rx="6" fill="#0f172a" stroke="#eab308" stroke-width="1"/>
+        <circle cx="136" cy="14" r="4" fill="#eab308"/>
+        <text x="146" y="18" fill="#fde047" font-size="11" font-weight="600">Lightpanda</text>
+
+        <rect x="248" y="0" width="110" height="28" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+        <circle cx="262" cy="14" r="4" fill="#38bdf8"/>
+        <text x="272" y="18" fill="#7dd3fc" font-size="11" font-weight="600">Obscura</text>
+      </g>
+    </g>
+  </g>
+</svg>

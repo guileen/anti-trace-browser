@@ -14,21 +14,21 @@ description: 为 anti-trace-browser 选择、持久化和验证 Camoufox 配置�
 - **已测事实**：§实测锚点所链接的原始报告。
 - **待验能力**：配置入口已核实，效果、作用域或生命周期尚待对应实验。
 
-优先完成官方配置层实验，再按差距决定原生补丁或 Obscura 的开发范围。
+后续工作按[OpenSpec](../../openspec/changes/evaluate-lightweight-runtime/proposal.md)推进：Camoufox作为Firefox原生策略/功能基准，Rust/Zig两路赛马。当前F1–F3要求真实Canvas/Audio/GL、语义/统计合理、同环境稳定和真实配置组合差异；Chrome为兼容/经验参考，精确复制其输出退出硬门槛。
 
-## 联合验收：环境内稳定 AND 环境间差异
+## 历史联合验收：环境内稳定 AND 环境间差异
 
-两项为同时成立的硬门槛，适用于最终配置及必测的页面可观察特征。配置文件哈希与真实输出分别核验。
+本节保留旧套件A/B判据及回执。当前I1/F1–F3联合验收真实计算、输入相关统计、稳定与隔离，以及真实配置带来的A/B特征组合差异；共有物理输出按实际保留。原始PNG字节、解码像素及编码元数据分别记录。
 
 - 环境内：A1=A2、B1=B2，涵盖刷新、新页面及浏览器重启；相同输入与固定版本条件下比较。
 - 环境间：A1≠B1、A2≠B2，逐项检查规定的差异字段；Canvas 检查像素及解码后图像，PNG 字节另列。
 - 联合通过：`same_runtime AND fixed_configuration AND within_environment_stable AND between_environments_different`，再叠加功能、一致性与隔离门槛。缺失观察登记为待验。
-- 当前默认组：环境内稳定通过，必测环境间差异失败，联合结果为失败。后续配置组继续使用同一联合门槛。
+- 历史默认组：环境内稳定通过，旧套件必测环境间差异失败。历史记录保持原状；新Chrome差分门槛另采证据。
 
 
-## 产品层：身份、设备与网络（anti-trace-cli）
+## 产品层：身份、设备与网络（cli）
 
-`anti-trace-cli` 把下列规则固化进代码，改动这些规则前先读对应模块。
+`cli` 把下列规则固化进代码，改动这些规则前先读对应模块。
 
 | 规则 | 实现 | 依据 |
 |---|---|---|
@@ -36,26 +36,27 @@ description: 为 anti-trace-browser 选择、持久化和验证 Camoufox 配置�
 | 设备类别决定屏幕/DPR/核心数 | `DEVICES[os]` 表 + `next_device()` 取未使用类别；`engine.build_options` 下发 `screen.*`、`window.*`、`window.devicePixelRatio` | `screen.width` 等键在 `properties.json` 中可覆写；实测 `(min-resolution: 2dppx)`、`device-width` 随配置变化 |
 | 字体两档 | `host`（默认，沿用宿主真实字体）；`subset:N`（校准池固定子集，始终含核心家族，配 `custom_fonts_only`） | `host` 下 Canvas 文本跨环境相同；`subset` 下不同、重启稳定，但未列出字体全部回退（可检测） |
 | Canvas 不开随机读回 | 不设 `canvas_noise` | 实测 `canvas_noise=True` 每次读回都不同，违反重启稳定门槛 |
-| 时区/语言来自真实出口 | `net.probe_egress` + 浏览器内 `ipinfo.io` 自测；`config.timezone`、`locale=[tag]` | 上游 `geoip` 的区域语言表会产出 `fil-US`/`pl-GB`/`nds-NL` 等不合理组合，故自行映射 |
-| 出口漂移处理 | `network.follow_egress` 为假：保留身份并告警；为真：改写并重启一次 | 轮换 IP 池无法同时满足身份固定与地理一致 |
+| 时区/语言当前按出口派生 | `net.probe_egress` + 浏览器内自测；`config.timezone`、`locale=[tag]` | 当前产品策略；后续允许用户明确设置 locale/时区并分别记录出口 |
+| 出口漂移处理 | `network.follow_egress` 为假：保留身份并告警；为真：改写并重启一次 | 配置变化需显式 revision；多语言用户和跨区连接按实际配置验收 |
 | 地理位置权限默认拒绝 | `permissions.default.geo=2`，不下发坐标 | 放行但取不到位置时 `permissions.query` 与实际行为矛盾（实测 `granted` + `User denied geolocation prompt`） |
 | 控制面仅本用户 | `engine.sock` 0600 + `.lock`/`.spawn` 双锁；引擎 fail-fast 抢锁 | HTTP `127.0.0.1` 端口可被任意网页跨源 POST 驱动（已复现 `eval`） |
 | 快照不写 DOM | `actions.SNAPSHOT_JS` 只读遍历，返回唯一 CSS 路径 | 写 `data-atb-ref` 会被页面脚本观测，且不是无障碍树 |
 | `eval` 默认隔离世界 | `--main-world` 需环境开启 | 隔离世界读页面 TypedArray 会触发 Xray 限制；音频 RMS 需 `buf.copyFromChannel` 到自有数组 |
 
-## Header：三类归属与验收
+## Header：上下文归属与验收
 
-一次文档导航 12 个 Header，全部要有归属，没有“未审视的默认值”：
+历史文档导航样本包含 12 个 Header；总数随资源、协议和浏览器策略变化。
 
 | 类别 | Header | 规则 |
 |---|---|---|
-| identity | `user-agent`、`accept-language` | 由指纹/OS/locale 派生；改环境必须跟着变。实测 locale `en-US`→`ja-JP` 使 `accept-language` 从 `en-US,en;q=0.9` 变为 `ja-JP,ja;q=0.9` |
-| build | `accept-encoding`、`priority`、`connection` | 由 Firefox 构建决定，跨环境一致；不要试图逐环境随机化 |
-| universal | `accept`、`upgrade-insecure-requests`、`sec-fetch-*` | 所有真实用户一致，改动即异常 |
-| family | `sec-ch-ua*`、`dnt`、`sec-gpc` | Firefox 身份下必须缺席 |
-| request / origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 每次请求或站点状态决定 |
+| identity | `user-agent`、`accept-language` | 对照 resolved 配置与页面声明 |
+| build | `accept-encoding` | 对照实际编码能力与连接条件 |
+| request | `accept`、`upgrade-insecure-requests`、`sec-fetch-*` | 对照资源类型、导航来源和安全上下文 |
+| family | `sec-ch-ua*` | 对照引擎支持、HTTPS及协商条件 |
+| protocol / policy | `connection`、`priority`、`dnt`、`sec-gpc` | 协议及隐私策略；Priority 可跨 HTTP 版本 |
+| origin | `host`、`cookie`、`referer`、`if-none-match`、`range` | 请求目标与站点状态 |
 
-Camoufox 只暴露三个 header 配置项：`headers.User-Agent`、`headers.Accept-Language`、`headers.Accept-Encoding`；其余由 Gecko 固定发出。因此验收用 `audit <env> --headers` 读取真实请求头，未登记项标 `unknown`。
+已核对版本暴露 `headers.User-Agent`、`headers.Accept-Language`、`headers.Accept-Encoding`；其余 Header 行为沿用 Gecko 请求处理。`audit --headers` 当前将 unknown 列出但赋 pass，OpenSpec C2 明确修为 review_required，加入服务端接收值校验。
 
 ## Canvas：固定环境的稳定输出
 
@@ -130,11 +131,11 @@ Camoufox 只暴露三个 header 配置项：`headers.User-Agent`、`headers.Acce
 从集合根目录执行：
 
 ```sh
-npm --prefix audit-service start
+npm --prefix services/audit start
 # 另一个终端；默认组，A1 → B1 → A2 → B2
-uv run --project camoufox-baseline --locked python camoufox-baseline/scripts/paired_environments.py
+uv run --project browsers/camoufox-baseline --locked python browsers/camoufox-baseline/scripts/paired_environments.py
 # 单个新测试环境访问官方参考站
-uv run --project camoufox-baseline --locked python camoufox-baseline/scripts/amiunique_baseline.py
+uv run --project browsers/camoufox-baseline --locked python browsers/camoufox-baseline/scripts/amiunique_baseline.py
 ```
 
 先读运行器和已有报告再改变参数。保护配置组是后续实验，当前双环境入口执行默认组。每个实验组独立输出目录并保存解析配置、原始结果、截图、时序与关闭回执。
@@ -145,8 +146,8 @@ uv run --project camoufox-baseline --locked python camoufox-baseline/scripts/ami
 
 ## 实测锚点与下一次实验
 
-- [默认基准对照报告](../../camoufox-baseline/.local/reports/paired/20261103-153902/comparison.json)：同内核/配置复用/局部重启稳定/LocalStorage 隔离通过；Canvas 像素、Audio、GL、字体、核心数相同。
-- [靶向隔离实测报告](../../camoufox-baseline/.local/reports/paired/20261103-161902/comparison.json)：**联合验收通过** (`joint_acceptance: true`)。
+- [默认基准对照报告](../../browsers/camoufox-baseline/.local/reports/paired/20261103-153902/comparison.json)：同内核/配置复用/局部重启稳定/LocalStorage 隔离通过；Canvas 像素、Audio、GL、字体、核心数相同。
+- [靶向隔离实测报告](../../browsers/camoufox-baseline/.local/reports/paired/20261103-161902/comparison.json)：当时探针子集记录 `joint_acceptance: true`；完整门槛按 OpenSpec I1 分项复验。
   - **同环境重启稳定 (A1=A2, B1=B2)**：Canvas 像素哈希、Audio 样本、WebGL 渲染器及参数、字体宽度、屏幕尺寸、核心数 100% 保持一致。
   - **跨环境硬件差异化 (A≠B)**：
     - Canvas 像素哈希：`b78371f3` vs `e538d72c` (由字体度量隔离生成确定性渲染差异)
@@ -160,7 +161,7 @@ uv run --project camoufox-baseline --locked python camoufox-baseline/scripts/ami
   - **功能与一致性控制**：四轮会话功能评分与自动化一致性评分均为 100/100，存储隔离 100%。
 - [项目文档](../../README.md)：完整方法、范围与历史回执。
 
-Camoufox 现已建立首个通过联合验收的可用配置基线。下一步重点在 Obscura 等自建轻内核中实现原生多身份环境管理。
+Camoufox 保留可运行基准与以上策略证据；新内核逐项完成稳定、差异、功能和 GUI 验收，再依据改造成本与性能收敛。Audio、纯几何 Canvas 等相同输出保留为完整门槛差距。
 
 ## 固定版本来源
 

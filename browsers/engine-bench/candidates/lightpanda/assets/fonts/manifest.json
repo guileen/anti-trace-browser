@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "scope": "Unmodified redistributable font asset; rendering and CJK acceptance are not established by asset acquisition.",
+  "fonts": [
+    {
+      "file": "NotoSansCJKsc-Regular.otf",
+      "family": "Noto Sans CJK SC",
+      "style": "Regular",
+      "postscript_name": "NotoSansCJKsc-Regular",
+      "version": "2.004",
+      "embedded_version": "Version 2.004;hotconv 1.0.118;makeotfexe 2.5.65603",
+      "format": "OpenType/CFF",
+      "sfnt_signature": "OTTO",
+      "bytes": 16437364,
+      "modified": false,
+      "copyright": "© 2014-2021 Adobe (http://www.adobe.com/).",
+      "source": {
+        "repository": "https://github.com/notofonts/noto-cjk",
+        "tag": "Sans2.004",
+        "commit": "523d033d6cb47f4a80c58a35753646f5c3608a78",
+        "git_blob_sha1": "dc15562470b4f842321894787a0d066879ccff8b",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
+        "tag_resolution_url": "https://api.github.com/repos/notofonts/noto-cjk/git/ref/tags/Sans2.004",
+        "retrieval_url": "https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
+        "integrity": "Downloaded bytes match the official immutable Git blob SHA-1 and declared byte length."
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "file": "LICENSE-NotoSansCJK",
+        "bytes": 4301,
+        "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+        "git_blob_sha1": "d952d62c065f3f35fb83a173496e90b21525aef3",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/523d033d6cb47f4a80c58a35753646f5c3608a78/LICENSE",
+        "embedded_notice": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This Font Software is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software.",
+        "embedded_url": "http://scripts.sil.org/OFL"
+      },
+      "sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+    }
+  ]
+}

@@ -1,0 +1,873 @@
+{
+  "schema": 1,
+  "candidate": "obscura",
+  "status": "experimental cost slice built and exercised; NOT full product acceptance",
+  "latest_revision": {
+    "date": "2026-11-05",
+    "current_build": "current-build.json",
+    "authenticity": "../../.local/authenticity/obscura-1793866069818/report.json",
+    "complete_task_performance": "../../.local/performance/obscura-authentic-1793867667365/report.json",
+    "combined_receipt": "../../.local/authenticity/implementation-1793868323575.json",
+    "scope": "Current one-host authenticity/lifecycle/font intervention and 2+10 complete tasks passed; Worker Canvas/GL are unsupported. Historical release/build/cost fields below retain their original inputs. Full product release remains outstanding."
+  },
+  "source": {
+    "repository": "https://github.com/h4ckf0r0day/obscura",
+    "commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+    "tag_mapping": "source checkout has no local tags; do not equate HEAD with release v0.2.6",
+    "license": "Apache-2.0",
+    "dependency_lock_sha256": "23ebddf5df2321686f33def79c70143fe9ea668714b528aa4e5939d259424ab7",
+    "toolchain": {
+      "rustc": "1.99.1 (58cf8f9c3 2026-10-13)",
+      "rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+      "cargo": "1.99.1 (5f94df478 2026-08-27)",
+      "target": "aarch64-apple-darwin",
+      "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+    },
+    "deps": {
+      "deno_core": "0.412.0",
+      "v8": "150.4.0",
+      "taffy": "vendored 0.12.1",
+      "cosmic-text": "vendored 0.14.2",
+      "tiny-skia": "0.12.0"
+    },
+    "license_inventory": "licenses.json (335 packages with declarations; no blanket distribution clearance)"
+  },
+  "release_baseline": {
+    "tag": "v0.2.6",
+    "archive": "obscura-aarch64-macos-stealth.tar.gz",
+    "archive_sha256": "01a29bb9eb3a7eda89c036db187bbdd9a01b76d3d8e4860117c00fc881ac40bf",
+    "executable_bytes": 75381712,
+    "executable_sha256": "dff3c69858318ff35c7db299dc8ab5faf4b739c6c2f5c727fdad42705aa31a83",
+    "raw": "../../.local/obscura-cost/smoke-release.json",
+    "findings": "raw CDP + upstream Puppeteer work; cookie/localStorage restart persists, IndexedDB does not; hardware/memory/screen realms/restarts disagree; fetch UA ignores CLI UA. Release package name contains stealth but smoke did not enable --stealth."
+  },
+  "patch": {
+    "path": "runtime-environment.patch",
+    "sha256": "561879b97f3a9c00c715319b03ef2cf763dc1ae3f565bca9b5505128174e522c",
+    "bytes": 18456,
+    "insertions": 184,
+    "deletions": 11,
+    "modules": [
+      "obscura-browser/src/environment.rs",
+      "obscura-browser/src/context.rs",
+      "obscura-browser/src/lib.rs",
+      "obscura-browser/src/page.rs",
+      "obscura-js/src/runtime.rs",
+      "obscura-js/src/ops.rs",
+      "obscura-js/src/indexed_db.rs",
+      "obscura-js/js/bootstrap.js"
+    ],
+    "scope": "Runtime-owned slice schema=1 resolved config, seed defaults + typed explicit override, persisted environment record, pre-page-script identity slots copied to frames, configured HTTP fetch/XHR/Worker UA+language, cold IndexedDB snapshot. No CDP page API monkeypatch; no new synthetic graphics/audio/font output.",
+    "deliberate_limits": [
+      "No full product schema=3 migration/revision/runtime-assets digests/lease",
+      "Stealth fixed wreq Windows profile rejected in environment mode rather than pretending arbitrary configurable TLS/CH consistency",
+      "No fake existing Canvas/Audio stabilized to game the suite"
+    ]
+  },
+  "build": {
+    "raw_directory": "../../.local/obscura-cost/",
+    "debug": {
+      "clean_target_wall_ms": 94442.966125,
+      "incremental_no_change_wall_ms": 288.463083,
+      "remediation_incremental_wall_ms": 12200.101167,
+      "artifact_bytes": 208902648,
+      "artifact_sha256": "6af8a47eb3f075fb891725083d8f77eb935b6969781e41a4cbf54ef09fc7a2b5",
+      "evidence": [
+        "build.json",
+        "build-clean-target.log",
+        "build-incremental-no-change.log",
+        "build-fetch-remediation.json"
+      ]
+    },
+    "optimized": {
+      "schema": 1,
+      "profile": "release",
+      "started_at": "2026-11-04T10:25:26.799Z",
+      "source_commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+      "toolchain": {
+        "status": 0,
+        "stdout": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+        "stderr": ""
+      },
+      "cargo": {
+        "status": 0,
+        "stdout": "cargo 1.99.1 (5f94df478 2026-08-27)\n",
+        "stderr": ""
+      },
+      "host": {
+        "status": 0,
+        "stdout": "Darwin gl-macmini.local 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:15 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8152 arm64\n",
+        "stderr": ""
+      },
+      "sdk": {
+        "status": 0,
+        "stdout": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\n",
+        "stderr": ""
+      },
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release",
+        "-p",
+        "obscura-cli",
+        "--features",
+        "render",
+        "--bin",
+        "obscura"
+      ],
+      "feature_scope": "render enabled; stealth deliberately off because fixed wreq Windows profile is not environment configurable",
+      "cache_ownership": {
+        "cargo_home": "~/.cargo (shared download cache)",
+        "target_dir": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/target",
+        "initial_target_exists": false
+      },
+      "before": {
+        "source": {
+          "status": 0,
+          "stdout": "32232\t/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source\n",
+          "stderr": ""
+        },
+        "cargo": {
+          "status": 0,
+          "stdout": "2085416\t/Users/gl/.cargo\n",
+          "stderr": ""
+        }
+      },
+      "builds": [
+        {
+          "kind": "clean-profile",
+          "status": 0,
+          "signal": null,
+          "wall_ms": 136442.302917,
+          "log": "build-optimized-clean-profile.log"
+        },
+        {
+          "kind": "incremental-no-change",
+          "status": 0,
+          "signal": null,
+          "wall_ms": 128.68624999999884,
+          "log": "build-optimized-incremental-no-change.log"
+        }
+      ],
+      "after": {
+        "target": {
+          "status": 0,
+          "stdout": "7593056\t/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/target\n",
+          "stderr": ""
+        },
+        "cargo": {
+          "status": 0,
+          "stdout": "2085416\t/Users/gl/.cargo\n",
+          "stderr": ""
+        }
+      },
+      "artifact": {
+        "path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/target/release/obscura",
+        "bytes": 109469648,
+        "sha256": "066724cea2e55bd627abe54115ada5db6fcd095a442fa90af0b3cdcf8b3e657e"
+      },
+      "lock_sha256": "23ebddf5df2321686f33def79c70143fe9ea668714b528aa4e5939d259424ab7",
+      "metadata": {
+        "status": 0,
+        "path": "dependency-metadata.json"
+      }
+    },
+    "cache_notes": "Clean debug target and clean release profile, not fresh machine/dependency cache. Cargo download cache shared with workstation; target directory is candidate-owned. Release reused downloaded crates/V8 from debug. Debug and release build timings are build-cost facts, not runtime performance.",
+    "disk_kib": {
+      "source": 32232,
+      "cargo_before_debug": 1646712,
+      "cargo_after_debug": 2047232,
+      "cargo_before_release": 2085416,
+      "cargo_after_release": 2085416,
+      "isolated_target_after_debug": 3698676,
+      "isolated_target_after_both": 7593056
+    },
+    "download_accounting": {
+      "status": "partial",
+      "cargo_growth_kib_first_build": 400520,
+      "warning": "Disk cache growth is not network bytes; exact total download bytes not instrumented. Build logs list fetched crates."
+    },
+    "v8_prebuilt": {
+      "url": "https://github.com/denoland/rusty_v8/releases/download/v150.4.0/librusty_v8_simdutf_release_aarch64-apple-darwin.a.gz",
+      "linked_archive_bytes": 147395992,
+      "linked_archive_sha256": "f0acf05bff0ac2663800a3d0f3dcf17fbd43103ab67b98595a3b7b63c3fdf4d2",
+      "scope": "debug archive; release also successfully uses upstream prebuilt path, separate build receipt in target release/build",
+      "source_build_required": false
+    }
+  },
+  "smoke": {
+    "raw": "../../.local/obscura-cost/smoke-patched-optimized.json",
+    "server_echo": "../../.local/obscura-cost/smoke-patched-optimized-server.json",
+    "protocol_frames": "../../.local/obscura-cost/smoke-patched-optimized-{A1,B1,A2,B2}-frames.json",
+    "sequence": [
+      "A1",
+      "B1",
+      "A2",
+      "B2"
+    ],
+    "transport": "raw CDP context create/target create/attach/network/page plus upstream docs Puppeteer flow, pinned puppeteer-core 24.37.2",
+    "coverage": "same-origin page/iframe/Worker, loopback HTTP/1.1 navigation+redirect+stylesheet+frame+Worker-script+fetch, graceful CDP close and process restarts, real screenshot and coordinate/text input",
+    "runs": [
+      {
+        "label": "A1",
+        "error": null,
+        "identity": {
+          "ua": "ObscuraCost/A",
+          "platform": "Linux x86_64",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardware": 4,
+          "memory": 4,
+          "screen": [
+            1280,
+            720
+          ],
+          "workerGlobal": "undefined"
+        },
+        "realm_values": {
+          "page": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "undefined"
+          },
+          "frame": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "undefined"
+          },
+          "worker": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "function",
+            "documentType": "object",
+            "windowType": "object"
+          }
+        },
+        "network": {
+          "status": "observed",
+          "value": {
+            "headers": {
+              "user-agent": "ObscuraCost/A",
+              "accept-language": "en-US",
+              "accept": "*/*",
+              "accept-encoding": "gzip,deflate,br",
+              "host": "127.0.0.1:61776"
+            },
+            "http_version": "1.1"
+          }
+        },
+        "storage": {
+          "status": "observed",
+          "value": {
+            "before": {
+              "cookie": "",
+              "local": null
+            },
+            "indexed_before": null,
+            "after_cookie": "persist=A",
+            "after_local": "1"
+          }
+        },
+        "input": {
+          "status": "observed",
+          "value": {
+            "input": "真实输入-A1",
+            "result": "真实输入-A1"
+          }
+        },
+        "screenshot": {
+          "status": "observed",
+          "value": {
+            "file": "smoke-patched-optimized-A1.png",
+            "bytes": 11557,
+            "sha256": "2165c1669f9e11a681acf6d008ec1b35c340f91cfe0af08e98be1e3dcf9efc06"
+          }
+        },
+        "upstream_puppeteer": {
+          "status": "observed",
+          "value": {
+            "title": "Obscura cost fixture",
+            "identity": {
+              "ua": "ObscuraCost/A",
+              "platform": "Linux x86_64",
+              "language": "en-US",
+              "languages": [
+                "en-US",
+                "en"
+              ],
+              "hardware": 4,
+              "memory": 4,
+              "screen": [
+                1280,
+                720
+              ],
+              "workerGlobal": "undefined"
+            }
+          }
+        },
+        "canvas": {
+          "rgba_sha256": "4c8fdbfdfa7e80abc549fa6e099ae31d108b646d646fb5ac798e67a124510adc",
+          "measure": 48,
+          "webgl_null": true,
+          "webgl2_null": true
+        },
+        "audio": {
+          "sample_count": 8192,
+          "hz440_equals_hz880": true,
+          "nonzero_samples": 8192
+        }
+      },
+      {
+        "label": "B1",
+        "error": null,
+        "identity": {
+          "ua": "ObscuraCost/B",
+          "platform": "Linux x86_64",
+          "language": "de-DE",
+          "languages": [
+            "de-DE",
+            "de"
+          ],
+          "hardware": 12,
+          "memory": 8,
+          "screen": [
+            1920,
+            1080
+          ],
+          "workerGlobal": "undefined"
+        },
+        "realm_values": {
+          "page": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "undefined"
+          },
+          "frame": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "undefined"
+          },
+          "worker": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "function",
+            "documentType": "object",
+            "windowType": "object"
+          }
+        },
+        "network": {
+          "status": "observed",
+          "value": {
+            "headers": {
+              "user-agent": "ObscuraCost/B",
+              "accept-language": "de-DE",
+              "accept": "*/*",
+              "accept-encoding": "gzip,deflate,br",
+              "host": "127.0.0.1:61776"
+            },
+            "http_version": "1.1"
+          }
+        },
+        "storage": {
+          "status": "observed",
+          "value": {
+            "before": {
+              "cookie": "",
+              "local": null
+            },
+            "indexed_before": null,
+            "after_cookie": "persist=B",
+            "after_local": "1"
+          }
+        },
+        "input": {
+          "status": "observed",
+          "value": {
+            "input": "真实输入-B1",
+            "result": "真实输入-B1"
+          }
+        },
+        "screenshot": {
+          "status": "observed",
+          "value": {
+            "file": "smoke-patched-optimized-B1.png",
+            "bytes": 11537,
+            "sha256": "a1dcf80a28d15fa5689712a1635d379f6c0c6f5c35908802edb2d214694003cf"
+          }
+        },
+        "upstream_puppeteer": {
+          "status": "observed",
+          "value": {
+            "title": "Obscura cost fixture",
+            "identity": {
+              "ua": "ObscuraCost/B",
+              "platform": "Linux x86_64",
+              "language": "de-DE",
+              "languages": [
+                "de-DE",
+                "de"
+              ],
+              "hardware": 12,
+              "memory": 8,
+              "screen": [
+                1920,
+                1080
+              ],
+              "workerGlobal": "undefined"
+            }
+          }
+        },
+        "canvas": {
+          "rgba_sha256": "d825397234109061a83a65588b099da66b01be81b0d062803fe02a30dd3418f6",
+          "measure": 48,
+          "webgl_null": true,
+          "webgl2_null": true
+        },
+        "audio": {
+          "sample_count": 8192,
+          "hz440_equals_hz880": true,
+          "nonzero_samples": 8192
+        }
+      },
+      {
+        "label": "A2",
+        "error": null,
+        "identity": {
+          "ua": "ObscuraCost/A",
+          "platform": "Linux x86_64",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "hardware": 4,
+          "memory": 4,
+          "screen": [
+            1280,
+            720
+          ],
+          "workerGlobal": "undefined"
+        },
+        "realm_values": {
+          "page": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "undefined"
+          },
+          "frame": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "undefined"
+          },
+          "worker": {
+            "ua": "ObscuraCost/A",
+            "platform": "Linux x86_64",
+            "language": "en-US",
+            "languages": [
+              "en-US",
+              "en"
+            ],
+            "hardware": 4,
+            "memory": 4,
+            "screen": [
+              1280,
+              720
+            ],
+            "workerGlobal": "function",
+            "documentType": "object",
+            "windowType": "object"
+          }
+        },
+        "network": {
+          "status": "observed",
+          "value": {
+            "headers": {
+              "cookie": "persist=A",
+              "user-agent": "ObscuraCost/A",
+              "accept-language": "en-US",
+              "accept": "*/*",
+              "accept-encoding": "gzip,deflate,br",
+              "host": "127.0.0.1:61776"
+            },
+            "http_version": "1.1"
+          }
+        },
+        "storage": {
+          "status": "observed",
+          "value": {
+            "before": {
+              "cookie": "persist=A",
+              "local": "1"
+            },
+            "indexed_before": 1,
+            "after_cookie": "persist=A",
+            "after_local": "2"
+          }
+        },
+        "input": {
+          "status": "observed",
+          "value": {
+            "input": "真实输入-A2",
+            "result": "真实输入-A2"
+          }
+        },
+        "screenshot": {
+          "status": "observed",
+          "value": {
+            "file": "smoke-patched-optimized-A2.png",
+            "bytes": 11809,
+            "sha256": "7e780344282ccb3d3e4b1c29dbd8071ead3c2ddad76055342f0057f6f81bbe62"
+          }
+        },
+        "upstream_puppeteer": {
+          "status": "observed",
+          "value": {
+            "title": "Obscura cost fixture",
+            "identity": {
+              "ua": "ObscuraCost/A",
+              "platform": "Linux x86_64",
+              "language": "en-US",
+              "languages": [
+                "en-US",
+                "en"
+              ],
+              "hardware": 4,
+              "memory": 4,
+              "screen": [
+                1280,
+                720
+              ],
+              "workerGlobal": "undefined"
+            }
+          }
+        },
+        "canvas": {
+          "rgba_sha256": "481e5d8b72aaea0d001b6964ff612fa65d6a293894c696a61dd2b6cfd1888f58",
+          "measure": 48,
+          "webgl_null": true,
+          "webgl2_null": true
+        },
+        "audio": {
+          "sample_count": 8192,
+          "hz440_equals_hz880": true,
+          "nonzero_samples": 8192
+        }
+      },
+      {
+        "label": "B2",
+        "error": null,
+        "identity": {
+          "ua": "ObscuraCost/B",
+          "platform": "Linux x86_64",
+          "language": "de-DE",
+          "languages": [
+            "de-DE",
+            "de"
+          ],
+          "hardware": 12,
+          "memory": 8,
+          "screen": [
+            1920,
+            1080
+          ],
+          "workerGlobal": "undefined"
+        },
+        "realm_values": {
+          "page": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "undefined"
+          },
+          "frame": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "undefined"
+          },
+          "worker": {
+            "ua": "ObscuraCost/B",
+            "platform": "Linux x86_64",
+            "language": "de-DE",
+            "languages": [
+              "de-DE",
+              "de"
+            ],
+            "hardware": 12,
+            "memory": 8,
+            "screen": [
+              1920,
+              1080
+            ],
+            "workerGlobal": "function",
+            "documentType": "object",
+            "windowType": "object"
+          }
+        },
+        "network": {
+          "status": "observed",
+          "value": {
+            "headers": {
+              "cookie": "persist=B",
+              "user-agent": "ObscuraCost/B",
+              "accept-language": "de-DE",
+              "accept": "*/*",
+              "accept-encoding": "gzip,deflate,br",
+              "host": "127.0.0.1:61776"
+            },
+            "http_version": "1.1"
+          }
+        },
+        "storage": {
+          "status": "observed",
+          "value": {
+            "before": {
+              "cookie": "persist=B",
+              "local": "1"
+            },
+            "indexed_before": 1,
+            "after_cookie": "persist=B",
+            "after_local": "2"
+          }
+        },
+        "input": {
+          "status": "observed",
+          "value": {
+            "input": "真实输入-B2",
+            "result": "真实输入-B2"
+          }
+        },
+        "screenshot": {
+          "status": "observed",
+          "value": {
+            "file": "smoke-patched-optimized-B2.png",
+            "bytes": 11797,
+            "sha256": "33d449b28fe5ee29e83ace215b49bda39bf3cec0211c59cdf3d04846802dc3ef"
+          }
+        },
+        "upstream_puppeteer": {
+          "status": "observed",
+          "value": {
+            "title": "Obscura cost fixture",
+            "identity": {
+              "ua": "ObscuraCost/B",
+              "platform": "Linux x86_64",
+              "language": "de-DE",
+              "languages": [
+                "de-DE",
+                "de"
+              ],
+              "hardware": 12,
+              "memory": 8,
+              "screen": [
+                1920,
+                1080
+              ],
+              "workerGlobal": "undefined"
+            }
+          }
+        },
+        "canvas": {
+          "rgba_sha256": "5ff468ac3b1234693ce6032037f62fa7ac6580e4f96e6c67bc79a0bd9e4e17fe",
+          "measure": 48,
+          "webgl_null": true,
+          "webgl2_null": true
+        },
+        "audio": {
+          "sample_count": 8192,
+          "hz440_equals_hz880": true,
+          "nonzero_samples": 8192
+        }
+      }
+    ]
+  },
+  "capabilities": {
+    "runtime_owned_identity_subset": {
+      "state": "implemented",
+      "gate": "pass within enumerated subset"
+    },
+    "HTTP_UA_language_H1": {
+      "state": "implemented",
+      "gate": "pass for fixture routes; policies/TLS/H2 not_tested"
+    },
+    "same_origin_iframe_identity": {
+      "state": "implemented",
+      "gate": "pass"
+    },
+    "Worker_identity": {
+      "state": "implemented",
+      "gate": "identity matches but Worker semantics FAIL: actual worker reports document/window object"
+    },
+    "cookies_localStorage_graceful_restart": {
+      "state": "implemented",
+      "gate": "pass"
+    },
+    "IndexedDB_cold_snapshot_restart": {
+      "state": "implemented",
+      "gate": "pass graceful restart only; crash/commit durability outstanding"
+    },
+    "page_render_screenshot_coordinate_text_input": {
+      "state": "implemented",
+      "gate": "pass narrow actual task; CJK fonts missing"
+    },
+    "basic_live_GUI": {
+      "state": "unsupported",
+      "gate": "outstanding same-session viewer/control/human acceptance"
+    },
+    "Canvas_text_real_font": {
+      "state": "unsupported",
+      "gate": "fail existing pseudo-glyph implementation; actual pixels unstable"
+    },
+    "Audio_real_input_response": {
+      "state": "unsupported",
+      "gate": "fail 440/880Hz samples identical at8192 frames"
+    },
+    "WebGL_shader_pixels_objects": {
+      "state": "unsupported",
+      "gate": "outstanding getContext returns null"
+    },
+    "malicious_page_isolation": {
+      "state": "unsupported",
+      "gate": "not_tested; worker DOM access observed"
+    }
+  },
+  "performance": {
+    "status": "patched_full_product_task_not_tested",
+    "release_baseline": "../../.local/performance/native-2026-11-04.json",
+    "baseline_scope": "Pinned upstream release v0.2.6; 2 discarded warmups and 10 measured runs. Shared DOM/JS expression and CSS pixels measured separately.",
+    "comparison_status": "DOM baseline comparable; visual workload and wrapper resource scopes separated",
+    "reason": "Parent integration measured release baselines after source slices. Patched optimized binary still needs full-product-task performance after required features are complete."
+  },
+  "cost_and_security_detail": "source-review.json",
+  "replay": [
+    "npm --prefix candidates/obscura ci --ignore-scripts",
+    "node candidates/obscura/prepare.mjs /path/to/pinned/upstream-checkout (fresh worktree only)",
+    "node candidates/obscura/build.mjs --release",
+    "node candidates/obscura/smoke.mjs --optimized",
+    "node candidates/obscura/smoke.mjs --release (separate pinned upstream executable)"
+  ],
+  "outstanding_product_gates": [
+    "real Canvas text/geometry functional fidelity and stable required rendering outputs",
+    "real WebAudio graph and independent input response",
+    "real WebGL shader/pixel/object semantics",
+    "isolated Worker execution/clone/timing and cross-origin/sandbox realms",
+    "basic viewer and same-session GUI↔Agent controls/human acceptance, CJK asset provisioning",
+    "crash-durable commit semantics/lease/migration/archive validation",
+    "TLS/H2/Client-Hints/context-aware headers, proxy/egress enforcement",
+    "full2warm+10 shared-workload performance and security/license/update release audit",
+    "READY publication after config/storage validation; typed startup errors and immutable configuration receipt"
+  ],
+  "decision_boundary": "Evidence supports lower renderer-integration cost for an experimental line that can reuse native page renderer + working input. It does not establish dominance over another candidate or authorize product promotion; all required gates remain unchanged."
+}

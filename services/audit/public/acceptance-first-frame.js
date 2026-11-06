@@ -1,0 +1,2 @@
+'use strict';
+parent.postMessage({ kind: 'first-frame', snapshot: { user_agent: navigator.userAgent, platform: navigator.platform, locale: navigator.language, languages: Array.from(navigator.languages || []), timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, hardware_concurrency: navigator.hardwareConcurrency, screen_width: screen.width, screen_height: screen.height } }, location.origin);

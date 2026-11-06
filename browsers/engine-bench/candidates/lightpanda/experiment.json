@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "candidate": "lightpanda",
+  "source": { "repository": "https://github.com/lightpanda-io/browser.git", "tag": "1.0.2", "commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f", "checkout": "browsers/engine-bench/.local/lightpanda-cost/source", "patch": "runtime.patch" },
+  "release": { "version": "1.0.2", "asset": "lightpanda-aarch64-macos", "sha256": "9f3ee749a55d1abc5f8fdda0d9559c3b2abcec5bff5bfe902bc06c0a89538ec4" },
+  "toolchain": { "authority": "build.zig.zon:5 (README:306 is stale)", "zig": "0.17.0", "rustc": "1.99.1 (58cf8f9c3 2026-10-13)", "cargo": "1.99.1 (5f94df478 2026-08-27)", "cmake": "4.4.5", "swift": "Apple Swift 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)", "host": "Darwin arm64", "v8_release": "15.5.35.13", "v8_binding_release": "v0.5.9", "v8_binding_commit": "b73e4fa2d0afe5036745ae7d332cc5cb7e7adb53" },
+  "commands_from_candidate_directory": {
+    "install_client": "npm ci --ignore-scripts --no-audit --no-fund",
+    "apply_patch_from_fresh_source": "git -C ../../.local/lightpanda-cost/source apply ../../../candidates/lightpanda/runtime.patch",
+    "build_cost": "node build-cost.mjs",
+    "seed_pinned_dependency_archives": "node acquire-deps.mjs",
+    "alternate_pinned_boringssl_transport": "node acquire-deps.mjs --boringssl-api",
+    "official_origin_recovery": "node acquire-deps.mjs --official-origins",
+    "recovered_compile": "CARGO_NET_OFFLINE=true node record-command.mjs recovered-native-fixed zig build -Doptimize=fast -j4",
+    "clean_owned_objects": "CARGO_NET_OFFLINE=true BUILD_GLOBAL_CACHE_DIR=\"$PWD/../../.local/lightpanda-cost/clean-global-cache\" node record-command.mjs recovered-clean-final zig build -Doptimize=fast -j4 --cache-dir \"$PWD/../../.local/lightpanda-cost/clean-objects\"",
+    "incremental_owned_objects": "CARGO_NET_OFFLINE=true BUILD_GLOBAL_CACHE_DIR=\"$PWD/../../.local/lightpanda-cost/clean-global-cache\" node record-command.mjs recovered-incremental-final zig build -Doptimize=fast -j4 --cache-dir \"$PWD/../../.local/lightpanda-cost/clean-objects\"",
+    "release_functional_smoke": "LIGHTPANDA_RUN=release-functional node smoke.mjs",
+    "recovery_report": "node recovery.mjs clean-build incremental-build recovered-clean recovered-compile recovered-rust-offline recovered-icu-data recovered-icu-data-resume recovered-icu-data-origin recovered-native recovered-native-fixed recovered-clean-final recovered-incremental-final",
+    "viewer": "swiftc -parse-as-library -swift-version 5 viewer.swift -o ../../.local/lightpanda-cost/diagnostic-viewer",
+    "release_smoke": "LIGHTPANDA_RUN=release-controlled-final LIGHTPANDA_VIEWER=../../.local/lightpanda-cost/diagnostic-viewer node smoke.mjs",
+    "patched_smoke": "LIGHTPANDA_BINARY=../../.local/lightpanda-cost/source/zig-out/bin/lightpanda LIGHTPANDA_PATCHED=1 LIGHTPANDA_RUN=patched-controlled LIGHTPANDA_VIEWER=../../.local/lightpanda-cost/diagnostic-viewer node smoke.mjs",
+    "image_metrics": "node image-metrics.mjs ../../.local/lightpanda-cost/release-controlled/A1.png"
+  },
+  "evidence_scope": "Local HTTP fixture, native process, raw CDP, official upstream-example client Puppeteer. No third-party anti-bot clearance or comparable performance claim.",
+  "gui_scope": "Actual AppKit window displays unaltered upstream text-only PNG; coordinate events reach the same runtime. This intentionally does NOT satisfy genuine CSS page rendering or GUI acceptance.",
+  "network_scope": "Loopback HTTP/1.1 only. HTTPS/H2/proxy/egress/DNS fail-closed behavior untested. Telemetry and core dumps disabled for launched browsers.",
+  "product_gate": "outstanding"
+}

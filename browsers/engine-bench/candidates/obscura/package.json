@@ -1,0 +1,1 @@
+{"name":"obscura-runtime-cost-slice","private":true,"type":"module","version":"1.0.0","license":"MIT","engines":{"node":">=24"},"scripts":{"build":"node build.mjs","smoke":"node smoke.mjs"},"dependencies":{"puppeteer-core":"24.37.2"}}

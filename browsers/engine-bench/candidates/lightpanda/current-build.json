@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "runtime": "lightpanda",
+  "source_commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+  "artifact": {
+    "path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/zig-out/bin/lightpanda",
+    "bytes": 114845624,
+    "sha256": "cc95a4a8fe0ceaf0b9b3064119fdc950eeca8552467d08618a0198d15aeef3b1"
+  },
+  "patch": {
+    "path": "engine-bench/candidates/lightpanda/runtime.patch",
+    "sha256": "3a7aefbf8b87a47c141c338cd8e12ad78aeac486a1b78d0593ebeecfa1d78e2f"
+  },
+  "renderer_patch": {
+    "path": "engine-bench/candidates/obscura/runtime-environment.patch",
+    "sha256": "86856a86c5745600ad71390c42efeec1d74a31147bb846db36e9df566ae09cc1"
+  },
+  "build_receipt": "engine-bench/.local/lightpanda-cost/native-build-1793952718863/receipt.json",
+  "qualification": "Successful compilation with unchanged source inputs; functionality and release acceptance are separate."
+}

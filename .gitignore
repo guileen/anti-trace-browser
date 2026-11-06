@@ -6,4 +6,8 @@ __pycache__/
 .DS_Store
 obscura-upstream/
 *.egg-info/
+/cli/build/
+/services/challenges/.wrangler/
 .atb.tar.gz
+lightpanda-desktop/src-tauri/target/
+lightpanda-desktop/src-tauri/gen/

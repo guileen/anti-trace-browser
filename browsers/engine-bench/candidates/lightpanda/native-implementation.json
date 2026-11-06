@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "state": "built_authenticity_verified",
+  "source_commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+  "toolchain": "Zig 0.17.0",
+  "renderer_source": "engine-bench/.local/obscura-cost/source",
+  "renderer_upstream_commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+  "renderer_modifications": "The Obscura source patch is a required renderer build input; LP does not execute the Obscura browser/JS/network runtime. Current shared renderer resolves generic sans/mono/serif against actually allowed file-backed families; the previous first-face alias collapse is corrected.",
+  "renderer_patch": {
+    "path": "engine-bench/candidates/obscura/runtime-environment.patch",
+    "sha256": "866c282271dbc27aed1bf48e19f10095c7b092556b4bf1fa1613de73df56d3c2",
+    "bytes": 1292648
+  },
+  "previous_renderer_patch": {"sha256":"16ca3f22dfbd8d77783da911d4d19732d268c61de7d7d61bd101d69ab7318a3d","bytes":1216098,"qualification":"historical pre-authenticity renderer input"},
+  "current_verification": {
+    "build": "engine-bench/candidates/lightpanda/current-build.json",
+    "matrix": "engine-bench/.local/authenticity/lightpanda-1793866069834/report.json",
+    "matrix_result": {"cells":32,"judge_passed":32,"local_checks":154,"local_passed":154,"overall":"PASS"},
+    "performance": "engine-bench/.local/performance/lightpanda-authentic-1793867465465/report.json",
+    "gui": "engine-bench/.local/authenticity/gui-1793862573993/desktop-smoke.json",
+    "scope": "One-host authenticity/lifecycle/controlled-font intervention, ten measured complete tasks, actual Desktop WebView and independent server input receipts; not full product release"
+  },
+  "patch": {
+    "path": "engine-bench/candidates/lightpanda/runtime.patch",
+    "sha256": "be74064a233d80bc0009ac6dbb4ce10f7ceef867e18ed4d547db6911b2fb2129",
+    "bytes": 710649,
+    "includes_new_files": true
+  },
+  "historical_artifacts": {
+    "binary_sha256": "7e270f93bea20913088db87d61b1dba323d0462b38e2228bda8a639c661ca0ef",
+    "patch_sha256": "7e478847d80af4129b666dd48167d2f754f6c4a06b37bf4b0c1a201792c87edd",
+    "directory": "engine-bench/.local/lightpanda-cost/revisions/7e270f93-7e478847",
+    "original_cargo_lock_sha256": "ce85a854dd6794f105b53fa67e9091d0ddc04d05229d10eaaf87ce0080c5d84d"
+  },
+  "implemented_source_paths": [
+    "Strict schema3 raw-config SHA256 receipt, actual running executable SHA256, file-byte assets, real font/backend initialization before READY, native identity admission and explicit revision/predecessor migration",
+    "Per-origin SQLite LocalStorage and IndexedDB, mutation-time Cookie SQLite commits, FULL/fullfsync durability and strict startup recovery/preflight",
+    "Native env:VAR proxy resolution without credential argv; every native curl connection reset applies the selected proxy and disables ambient NO_PROXY bypass; no automatic direct fallback; native agent mode rejects environment configs because its LLM transport is separate",
+    "LP DOM/CSSOM/input/scroll snapshot projected read-only into the shared Taffy/cosmic-text/tiny-skia renderer; LP alone owns page execution and resource requests",
+    "Shared retained layout backs screenshot, DOM boxes, scroll metrics, hit testing and focus; actual native hover/pressed/focus/modality state feeds both the readonly painter and native CSS selectors, including iframe/shadow ancestry",
+    "LP-fetched image bytes and actual native Canvas/CGL RGBA surfaces feed paint; child-frame surfaces use the same LP Frame tree",
+    "Native Window and Worker 2D Canvas with real path/Path2D geometry, linear/radial/conic gradients, bitmap patterns, line styling/dashes, text shaping/rasterization, transforms/clips, compositing, image draw, readback, PNG/dataURL/Blob and ImageBitmap snapshots",
+    "Real macOS CGL driver bridge with shader/program/buffer/texture/framebuffer/renderbuffer objects, matrix/vector/array uniforms, actual texture uploads/readPixels, queried driver strings, native precision-query availability, typed parameter arrays and real binding object identity",
+    "Atomic reference-counted, mutex-guarded raster/GL Surface backs Window/Worker OffscreenCanvas with coherent dimensions/pixels/taint, atomic snapshot-and-clear transfer and safe observer teardown; Rust CGL operations are serialized across threads",
+    "Multiple real native Pages share one Session/storage and CDP socket; target-scoped V8 context groups, actual remote handles and callFunctionOn receivers, frame arenas, DOM registries, events and child-frame context linkage",
+    "Managed ANTI_TRACE_PARENT_EOF=1 watches stdin HUP/EV_EOF in the existing epoll/kqueue server, terminates native execution and runs normal session/Frame cleanup; inherited lease descriptors remain held until process exit",
+    "SessionStorage is owned by stable top-level frame ID plus origin, shared only with same-tab same-origin descendants, preserved across document replacement and cleared on tab/session close; Meta+A/Ctrl+A follows actual platform and UTF16 selection semantics",
+    "One Config native Identity owns UA product/version, low/full brands, mobile, platform and architecture declarations; HttpClient baseline headers and both Window/Worker NavigatorUAData read the same active declaration. Default UA is Lightpanda/<actual build version>; explicit custom UA is parsed rather than retaining fixed Lightpanda hints.",
+    "Fixed native UA and Client Hint headers are shared by navigation, subresources, fetch, iframe/worker requests and WebSocket upgrades. CLI/CDP/Fetch partial header overrides cannot introduce a second identity; CDP UA overrides replace the full native declaration. Low-entropy brands use major versions; fullVersionList and uaFullVersion use the configured complete product version."
+  ],
+  "retained_native_components": ["V8 Worker globals and scheduler", "Existing native Audio graph and DSP"],
+  "authenticity_source_revision": {
+    "scope": "OpenSpec 7.3 native declarations, functional color/GL controls and genuine font resolution",
+    "build": "current-build.json binds current native artifact and source inputs to successful compilation",
+    "tests": "Native Identity and RGBA regressions each passed; actual v2 matrix covers Window/iframe/Worker drawing, DSP, GL, declarations and persistence",
+    "native_environment_schema": 3,
+    "resolved_fields": "unchanged",
+    "migration": "Existing persisted UA values are never rewritten. Explicit environment migration selects the new native default. A recognized UA operating system that contradicts resolved.platform is rejected at native identity admission.",
+    "custom_ua": "Recognized browser product tokens or the custom first product supply the declared brand/version; UA operating-system tokens and the compatible configured platform supply JS/wire platform. This does not claim another browser's implementation or exact Chrome output equivalence. Malformed product/version syntax is an explicit configuration error; an absent version, unknown platform version and unknown model remain empty.",
+    "rendering_inspection": "Window/Worker Canvas uses native retained raster/text surfaces, GL uses actual CGL shaders/textures/readPixels, and OfflineAudioContext pulls real oscillator/AudioParam/gain/connection DSP quanta. Real F1 runs exposed missing DITHER, functional rgba parsing and collapsed generic font families; fixed actual enum 0x0BD0, allocation-free rgb()/rgba() parsing and shared renderer family selection. Native font subset selection now reuses the existing coherent core-font policy. No canned output/noise or error suppression.",
+    "added_regressions": ["Native Identity default/custom product major/full version and platform mismatch admission", "HttpClient fixed baseline UA/Client Hint declarations and atomic override failure", "Window/Worker native appVersion, UAData low/full brand and platform agreement", "Window/Worker WebGL DITHER enum and real enable/disable must retain NO_ERROR", "Native RGB/RGBA numeric percentage alpha rounding and malformed input parser cases", "Window/Worker actual rgba paint/readback and PNG equivalence to independently painted matching hex colors"]
+  },
+  "dependencies": {
+    "inventory": "engine-bench/candidates/lightpanda/native-dependencies.json",
+    "packages": 253,
+    "missing_license_declarations": 0,
+    "native_license": "AGPL-3.0-or-later",
+    "shared_renderer_license": "Apache-2.0",
+    "platform_framework": "macOS OpenGL.framework/CGL",
+    "font_assets": "Explicit nonempty asset_paths.fonts, loaded in content-hash order; pinned Noto Sans CJK SC Regular version2.004 is packaged without modification",
+    "font_manifest": "engine-bench/candidates/lightpanda/assets/fonts/manifest.json",
+    "font_license": "OFL-1.1",
+    "font_sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+    "font_bytes": 16437364,
+    "font_upstream_commit": "523d033d6cb47f4a80c58a35753646f5c3608a78"
+  },
+  "executed_dependency_preparation": [
+    "Preserved old binary, patch and Cargo.lock; did not remove or replace source/archive/object/prebuiltV8 caches",
+    "Source/index/crate-cache merge copied cache entries; macOS cp -n returned status 1 with no stderr on skips; raw failed receipt retained under native-prepare-1793801415771",
+    "CARGO_NET_OFFLINE=true cargo generate-lockfile --offline --manifest-path src/rust/ffi/Cargo.toml completed",
+    "CARGO_NET_OFFLINE=true cargo metadata --locked --offline --format-version 1 --manifest-path src/rust/ffi/Cargo.toml completed",
+    "Exported actual tracked changes and new source files into runtime.patch and its content-addressed revision"
+  ],
+  "commands_for_integrator": [
+    "node engine-bench/candidates/lightpanda/native-build.mjs prepare",
+    "node engine-bench/candidates/lightpanda/native-build.mjs build",
+    "lightpanda serve --host 127.0.0.1 --port 9223 --environment-config \"$NATIVE_ENVIRONMENT_CONFIG\""
+  ],
+  "not_executed": ["Different-host restore", "Physical GUI/IME human review", "Full security/license and clean-install release review"],
+  "remaining_source_and_product_gaps": [
+    "Historical pre-authenticity artifact had 428/459 passing legacy suite4 required checks, 31 outstanding; these scores do not describe current source or the independent authenticity suite",
+    "ArrayBuffer, MessagePort and ImageBitmap transfer-list ownership transport is not implemented and throws DataCloneError; ordinary ArrayBuffer cloning and native OffscreenCanvas transfer are implemented",
+    "WebGL2 is unsupported; WebGL shader precision queries return actual driver results or null when unavailable rather than fabricated limits; selected CGL backend must exist on the host",
+    "The read-only layout snapshot serializes authoritative DOM state to detect changes; current complete-task timings and RSS retain that actual cost",
+    "All 22 independent scenarios remain mandatory; unsupported behavior, unavailable host facilities and unexercised checks do not become passing results"
+  ],
+  "verification": {
+    "scope": "Historical pre-authenticity build and legacy suite4 only; current verification is recorded separately in current_verification",
+    "build_receipt": "engine-bench/.local/lightpanda-cost/native-build-1793817544004/receipt.json",
+    "binary_sha256": "5063dd5da06a6cca0da419946025384b8e4a3b2c233031a577ca7c4a39bb5893",
+    "build_renderer_patch_sha256": "55a0922efd1630d12fbfbcda37f378fc7efb0cb04a5f8bf442ddc5edda4d50ff",
+    "renderer_patch_qualification": "Historical renderer binding for this recorded build; not the current renderer/font-resolution revision.",
+    "matrix": "engine-bench/.local/acceptance/strict-three-runtime-suite4-1793814768117424000/lightpanda-r2",
+    "matrix_result": {"required":459,"passed":428,"outstanding":31,"overall":"NOT_PASS"},
+    "native_session_tests": {"passed":2,"filter":"Session: sessionStorage","scope":"Real native same-origin descendants, separate tabs/origins, reload/origin roundtrip and tab close"},
+    "gui_evidence": "engine-bench/.local/acceptance/product-smoke-1793802818047430000/viewer-lightpanda-dpr2-ui-controls.png",
+    "gui_scope": "Actual Ego viewer on21e076 artifact before test-only cleanup: DPR2 Meta+A Chinese replacement, counter, child click and handback; final5063 artifact independently repeats required GUI observations in source-bound matrix. Neither is physical IME/human signoff.",
+    "historical_failures": "Earlier stream asset limit, native WebGL liveness absence, Meta+A and cross-tab SessionStorage failures retained unchanged in previous build/matrix/smoke artifacts"
+  },
+  "product_acceptance": "outstanding",
+  "cost_card_modified": false
+}

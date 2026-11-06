@@ -1,0 +1,724 @@
+{
+  "schema": 1,
+  "candidate": "lightpanda",
+  "product_gate": "outstanding",
+  "latest_revision": {
+    "date": "2026-11-05",
+    "current_build": "current-build.json",
+    "authenticity": "../../.local/authenticity/lightpanda-1793866069834/report.json",
+    "complete_task_performance": "../../.local/performance/lightpanda-authentic-1793867465465/report.json",
+    "combined_receipt": "../../.local/authenticity/implementation-1793868323575.json",
+    "scope": "Current one-host authenticity/lifecycle/font intervention and 2+10 complete tasks passed; historical release/build/cost fields below retain their original inputs. Full product release remains outstanding."
+  },
+  "source": {
+    "repository": "https://github.com/lightpanda-io/browser.git",
+    "tag": "1.0.2",
+    "commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+    "manifest_anchor": "build.zig.zon:3-9",
+    "toolchain_conflict": "README:306 says Zig 0.15.2; manifest requires 0.17.0. Source package version is 1.1.0-dev despite tag 1.0.2."
+  },
+  "release": {
+    "version": "1.0.2",
+    "asset_sha256": "9f3ee749a55d1abc5f8fdda0d9559c3b2abcec5bff5bfe902bc06c0a89538ec4",
+    "binary_bytes": 93242456,
+    "protocol_version_observation": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/124.0.6367.29",
+      "revision": "@9e6ded5ac1ff5e38d930ae52bd9aec09bd1a68e4",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      "jsVersion": "12.4.254.8"
+    }
+  },
+  "build": {
+    "started": "2026-11-04T10:16:02.402Z",
+    "finished": "2026-11-04T11:57:14.554Z",
+    "recovery_manifest": "recovery.json",
+    "prebuilt": {
+      "status": 0,
+      "signal": null,
+      "elapsed_ms": 126915.26716700001
+    },
+    "initial_failed_clean": {
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 704522.082541,
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "stderr": "./build.zig.zon:35:20: error: server connection failed: TlsInitializationFailed\n            .url = \"https://github.com/curl/curl/releases/download/curl-8_23_0/curl-8.23.0.tar.gz\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n./build.zig.zon:43:20: error: unable to discover remote git server capabilities: TlsInitializationFailed\n            .url = \"git+https://github.com/lightpanda-io/zenai.git#8bfbb3e5788d278a63708db8ee5f58aa589f9fff\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n./build.zig.zon:51:20: error: unable to discover remote git server capabilities: TlsInitializationFailed\n            .url = \"git+https://github.com/PCRE2Project/pcre2#9ad4a2e956876747a5022bf04614c7e39e71d4ec\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nzig-pkg/boringssl-0.1.0-VtJeWc1RAADbO4ypofgJivLdDc6yj5O2ifTBlY-ZDHcH/build.zig.zon:12:20: error: unable to unpack git files: ReadFailed\n            .url = \"git+https://github.com/google/boringssl#7c1efd8d6ffb36a57feba44e8c73cf674801f3cb\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+      "stage": "dependency_transport_before_source_compilation"
+    },
+    "initial_failed_incremental": {
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 540294.6822500001,
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "stderr": "./build.zig.zon:51:20: error: unable to create fetch stream: TlsInitializationFailed\n            .url = \"git+https://github.com/PCRE2Project/pcre2#9ad4a2e956876747a5022bf04614c7e39e71d4ec\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nzig-pkg/boringssl-0.1.0-VtJeWc1RAADbO4ypofgJivLdDc6yj5O2ifTBlY-ZDHcH/build.zig.zon:12:20: error: unable to unpack git files: ReadFailed\n            .url = \"git+https://github.com/google/boringssl#7c1efd8d6ffb36a57feba44e8c73cf674801f3cb\",\n                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+      "stage": "dependency_transport_before_source_compilation"
+    },
+    "clean": {"status": 0, "elapsed_ms": 233051.63375, "scope": "Fresh owned local/global object caches; pinned dependency sources, Cargo sources and prebuilt V8 retained", "raw": "../../.local/lightpanda-cost/build/recovered-clean-final.json"},
+    "incremental": {"status": 0, "elapsed_ms": 571.037792, "scope": "No edits, identical clean-cache command and flags", "raw": "../../.local/lightpanda-cost/build/recovered-incremental-final.json"},
+    "artifact": {"path": "source/zig-out/bin/lightpanda", "bytes": 92785976, "sha256": "7e270f93bea20913088db87d61b1dba323d0462b38e2228bda8a639c661ca0ef"},
+    "initial_owned_disk_bytes": 329900243,
+    "final_allocated_kib": 2887560,
+    "disk_scope": "Accumulated sources, archives, dependency/object caches and evidence; not installation footprint",
+    "cpu_and_peak_memory": "not_measured",
+    "prebuilt_files": [
+      {
+        "path": "source/.lp-cache/prebuilt-v8/v0.5.9/libc_v8_15.5.35.13_macos_aarch64.a",
+        "bytes": 116436968,
+        "sha256": "dc14027e53df891399522f6089296acfdf37207afaca1e49dd05c446d3fc475f"
+      }
+    ],
+    "download_accounting": "Cached prebuilt file bytes are logical downloaded artifacts, not measured network transfer including retries/protocol overhead. Build cache is owned under .local/lightpanda-cost; no previous V8/source build claimed.",
+    "initial_transport_attempts": [
+      {
+        "name": "curl",
+        "url": "https://github.com/curl/curl/releases/download/curl-8_23_0/curl-8.23.0.tar.gz",
+        "expected_zig_hash": "N-V-__8AAMjlVwH79yAHsK65VUcPuhOO6BWgpLDvvnlWPLly",
+        "hash_matches": false,
+        "download": {
+          "status": 28,
+          "elapsed_ms": 361059.123208,
+          "command": "curl",
+          "args": [
+            "--fail",
+            "--location",
+            "--retry",
+            "1",
+            "--connect-timeout",
+            "15",
+            "--max-time",
+            "180",
+            "--output",
+            "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/curl.tar.gz",
+            "https://github.com/curl/curl/releases/download/curl-8_23_0/curl-8.23.0.tar.gz"
+          ],
+          "error_lines": [
+            "curl: (28) Operation timed out after 178429 milliseconds with 2945594 out of 4465093 bytes received",
+            "curl: (28) Operation timed out after 178805 milliseconds with 1473289 out of 4465093 bytes received"
+          ]
+        },
+        "fetch": null,
+        "raw_log": "dependency-archives/curl.json"
+      },
+      {
+        "name": "zenai",
+        "url": "https://codeload.github.com/lightpanda-io/zenai/tar.gz/8bfbb3e5788d278a63708db8ee5f58aa589f9fff",
+        "expected_zig_hash": "zenai-0.0.0-iOY_VHNwCAAZJVdc_8q-Vs7j5hexgpBh_8s6c6F1dlay",
+        "hash_matches": true,
+        "download": {
+          "status": 0,
+          "elapsed_ms": 5469.0037909999955,
+          "command": "curl",
+          "args": [
+            "--fail",
+            "--location",
+            "--retry",
+            "1",
+            "--connect-timeout",
+            "15",
+            "--max-time",
+            "180",
+            "--output",
+            "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/zenai.tar.gz",
+            "https://codeload.github.com/lightpanda-io/zenai/tar.gz/8bfbb3e5788d278a63708db8ee5f58aa589f9fff"
+          ],
+          "error_lines": []
+        },
+        "archive": {
+          "bytes": 138090,
+          "sha256": "be95c7392e2443799c4577dbf94c1469afd7b52f7bab157092fbb27d9f2aec36"
+        },
+        "fetch": {
+          "status": 0,
+          "elapsed_ms": 107.75337500002934,
+          "stdout": "zenai-0.0.0-iOY_VHNwCAAZJVdc_8q-Vs7j5hexgpBh_8s6c6F1dlay\n"
+        },
+        "raw_log": "dependency-archives/zenai.json"
+      },
+      {
+        "name": "pcre2",
+        "url": "https://codeload.github.com/PCRE2Project/pcre2/tar.gz/9ad4a2e956876747a5022bf04614c7e39e71d4ec",
+        "expected_zig_hash": "pcre2-10.50.0-DEV-IZ6r6yDTrgCmI3jcBntPIdZLWLhNORGZZSi8hxQkc11x",
+        "hash_matches": true,
+        "download": {
+          "status": 0,
+          "elapsed_ms": 137257.382875,
+          "command": "curl",
+          "args": [
+            "--fail",
+            "--location",
+            "--retry",
+            "1",
+            "--connect-timeout",
+            "15",
+            "--max-time",
+            "180",
+            "--output",
+            "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/pcre2.tar.gz",
+            "https://codeload.github.com/PCRE2Project/pcre2/tar.gz/9ad4a2e956876747a5022bf04614c7e39e71d4ec"
+          ],
+          "error_lines": []
+        },
+        "archive": {
+          "bytes": 4212618,
+          "sha256": "13347bbcf016d32452df9a6f375b8a3b5e7e72814976dd452525dd4d97598566"
+        },
+        "fetch": {
+          "status": 0,
+          "elapsed_ms": 511.445875000034,
+          "stdout": "pcre2-10.50.0-DEV-IZ6r6yDTrgCmI3jcBntPIdZLWLhNORGZZSi8hxQkc11x\n"
+        },
+        "raw_log": "dependency-archives/pcre2.json"
+      },
+      {
+        "name": "boringssl",
+        "url": "https://codeload.github.com/google/boringssl/tar.gz/7c1efd8d6ffb36a57feba44e8c73cf674801f3cb",
+        "expected_zig_hash": "N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6",
+        "hash_matches": false,
+        "download": {
+          "status": 28,
+          "elapsed_ms": 361025.92445800005,
+          "command": "curl",
+          "args": [
+            "--fail",
+            "--location",
+            "--retry",
+            "1",
+            "--connect-timeout",
+            "15",
+            "--max-time",
+            "180",
+            "--output",
+            "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/boringssl.tar.gz",
+            "https://codeload.github.com/google/boringssl/tar.gz/7c1efd8d6ffb36a57feba44e8c73cf674801f3cb"
+          ],
+          "error_lines": [
+            "curl: (28) Operation timed out after 180004 milliseconds with 5029888 bytes received",
+            "curl: (28) Operation timed out after 180010 milliseconds with 4909767 bytes received"
+          ]
+        },
+        "fetch": null,
+        "raw_log": "dependency-archives/boringssl.json"
+      }
+    ],
+    "partial_download_files": [
+      {
+        "name": "curl",
+        "bytes": 1473289,
+        "sha256": "67cd236a3d47e8122c4157ef79e856559793762a8858e94393af396d5c670c30",
+        "download_succeeded": false,
+        "content_verified": false
+      },
+      {
+        "name": "zenai",
+        "bytes": 138090,
+        "sha256": "be95c7392e2443799c4577dbf94c1469afd7b52f7bab157092fbb27d9f2aec36",
+        "download_succeeded": true,
+        "content_verified": true
+      },
+      {
+        "name": "pcre2",
+        "bytes": 4212618,
+        "sha256": "13347bbcf016d32452df9a6f375b8a3b5e7e72814976dd452525dd4d97598566",
+        "download_succeeded": true,
+        "content_verified": true
+      },
+      {
+        "name": "boringssl",
+        "bytes": 4909767,
+        "sha256": "1e5d6c69fcecefe742f128e7301da1b05fb7301c20dfae65f3806f7adfcef7d4",
+        "download_succeeded": false,
+        "content_verified": false
+      }
+    ],
+    "transport_conclusion": "System curl downloads followed by Zig content-hash verification; TLS/download delays are not Zig compilation or runtime costs. No further heavy compilation started before parent shared benchmark quiescence gate.",
+    "archive_byte_boundary": "Failed curl downloads, when present, are partial bytes, not accepted packages. They are hashed for diagnosis only; only exact Zig hash matches enter the package cache.",
+    "exact_shared_cache_lookup": {
+      "operation": "Exact pinned-hash directory lookup using glob; no broad credential or environment search",
+      "boringssl_hash": "N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6",
+      "curl_hash": "N-V-__8AAMjlVwH79yAHsK65VUcPuhOO6BWgpLDvvnlWPLly",
+      "cache_roots_checked": [
+        "/Users/gl/.cache/zig/p",
+        "/Users/gl/Library/Caches/zig/p"
+      ],
+      "result": "All four exact package paths reported Path not found",
+      "limits": "Only these conventional roots checked; no claim to inventory every user cache"
+    },
+    "public_api_transport": {
+      "url": "https://api.github.com/repos/google/boringssl/tarball/7c1efd8d6ffb36a57feba44e8c73cf674801f3cb",
+      "expected_zig_hash": "N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6",
+      "hash_matches": false,
+      "download": {
+        "status": 28,
+        "elapsed_ms": 120139.79266699999,
+        "error_lines": [
+          "curl: (28) Operation timed out after 118186 milliseconds with 2438782 bytes received"
+        ]
+      },
+      "fetch": null,
+      "raw_log": "dependency-archives/boringssl-api.json",
+      "download_file": {
+        "bytes": 2438782,
+        "sha256": "8e21e478ac9ac5ecfd80d9a5d9cbcc225d6b91e49a176cc38d0af92c33e2adf6",
+        "content_verified": false
+      }
+    }
+  },
+  "patch": {
+    "bytes": 23720,
+    "sha256": "7e478847d80af4129b666dd48167d2f754f6c4a06b37bf4b0c1a201792c87edd",
+    "modules": [
+      "src/Config.zig",
+      "src/browser/Session.zig",
+      "src/browser/webapi/Navigator.zig",
+      "src/browser/webapi/Window.zig",
+      "src/browser/webapi/WorkerNavigator.zig",
+      "src/browser/webapi/storage/idb/Manager.zig",
+      "src/browser/webapi/storage/storage.zig",
+      "src/help.zon",
+      "src/network/HttpClient.zig",
+      "src/server/cdp/domains/emulation.zig",
+      "src/server/cdp/domains/network.zig"
+    ],
+    "added_lines": 137,
+    "removed_lines": 64,
+    "boundary": "Native Config startup reads resolved JSON before HTTP/V8 initialization; native Navigator/WorkerNavigator bindings read same config. Origin-hashed SQLite backs LocalStorage and IndexedDB. Existing Cookie jar CLI owns Cookie persistence. No CDP injected API replacements.",
+    "ua_guard": "Local printable-ASCII validation retained; Mozilla-reservation branch removed with matching tests/help. Upstream acceptance/willingness not assumed."
+  },
+  "protocol": {
+    "release_raw": "pass",
+    "release_official": "pass",
+    "official_client": "puppeteer-core@24.31.0",
+    "upstream_example_anchor": "README.md:130-158",
+    "adapter_conclusion": "Raw context/target/attach/navigation and upstream-example Puppeteer work. Earlier STARTUP adapter failure is not evidence of inherent runtime startup failure.",
+    "patched_smoke": "pass cost slice; clean-built A1/B1/A2/B2; recovery.json measured_assertions and .local/lightpanda-cost/patched-controlled/ raw protocol/HTTP",
+    "patched_binary_sha256": "7e270f93bea20913088db87d61b1dba323d0462b38e2228bda8a639c661ca0ef",
+    "selected_binary_sha256": "9f3ee749a55d1abc5f8fdda0d9559c3b2abcec5bff5bfe902bc06c0a89538ec4",
+    "rounds": [
+      {
+        "label": "A1",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "iframe": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "worker": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": null,
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "fetch_headers": {
+          "host": "127.0.0.1:18762",
+          "accept": "*/*",
+          "accept-encoding": "deflate, gzip, br, zstd",
+          "cookie": "persist=durable",
+          "user-agent": "Lightpanda/1.0",
+          "sec-ch-ua": "\"Lightpanda\";v=\"1\"",
+          "sec-ch-ua-full-version-list": "\"Lightpanda\";v=\"1.0.2\"",
+          "accept-language": "en-US,en;q=0.9",
+          "referer": "http://127.0.0.1:18762/",
+          "sec-fetch-site": "same-origin",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-dest": "empty"
+        },
+        "before": {
+          "cookie": "",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true,
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "geometry": "{\"rects\":[{\"id\":\"go\",\"rect\":{\"x\":0,\"y\":55,\"width\":200,\"height\":70,\"top\":55,\"right\":200,\"bottom\":125,\"left\":0}},{\"id\":\"other\",\"rect\":{\"x\":200,\"y\":70,\"width\":200,\"height\":70,\"top\":70,\"right\":400,\"bottom\":140,\"left\":200}},{\"id\":\"text\",\"rect\":{\"x\":400,\"y\":85,\"width\":280,\"height\":50,\"top\":85,\"right\":680,\"bottom\":135,\"left\":400}},{\"id\":\"canvas\",\"rect\":{\"x\":685,\"y\":105,\"width\":5,\"height\":5,\"top\":105,\"right\":690,\"bottom\":110,\"left\":685}}],\"hit\":[\"go\",\"text\",\"\"]}",
+        "css_coordinate_input": "{\"clicks\":[\"left\"],\"clicked\":\"clicked\",\"text\":\"\"}",
+        "scroll": "{\"scrollY\":0,\"clicks\":[\"left\"]}",
+        "computed_geometry_input": "{\"clicks\":[\"left\",\"left\",\"right\"],\"text\":\"中文输入\",\"active\":\"text\"}"
+      },
+      {
+        "label": "B1",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "iframe": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "worker": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": null,
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "fetch_headers": {
+          "host": "127.0.0.1:18762",
+          "accept": "*/*",
+          "accept-encoding": "deflate, gzip, br, zstd",
+          "cookie": "persist=durable",
+          "user-agent": "Lightpanda/1.0",
+          "sec-ch-ua": "\"Lightpanda\";v=\"1\"",
+          "sec-ch-ua-full-version-list": "\"Lightpanda\";v=\"1.0.2\"",
+          "accept-language": "fr-FR,fr;q=0.9,en;q=0.8",
+          "referer": "http://127.0.0.1:18762/",
+          "sec-fetch-site": "same-origin",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-dest": "empty"
+        },
+        "before": {
+          "cookie": "",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true,
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "geometry": "{\"rects\":[{\"id\":\"go\",\"rect\":{\"x\":0,\"y\":55,\"width\":200,\"height\":70,\"top\":55,\"right\":200,\"bottom\":125,\"left\":0}},{\"id\":\"other\",\"rect\":{\"x\":200,\"y\":70,\"width\":200,\"height\":70,\"top\":70,\"right\":400,\"bottom\":140,\"left\":200}},{\"id\":\"text\",\"rect\":{\"x\":400,\"y\":85,\"width\":280,\"height\":50,\"top\":85,\"right\":680,\"bottom\":135,\"left\":400}},{\"id\":\"canvas\",\"rect\":{\"x\":685,\"y\":105,\"width\":5,\"height\":5,\"top\":105,\"right\":690,\"bottom\":110,\"left\":685}}],\"hit\":[\"go\",\"text\",\"\"]}",
+        "css_coordinate_input": "{\"clicks\":[\"left\"],\"clicked\":\"clicked\",\"text\":\"\"}",
+        "scroll": "{\"scrollY\":0,\"clicks\":[\"left\"]}",
+        "computed_geometry_input": "{\"clicks\":[\"left\",\"left\",\"right\"],\"text\":\"中文输入\",\"active\":\"text\"}"
+      },
+      {
+        "label": "A2",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "iframe": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "worker": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": null,
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "fetch_headers": {
+          "host": "127.0.0.1:18762",
+          "accept": "*/*",
+          "accept-encoding": "deflate, gzip, br, zstd",
+          "cookie": "persist=durable",
+          "user-agent": "Lightpanda/1.0",
+          "sec-ch-ua": "\"Lightpanda\";v=\"1\"",
+          "sec-ch-ua-full-version-list": "\"Lightpanda\";v=\"1.0.2\"",
+          "accept-language": "en-US,en;q=0.9",
+          "referer": "http://127.0.0.1:18762/",
+          "sec-fetch-site": "same-origin",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-dest": "empty"
+        },
+        "before": {
+          "cookie": "persist=durable",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true,
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "geometry": "{\"rects\":[{\"id\":\"go\",\"rect\":{\"x\":0,\"y\":55,\"width\":200,\"height\":70,\"top\":55,\"right\":200,\"bottom\":125,\"left\":0}},{\"id\":\"other\",\"rect\":{\"x\":200,\"y\":70,\"width\":200,\"height\":70,\"top\":70,\"right\":400,\"bottom\":140,\"left\":200}},{\"id\":\"text\",\"rect\":{\"x\":400,\"y\":85,\"width\":280,\"height\":50,\"top\":85,\"right\":680,\"bottom\":135,\"left\":400}},{\"id\":\"canvas\",\"rect\":{\"x\":685,\"y\":105,\"width\":5,\"height\":5,\"top\":105,\"right\":690,\"bottom\":110,\"left\":685}}],\"hit\":[\"go\",\"text\",\"\"]}",
+        "css_coordinate_input": "{\"clicks\":[\"left\"],\"clicked\":\"clicked\",\"text\":\"\"}",
+        "scroll": "{\"scrollY\":0,\"clicks\":[\"left\"]}",
+        "computed_geometry_input": "{\"clicks\":[\"left\",\"left\",\"right\"],\"text\":\"中文输入\",\"active\":\"text\"}"
+      },
+      {
+        "label": "B2",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "iframe": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "worker": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": null,
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "fetch_headers": {
+          "host": "127.0.0.1:18762",
+          "accept": "*/*",
+          "accept-encoding": "deflate, gzip, br, zstd",
+          "cookie": "persist=durable",
+          "user-agent": "Lightpanda/1.0",
+          "sec-ch-ua": "\"Lightpanda\";v=\"1\"",
+          "sec-ch-ua-full-version-list": "\"Lightpanda\";v=\"1.0.2\"",
+          "accept-language": "fr-FR,fr;q=0.9,en;q=0.8",
+          "referer": "http://127.0.0.1:18762/",
+          "sec-fetch-site": "same-origin",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-dest": "empty"
+        },
+        "before": {
+          "cookie": "persist=durable",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true,
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "geometry": "{\"rects\":[{\"id\":\"go\",\"rect\":{\"x\":0,\"y\":55,\"width\":200,\"height\":70,\"top\":55,\"right\":200,\"bottom\":125,\"left\":0}},{\"id\":\"other\",\"rect\":{\"x\":200,\"y\":70,\"width\":200,\"height\":70,\"top\":70,\"right\":400,\"bottom\":140,\"left\":200}},{\"id\":\"text\",\"rect\":{\"x\":400,\"y\":85,\"width\":280,\"height\":50,\"top\":85,\"right\":680,\"bottom\":135,\"left\":400}},{\"id\":\"canvas\",\"rect\":{\"x\":685,\"y\":105,\"width\":5,\"height\":5,\"top\":105,\"right\":690,\"bottom\":110,\"left\":685}}],\"hit\":[\"go\",\"text\",\"\"]}",
+        "css_coordinate_input": "{\"clicks\":[\"left\"],\"clicked\":\"clicked\",\"text\":\"\"}",
+        "scroll": "{\"scrollY\":0,\"clicks\":[\"left\"]}",
+        "computed_geometry_input": "{\"clicks\":[\"left\",\"left\",\"right\"],\"text\":\"中文输入\",\"active\":\"text\"}"
+      }
+    ]
+  },
+  "native_viewer": {
+    "status": 0,
+    "signal": null,
+    "stdout": "viewer_ready: AppKit NSImageView + CDP screenshot and coordinate input; text-only image\n",
+    "stderr": "",
+    "component": "system AppKit NSImageView displaying unaltered Lightpanda text-only PNG; not genuine page rendering",
+    "source": "viewer.swift",
+    "compile_command": "swiftc -parse-as-library -swift-version 5 viewer.swift -o ../../.local/lightpanda-cost/diagnostic-viewer",
+    "initial_compile_failure": "NSControl.action naming collision and top-level actor isolation; fixed dispatchInput + @main MainActor entrypoint; corrected compile succeeded.",
+    "actual_evidence": "release-controlled-final/native-viewer.png; genuine AppKit view capture of text-only upstream PNG, not CSS page imagery",
+    "mandatory_gui": "outstanding",
+    "remaining": "A true CSS layout/paint tree must replace Element faux geometry and text-only screenshot blocks, decode and paint image resources, and share layout with hit testing/scroll/focus. Native viewer wiring alone cannot supply this.",
+    "source_anchors": [
+      "src/rust/render/lib.rs:19-23",
+      "src/browser/screenshot.zig:129-165,188-212,255-267",
+      "src/browser/webapi/Element.zig:1775-1778,1807-1828,1953-1957",
+      "src/browser/webapi/Document.zig:947-988",
+      "src/browser/webapi/canvas/CanvasRenderingContext2D.zig:86-108"
+    ],
+    "components": "Existing Rust parley/fontique/skrifa/tiny-skia/png text raster components reused unchanged; system AppKit only adds native display/input. Their licenses are in licenses.json. Integrating another browser as viewer would change the tested runtime and was not substituted.",
+    "artifact": {
+      "bytes": 200480,
+      "sha256": "9530da507ba84c1ec296b3e6e474bc6463287b03feb961ec839b347d2ccd9022"
+    },
+    "existing_supported_imagery": {
+      "observed": "Text-flow PNG with glyph rasterization, not CSS boxes, images or Canvas pixels; visually reviewed release-controlled/A1.png and native-viewer.png. body/button/canvas expected pixel counts were all zero.",
+      "upstream": "README.md:111-114 calls PNG/PDF text-only; src/help.zon image resource help says images are never decoded and only first 16KB is read for natural dimensions. --render-font can supply missing glyphs but cannot add CSS layout or image painting.",
+      "pixel_evidence": "release-controlled/image-metrics.json; controlled-final screenshot has identical SHA256 b9232487f5828aba3c7e91a493c4248f2024995d329f5f39ad7fe80aa4632836"
+    }
+  },
+  "required_feature_status": {
+    "same_environment_restart": "Patched UA/platform/cores/memory/locale/timezone repeat in A1/A2 and B1/B2; full manifest/config/assets stability gate outstanding",
+    "different_environment_outputs": "Patched configured fields differ consistently in page/iframe/Worker/HTTP; screen remains identical, Audio vectors identical A/B, Canvas transparent and GL absent. Full required differentiation remains outstanding.",
+    "native_configuration": "pass measured first-script/iframe/Worker/HTTP fields on clean-built source patch; complete EnvironmentSpec resolver/generator/assets receipt remains outstanding",
+    "cookie_persistence": "pass release and patched controlled cold restart with distinct A/B jars",
+    "localstorage_persistence": "release fails; patched A2/B2 restore durable after A1/B1 empty, normal-exit scope only",
+    "indexeddb_persistence": "release fails; patched A2/B2 restore durable transaction value after A1/B1 empty; crash durability unverified",
+    "genuine_gui": "fail: expected CSS colors absent, screenshot is text-only; declared absolute coordinates do not match faux geometry",
+    "input": "CDP hit testing can independently activate left/right and insert Chinese when queried faux rectangles are used. Intended CSS coordinates fail; scrollY remains zero after wheel600. Not GUI/IME acceptance.",
+    "canvas": "fail on release and source patch: fillRect followed by readback returns transparent [0,0,0,0]",
+    "webgl_shader_pixels": "unsupported: release and source patch return null context",
+    "audio_input_response": "pass measured release/source-patch sine440/880 nonzero distinct vectors; release graph controls disconnected/gain0/gain0.25/stop0/delayed-start pass. Audio A/B differentiation and full conformance outstanding.",
+    "audio_graph_evidence": "../../.local/lightpanda-cost/audio-graph-controls/report.json",
+    "worker_globals": "pass measured release/source-patch document/window undefined and DedicatedWorkerGlobalScope brand; complete isolation/scheduling/security unverified",
+    "cli_agent": "Raw CDP + upstream-example official client perform actual local fixture navigation/evaluation; product CLI/Agent leases, cancellation and permissions not integrated",
+    "proxy_and_egress": "not_tested",
+    "profile_export_migration": "not_tested",
+    "cross_site_identity_and_storage": "not_tested",
+    "https_h2_headers": "not_tested",
+    "security_update_upgrade": "not_tested"
+  },
+  "performance": {
+    "status": "patched_performance_not_tested",
+    "release_baseline": "../../.local/performance/native-2026-11-04.json",
+    "baseline_scope": "Pinned release1.0.2; 2 discarded warmups and10 measured runs; shared DOM/JS task completed. Text-only preview excluded from genuine visual completion.",
+    "reason": "Source patch built and smoke passed; comparative samples still use the pinned release baseline. Full-product/after-feature performance remains outstanding."
+  },
+  "security_limits": [
+    "Loopback HTTP only; no production or third-party challenge claim",
+    "Trusted host config supplies absolute storage path; origin hashes prevent origin-to-filename path injection",
+    "No profile OS lock, atomic migration/export, multi-context LocalStorage cache coherence, encryption, hostile-page sandbox, or crash/corruption recovery acceptance",
+    "Cookie jar upstream last-context-close-wins behavior remains; no product multiwriter safety claim",
+    "JSON contract is a cost-experiment subset of EnvironmentSpec, not complete schema3 identity/generator/runtime/assets receipt",
+    "CDP Browser.getVersion advertises Chrome124 values unlike actual Lightpanda JS/HTTP UA; no claim these protocol constants identify V8 build",
+    "Telemetry and core dumps disabled by launch environment; no secret/cloud access"
+  ],
+  "evidence_root": "engine-bench/.local/lightpanda-cost",
+  "license_inventory": "licenses.json",
+  "replay_commands": "experiment.json",
+  "outstanding_prerequisites": [
+    "Complete EnvironmentSpec schema3 resolver/generator/revision/assets receipt and validated READY; native resolved-field cost slice is not complete product configuration",
+    "Actual CSS/image/Canvas/GL rendering/input integration, full Audio conformance and required differential-output suite",
+    "Profile single-writer control, all-store cold export/import/migration and abnormal-exit checks",
+    "Complete binary/transitive license notice inventory and AGPL distribution review",
+    "User GUI handoff/IME/scroll acceptance and isolated full-workload performance measurements"
+  ]
+}

@@ -1,0 +1,325 @@
+{
+  "schema": 1,
+  "status": "authenticity_source_updated_awaiting_build",
+  "source_commit": "7c751c5cd8833ac951d48320218c4fe91aa97ac8",
+  "generator_contract": "native-3.3",
+  "patch": {
+    "path": "runtime-environment.patch",
+    "sha256": "86856a86c5745600ad71390c42efeec1d74a31147bb846db36e9df566ae09cc1",
+    "bytes": 1317566,
+    "includes_new_files": [
+      "crates/obscura-browser/src/environment.rs",
+      "crates/obscura-browser/tests/native_event_boundary.rs",
+      "crates/obscura-js/js/audio.js",
+      "crates/obscura-js/js/media-worker-components.json",
+      "crates/obscura-js/js/software.js",
+      "crates/obscura-js/js/web-audio-engine-0.13.4.LICENSE.txt",
+      "crates/obscura-js/js/web-audio-engine-0.13.4.js",
+      "crates/obscura-js/js/worker_bootstrap.js",
+      "crates/obscura-js/js/worker_client.js",
+      "crates/obscura-js/js/worker_codec.js",
+      "crates/obscura-js/src/activation.rs",
+      "crates/obscura-js/src/authenticity_tests.rs",
+      "crates/obscura-js/src/durable.rs",
+      "crates/obscura-js/src/graphics.rs",
+      "crates/obscura-js/src/remote_objects.rs",
+      "crates/obscura-js/src/remote_properties.rs",
+      "crates/obscura-js/src/runtime_input.rs",
+      "crates/obscura-js/src/worker.rs",
+      "crates/obscura-js/src/worker_import_tests.rs",
+      "crates/obscura-render/src/graphics.rs",
+      "crates/obscura-render/src/graphics/canvas.rs",
+      "crates/obscura-render/src/graphics/gl.rs",
+      "crates/obscura-render/src/graphics/image.rs"
+    ]
+  },
+  "history": {
+    "binary_sha256": "066724cea2e55bd627abe54115ada5db6fcd095a442fa90af0b3cdcf8b3e657e",
+    "patch_sha256": "561879b97f3a9c00c715319b03ef2cf763dc1ae3f565bca9b5505128174e522c",
+    "directory": "../../.local/obscura-cost/revisions/066724cea2e55bd627abe54115ada5db6fcd095a442fa90af0b3cdcf8b3e657e",
+    "parent_pre_cutover_success": {
+      "binary_sha256": "0ab0b4898e160cf4d3e6c3b405f02511b32d514190bee86e2ad6abff76c03f2b",
+      "patch_sha256": "1eb367cb0b52e851998c68037d29905cd92735f56206bff6b832796c76c32868",
+      "directory": "../../.local/obscura-cost/revisions/0ab0b4898e160cf4d3e6c3b405f02511b32d514190bee86e2ad6abff76c03f2b",
+      "qualification": "Preserved parent-built binary and patch predate native object-root, EOF shutdown and graphics followup changes; not verification of current source"
+    },
+    "parent_private_root_cutover_success": {
+      "binary_sha256": "a0796de46b4f9705900c9c7c87cdc78247d5e760731f80adba27805f1f6f0c0a",
+      "patch_sha256": "fa91845889773085b32976353529c2e831ee419dbca9fc1af7f09c6067876528",
+      "directory": "../../.local/obscura-cost/revisions/a0796de46b4f9705900c9c7c87cdc78247d5e760731f80adba27805f1f6f0c0a",
+      "qualification": "Preserved parent-built binary predates optional typed created_at support; manager create succeeded but start rejected that previously unknown field"
+    },
+    "parent_pre_canonical_digest_fix": {
+      "binary_sha256": "96ba9c69b78ab38b7bb1218004b1ddd365924ea4c418e501f85179dc41969a0b",
+      "patch_sha256": "129d120ed3e378faef8648cd1c0c6dd5af1fca1986ee56efb425458ba6cb0361",
+      "directory": "../../.local/obscura-cost/revisions/96ba9c69b78ab38b7bb1218004b1ddd365924ea4c418e501f85179dc41969a0b",
+      "qualification": "Parent-built native CJK create succeeded; startup rejected render object digest ordering under preserve_order. Current source correction remains uncompiled by worker."
+    },
+    "parent_pre_gui_control_frame_fix": {
+      "binary_sha256": "419f7207b5176f01906f59255fb0b594a4b1518e84e435ed3cc1df9391d7198c",
+      "patch_sha256": "abd14ef194276e746a410d5b73efb1d7256561705fa1ca30d8b9aca7a19e48d9",
+      "directory": "../../.local/obscura-cost/revisions/419f7207b5176f01906f59255fb0b594a4b1518e84e435ed3cc1df9391d7198c",
+      "qualification": "Parent observed managed start, opaque handles and exact CJK fill data; actual screenshot still showed control glyph boxes, narrow buttons and blank child frame. Preserved as historical component evidence, not GUI acceptance."
+    },
+    "parent_pre_worker_cache_gl_lifetime_dpr_fix": {
+      "binary_sha256": "7017d8e2239787e199b78e63cd2a73b3f0652bb57dda21597e34ee7d4ce91219",
+      "patch_sha256": "7491317d2b3fd10fa03bf587f838b5e8bdfd5b0acd5e11804b7a6888acaa0908",
+      "directory": "../../.local/obscura-cost/revisions/7017d8e2239787e199b78e63cd2a73b3f0652bb57dda21597e34ee7d4ce91219",
+      "qualification": "Parent observed default-font start, async flow, frame capture/retained child action and empty reported state-global reflection; matrix355/459 with104 outstanding. GUI still showed incorrectly scaled/positioned iframe, so this is not GUI or product acceptance."
+    },
+    "parent_pre_native_input_trust_cutover": {
+      "binary_sha256": "f57a844a4b9a426ce13661aa9e7ed04362b58c4930f1ab7f0af310506f46b4e3",
+      "patch_sha256": "dd9d74e1936caed3192c695259a4ee0bf0f0682a17e5f1068126c12034a75643",
+      "directory": "../../.local/obscura-cost/revisions/f57a844a4b9a426ce13661aa9e7ed04362b58c4930f1ab7f0af310506f46b4e3",
+      "qualification": "Parent reported425/459, functional GL/Worker and real DPR2 root CJK input/counter; physical child click and Meta+A replacement still failed. First HTTP author script could call public markTrusted and forge event trust. Preserved raw binary and exact earlier patch before private input/event cutover; not GUI/product acceptance."
+    }
+  },
+  "entrypoint": {
+    "command": "obscura --environment-config /absolute/profile/config.json serve --host 127.0.0.1 --port 0 --workers 1 --storage-dir /absolute/profile/data --ready-file /absolute/profile/ready.json",
+    "receipt": "Environment.getInfo {}",
+    "storage_format_version": 1,
+    "config_digest": "SHA256 of exact loaded raw UTF8 JSON bytes",
+    "gl_backend": [
+      "cgl-default",
+      "cgl-accelerated",
+      "cgl-generic-float"
+    ],
+    "proxy": "network.proxy_ref=env:VARIABLE; launcher resolves to OBSCURA_PROXY; http/https/socks5h only; no direct fallback",
+    "parent_eof": "ANTI_TRACE_PARENT_EOF=1 enables stdin EOF shutdown; launcher supplies a PIPE and inherits held profile lease fds; native retains all unknown inherited fds until exit"
+  },
+  "implementation": {
+    "authenticity_section7": "Actual CanvasRenderingContext2D class owns the native backing store and protected constructor; operations validate private receiver brands. getImageData rejects zero extents and normalizes negative rectangles; measureText is independent of paint. AudioBuffer bounds/copies and scheduled starts preserve real DSP. Canvas/Audio/GL do not manufacture native-code source. Shared renderer now resolves generic families from actual allowed proportional/monospace faces; no public native bridge added.",
+    "software_declarations": "One stable userAgentData object per Window/Worker reads private current host inputs; Worker installs it once, excluding the serialized declaration from generic descriptors. Configured UA product/version and resolved platform drive actual HTTP hints. Honest native fallback is Obscura/0.1.0; unknown high-entropy values remain empty. Explicit persisted UAs and nonempty generator versions remain supported.",
+    "realm_canvas_ownership": "Canvas registration and damage use the active native frame owner, never root DOM fallback for retired children. GL contexts are keyed by (frame_id,node_id), preventing root/child arena collisions. The private realm identifier is supplied by the original closure and cannot be overridden by request extras. Hidden frames retain actual native drawing surfaces.",
+    "audio_receiver_ownership": "Vendored API implementation/context fields are migrated to closure-owned WeakMaps with captured intrinsic accessors; no exported raw _impl objects or writable replacement DSP state. Float32Array checks use the intrinsic typed-array brand across realms. Destination disconnect overloads unwrap genuine records, validate ports/context/connections and remove actual graph edges. Real AudioContext catch-up rechecks running state and sample-clock progress after callbacks, including synchronous suspend/close.",
+    "classic_worker_imports": "Synchronous importScripts runs in the original Worker V8 context through a reentrant native op and the existing fetch_url_inner transport/security pipeline, including configured proxy, cookies, origin, SSRF/redirect/blocked-URL gates, interception and body limits. URLs are parsed before execution, relative imports use the final entry URL, JavaScript MIME/status are validated, original compile/runtime exceptions propagate, and termination cancels pending loading. No alternate fetch stack or eval shim.",
+    "worker_reactor_cost": "One additional persistent I/O reactor thread per live dedicated Worker. Deno async ops retain their required current-thread reactor. Synchronous imports poll the non-Send shared fetch future on the original V8/Rc owning thread under a temporary I/O handle; that handle is left before author compilation/execution. Transport DNS/blocking-pool use remains workload-dependent.",
+    "baseline_client_hints": "Root and isolated BrowserContext HTTP clients retain the explicit resolved native platform. One native header generator supplies navigation and scripted Fetch/Worker/import request assembly, including redirect hops, so a native non-Mozilla UA does not produce an empty platform or missing baseline hints.",
+    "config": "crates/obscura-browser/src/environment.rs",
+    "canonical_hashes": "Resolved and render object digests use one in-place recursive key-sorting helper before compact UTF8 serialization, independent of serde_json preserve_order. Original environment file SHA256 still hashes unmodified bytes. Added nested/order/UTF8 regression, not run.",
+    "canvas": "crates/obscura-render/src/graphics.rs and graphics/{canvas,image}.rs",
+    "native_control_text": "Document cosmic-text/Swash font selection, shaping and clipping for native control values/placeholders/password masks/select labels; actual shaped intrinsic advances and line metrics for buttons/columns, no embedded control bitmap-text path",
+    "frame_surface_hook": "Runtime screenshots recursively composite actual authoritative child SharedState rasters through CanvasSurfaceSource using content dimensions, native scroll/clipping/stacking and child resources; no second browser/DOM/network execution; detached resource tasks abort and capture-local surfaces cannot become stale",
+    "surface_dpr_alpha": "Shared surface paint applies actual raster scale once to CSS destination and rounded clip, retaining device-space ancestor masks/culling; native child captures start transparent and borrow premultiplied RGBA without redundant conversion/copy. Added fractional/high-DPR, crop/clip, transparency/live-mutation regressions, unrun; bad7017PNG preserved and no GUI pass inferred.",
+    "frame_protocol": "Actual loaded child node.frameId/contentDocument.frameId, native default execution context publication and exact selected-realm evaluation/call routing; generation-bound child DOM IDs cannot alias main arena; real transformed/scrolled content/padding/border/margin quads replace synthetic geometry; actual in-flight Document loads use existing navigation deadline",
+    "private_identity": "Native-owned locale/resolved inputs cached via a separate host-retained closure bridge; frozen Deno.core is unmodified. Focused element is realm-private closure state. No public environment/language/focus state assignment/copy/read; getter names and function-source presentation unchanged",
+    "gl": "crates/obscura-render/src/graphics/gl.rs",
+    "native_ops": "crates/obscura-js/src/graphics.rs",
+    "audio": "crates/obscura-js/js/audio.js and web-audio-engine-0.13.4.js",
+    "worker": "crates/obscura-js/src/worker.rs and js/worker_{bootstrap,client,codec}.js",
+    "worker_fetch_cache": "Request cache modes inherit/override explicitly; unsupported modes reject; real no-store transport reaches the network over redirects. Parent ran the cacheable-resource real-transport regression successfully.",
+    "durability": "Cookie write guards, LocalStorage write-through snapshot, IndexedDB commit-time synced atomic files; startup restores before READY; Cookie/LocalStorage I/O failure aborts runtime fail-closed",
+    "remote_objects": "Private per-runtime v8::Global roots with CSPRNG opaque IDs bound to original realm/document generation; no page-global registry or expression recipes; native descriptors, console, object arguments and DOM resolution share roots; release drops roots and replaced realms report stale_reference",
+    "parent_shutdown": "A native stdin reader thread signals actual server shutdown on parent EOF; startup checks before/after READY, processors stop, connections drain and storage flushes; standalone behavior is unchanged without env flag; no PID polling or subprocess watchdog",
+    "gl_followups": "Real driver-backed resource is* queries and SUBPIXEL_BITS; concrete resource-owning WebGL classes with private owner/type/lifetime records, deferred Shader/Program deletion and uniform generation checks; actual errors/compiler logs, no brand/toString relabeling; existing precision/vector/pixel transfer/resize support",
+    "interaction_css": "Authoritative connected-node focus/active/hover state; composed shadow-host ancestry for focus-within/active/hover; separate actual focus-visible policy; native focus/blur and pointer/modality events invalidate style/layout; disconnect clears state. New DOM and native runtime regressions written but not run.",
+    "target_activation": "Page.bringToFront and Target.activateTarget select existing native registry targets, update actual foreground focus/visibility and dispatch lifecycle events; persistent Page state seeds new/resumed runtimes before scripts; live heaps/contexts/session routes/remote handles are preserved. Activation callbacks use existing command watchdog.",
+    "private_event_boundary": "Closure-owned Event brand and immutable isTrusted use captured WeakSet methods. Native constructors/dispatch and document capabilities live in private V8 handles, inaccessible to author globals/lexicals. Real first-HTTP-author and Worker regressions passed, including replaced constructors and post-dispatch trust clearing. Worker global event methods resolve null/undefined receivers to the real global.",
+    "native_focus_ownership": "Page-shared native focused (frame_id,node_id,document_generation) tuple records actual connected DOM focus, inherits into child realms and clears direct/ancestor-retired owners without reborrowing a held DOM; original captured focus/blur and exact native document members are private callbacks.",
+    "native_viewer_input": "Authoritative child hit testing, native frame/node/generation focus and private captured document methods; uncancelled Meta+A/UTF16 and Tab/Shift+Tab defaults. Six CDP input regressions passed. Final actual DPR2 GUI verifies Chinese replacement, Tab focus, counter and original child click; no physical IME claim."
+  },
+  "dependencies": [
+    {
+      "name": "glow",
+      "version": "0.16.0",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "kind": "new native graphics binding, Cargo.lock pinned"
+    },
+    {
+      "name": "web-audio-engine",
+      "version": "0.13.4",
+      "license": "MIT",
+      "kind": "vendored DSP plus embedded dependencies; local linked-channel soft-knee compressor replaces upstream passthrough",
+      "notices": "source/crates/obscura-js/js/web-audio-engine-0.13.4.LICENSE.txt",
+      "manifest": "source/crates/obscura-js/js/media-worker-components.json"
+    },
+    {
+      "name": "cosmic-text",
+      "version": "0.14.2",
+      "license": "MIT OR Apache-2.0",
+      "kind": "existing renderer component"
+    },
+    {
+      "name": "swash",
+      "version": "0.2.0",
+      "license": "MIT OR Apache-2.0",
+      "kind": "existing glyph rasterizer"
+    },
+    {
+      "name": "tiny-skia",
+      "version": "0.12.0",
+      "license": "BSD-3-Clause",
+      "kind": "existing geometry/compositor"
+    },
+    {
+      "name": "sha2",
+      "version": "0.10.9",
+      "license": "MIT OR Apache-2.0",
+      "kind": "existing locked dependency reused for host/content receipts"
+    },
+    {
+      "name": "deno_core",
+      "version": "0.412.0",
+      "license": "MIT",
+      "kind": "existing V8 integration reused for independent worker isolates"
+    },
+    {
+      "name": "macOS OpenGL.framework",
+      "kind": "system CGL/OpenGL driver; actual available contexts required; not redistributed"
+    }
+  ],
+  "assets": {
+    "fonts": "Explicit absolute asset_paths.fonts; actual bytes frozen/shared; content SHA256-sorted/deduped before loading; optional real family allowlist; includes actual versioned CJK font when CJK is required",
+    "font_digest": "SHA256(canonical JSON sorted unique file SHA256 string list)",
+    "render_digest": "SHA256(canonical JSON {device_scale_factor:<normalized decimal string>,color_depth,pixel_depth,screen_width,screen_height,fonts,gl_backend})",
+    "font_distribution": "User/host font files retain their own licenses; proprietary system-font redistribution permission is not established by this patch"
+  },
+  "build": {
+    "command": "CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=../target cargo build --locked --release -p obscura-cli --features render --bin obscura",
+    "cwd": "engine-bench/.local/obscura-cost/source",
+    "wrapper": "node engine-bench/candidates/obscura/build.mjs --release",
+    "toolchain": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "requires": "macOS arm64 SDK/OpenGL.framework and cached Cargo dependencies; current-build.json binds the latest compiled artifact and patch; historical builds below keep their original scope"
+  },
+  "verification": {
+    "authenticity_section7_current": {
+      "status": "passed_one_host_authenticity_lifecycle_matrix",
+      "worker_builds_tests_lint_format": "not_run_by_assignment",
+      "current_build": "engine-bench/candidates/obscura/current-build.json",
+      "matrix": "engine-bench/.local/authenticity/obscura-1793866069818/report.json",
+      "complete_task_performance": "engine-bench/.local/performance/obscura-authentic-1793867667365/report.json",
+      "matrix_result": {
+        "cells": 32,
+        "judge_passed": 32,
+        "required_local_passed": 150,
+        "optional_unsupported": 4,
+        "overall": "PASS"
+      },
+      "parent_tests": {
+        "authenticity": 13,
+        "provisioned_font_separate": 1,
+        "isolated_context_wire": 1,
+        "scope": "Actual loopback Worker imports/order/cancellation/security/headers plus native Canvas/Audio/frame and real-font raster tests"
+      },
+      "reactor_regression": "Initial multi-thread Deno reactor aborted on deno_unsync's CurrentThread requirement. Corrected current-thread Deno plus separate I/O reactor passed original native cases and actual CLI matrix; original failed command retained in session evidence.",
+      "historical_receipts": "parent_final and all suite4 scores below describe earlier source/binaries only; no current-source pass is inferred",
+      "parent_f1_before_corrections": {
+        "matrix": "engine-bench/.local/authenticity/obscura-1793860976675/report.json",
+        "artifact_sha256": "6336e38fd95588b4fa0bb56135764e6dedc6e4af7a32ef3bf10fbe7ca04722c9",
+        "first_raw": "engine-bench/.local/authenticity/obscura-1793860976675/A1-127.0.0.1-initial.raw.json",
+        "observed": "Worker bootstrap threw Cannot redefine property: userAgentData; iframe native Canvas/GL unavailable; later repeat Runtime.evaluate exceeded 30s. Current fixes target descriptor ownership and native frame routing, not higher timeouts. This failed matrix remains historical."
+      },
+      "parent_f1_v2_before_imports": {
+        "matrix": "engine-bench/.local/authenticity/obscura-1793862595990/report.json",
+        "artifact_sha256": "2afe161b998caac5e3554fabbb58a6666da26687d01715b5eee42ca48631b995",
+        "observed": "Actual Window/iframe Canvas/Audio/GL semantics and causal font differences passed; remaining failures were missing importScripts and inconsistent platform/baseline CH. These historical observations preceded the separately recorded current passing build/matrix."
+      },
+      "patch_export": "node engine-bench/candidates/obscura/export-patch.mjs",
+      "tests": [
+        "CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=../target cargo test --locked -p obscura-js --features render authenticity_ -- --nocapture",
+        "CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=../target cargo test --locked -p obscura-js native_metadata_does_not_retain_removed_methods -- --nocapture",
+        "CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=../target cargo test --locked -p obscura-net authenticity_configured_software_headers_reach_real_transport -- --nocapture",
+        "CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=../target cargo test --locked -p obscura-browser --features render authenticity_isolated_context_platform_reaches_actual_wire -- --nocapture"
+      ],
+      "coverage": "Native Canvas/audio/realm/private-boundary probes and actual loopback Worker script/import effects, sequential/nested ordering, final-entry redirect base, HTTP/MIME/URL/blocked-redirect errors, pending-request cancellation, Cookie and independent navigation/fetch/Worker/import headers. The separately provisioned real Arial/Menlo font test passed metrics/raster/PNG and gradient-independent measureText. Worker Canvas/GL remain explicitly unsupported, not simulated."
+    },
+    "historical_delegate_builds": "not_run_by_assignment",
+    "parent_final": {
+      "build_receipt": "engine-bench/.local/obscura-cost/build-schema3-release-1793821909116.json",
+      "binary_sha256": "ac6e34907aa9231fa6132ee5a21dd3bca755b5bcd6d95e8f1156be0e29145e16",
+      "patch_sha256": "16ca3f22dfbd8d77783da911d4d19732d268c61de7d7d61bd101d69ab7318a3d",
+      "matrix": "engine-bench/.local/acceptance/strict-three-runtime-suite4-1793814768117424000/obscura-r3",
+      "matrix_result": {
+        "required": 459,
+        "passed": 427,
+        "outstanding": 32,
+        "product_scenarios_passed": 6,
+        "product_scenarios_required": 22,
+        "overall": "NOT_PASS"
+      },
+      "component_tests": {
+        "cdp_input": 6,
+        "first_http_author_trust": 1,
+        "worker_trust": 1,
+        "activation": 2,
+        "control_shaping_with_paint": 1,
+        "worker_no_store_transport": 1
+      },
+      "gui_evidence": "engine-bench/.local/acceptance/product-smoke-1793802818047430000/runtime-smoke-final.json",
+      "gui_png": "engine-bench/.local/acceptance/product-smoke-1793802818047430000/viewer-obscura-tab-final-controls.png",
+      "qualification": "Actual HTTP/Python/native GUI paths exercised. C1 still fails Canvas context brand and Canvas/Audio invalid-operation exceptions; I1 differentiation fails. This is not complete browser conformance or release acceptance."
+    },
+    "parent_pre_correction_build": {
+      "status": 101,
+      "wall_seconds": 20.205,
+      "log": "../../.local/obscura-cost/build-schema3-release-1793800437747-warm-target.log",
+      "result": "Deno op2 macro errors; source annotations corrected without rerunning compilation. Raw failed report preserved."
+    },
+    "parent_pre_cutover_success": {
+      "reported_release_seconds": 57.321,
+      "reported_no_change_seconds": 0.124,
+      "binary_sha256": "0ab0b4898e160cf4d3e6c3b405f02511b32d514190bee86e2ad6abff76c03f2b",
+      "qualification": "Parent-reported successful builds precede current private-root/EOF/graphics followup source; do not imply current compilation or acceptance"
+    },
+    "parent_private_root_cutover_build": {
+      "status": 101,
+      "log": "../../.local/obscura-cost/build-schema3-release-1793804879307-warm-target.log",
+      "result": "Parent observed one native-op scope/value lifetime mismatch; source now follows existing named scope lifetimes. Deprecated AtomicU64 fetch_update renamed try_update; no worker compilation rerun."
+    },
+    "parent_private_root_cutover_success": {
+      "reported_release_seconds": 44.021,
+      "reported_no_change_seconds": 0.1277,
+      "binary_sha256": "a0796de46b4f9705900c9c7c87cdc78247d5e760731f80adba27805f1f6f0c0a",
+      "qualification": "Parent reported compilation and managed create success; start rejected created_at. Current source accepts optional String metadata without changing raw-file hashing; not yet compiled by worker."
+    },
+    "parent_pre_gui_control_frame_fix": {
+      "binary_sha256": "419f7207b5176f01906f59255fb0b594a4b1518e84e435ed3cc1df9391d7198c",
+      "screenshot": "../../.local/acceptance/product-smoke-1793802818047430000/obscura-real-page.png",
+      "identity_surface": "../../.local/acceptance/product-smoke-1793802818047430000/identity-surface.json",
+      "observed": "Managed start and original-node CJK fill data succeeded; native screenshot confirms real CJK body text, password masking, control glyph boxes, narrow button text and blank iframe. Parent also observed missing bringToFront/frame metadata and public language/focus state markers. Current source fixes these normal paths but remains uncompiled/unverified; no GUI/product acceptance."
+    },
+    "parent_snapshot_core_hook_failure": {
+      "log": "../../.local/obscura-cost/build-schema3-release-1793812862312-warm-target.log",
+      "result": "Snapshot bootstrap rejected custom property on frozen Deno.core. Source now uses a separate closure bridge retained by the native V8 handle; engine core is not mutated or defrozen. No worker rerun."
+    },
+    "parent_7017_component_observations": {
+      "binary_sha256": "7017d8e2239787e199b78e63cd2a73b3f0652bb57dda21597e34ee7d4ce91219",
+      "reported_matrix": {
+        "total": 459,
+        "passed": 355,
+        "outstanding": 104
+      },
+      "reported_blockers": "32 WebGL missing isProgram; 32 Worker no-store rejected; remaining obligations unchanged",
+      "bad_gui_screenshot": "../../.local/acceptance/product-smoke-1793802818047430000/viewer-obscura-live-before.png",
+      "qualification": "Actual PNG inspected: child raster at half-size/half-position relative to correct border. Component frame/script/reflection observations do not imply GUI acceptance; no worker rechecks or raw evidence edits."
+    },
+    "parent_f57_component_observations": {
+      "binary_sha256": "f57a844a4b9a426ce13661aa9e7ed04362b58c4930f1ab7f0af310506f46b4e3",
+      "reported_matrix": {
+        "total": 459,
+        "passed": 425,
+        "outstanding": 34
+      },
+      "child_pointer_png": "../../.local/acceptance/product-smoke-1793802818047430000/viewer-obscura-dpr2-ui-controls.png",
+      "coordinate_analysis": "../../.local/obscura-cost/diagnostics/child-pointer-coordinate-analysis.json",
+      "author_helper_exposure": "../../.local/acceptance/product-smoke-1793802818047430000/author-helper-exposure.json",
+      "qualification": "Parent actual root CJK input/counter PNG and functional GL/Worker observations are component evidence only. Retained child-pointer PNG places reported client294,574 inside the actual visible child button under observed iframe mapping, excluding an obvious click miss but not proving transmitted payload. Native child routing, Meta+A and private trust source corrections remain uncompiled/unrun by worker."
+    },
+    "historical_delegate_tests": "not_run_by_assignment",
+    "historical_delegate_lint": "not_run_by_assignment",
+    "historical_delegate_smoke": "not_run_by_assignment",
+    "dependency_preparation": "cargo fetch/offline lock update only",
+    "backend_discovery": {
+      "path": "native-renderer-inventory.json",
+      "method": "CGLQueryRendererInfo/CGLDescribeRenderer/CGLChoosePixelFormat only; not runtime acceptance",
+      "online_renderers": 2
+    }
+  },
+  "limitations": {
+    "graphics": "Native preflight reports exact unsupported API list; WebGL2/full conformance, DOM image Canvas/texture overloads, gradient text, patterns/conic gradients, shadows/filters, Path2D hit testing and complete CSS font fallback parsing remain unavailable",
+    "audio": "No physical device, alternate DSP precision/backend, AudioWorklet/convolution/3D panning/non-WAV codecs; same explicit graphs may yield identical samples across environments",
+    "worker": "Classic dedicated Workers support genuine native importScripts and metadata/request paths. OffscreenCanvas and Worker Canvas/WebGL remain explicitly unsupported, not simulated and not counted as passed supported coverage. Module/nested/shared/service workers, transfers/SAB, streaming bodies, WebSocket and complete WebIDL remain unavailable; exact scope in component manifest/native receipt.",
+    "network": "HTTP transports implemented; DNS/IPv4/IPv6/UDP/WebRTC packet-leak matrix not executed; absent transports do not prove a passed gate",
+    "acceptance": "No product acceptance; required unsupported, identical differentiation, missing tests, or human GUI signoff remain outstanding"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "scope": "Reviewed candidate and renderer direct dependencies, not a complete binary SBOM. Distribution/legal review remains required.",
+  "candidate": {
+    "commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+    "default_license": "AGPL-3.0-only",
+    "default_anchor": "LICENSING.md:6",
+    "source_header_license": "AGPL-3.0-or-later",
+    "source_header_anchor": "src/Config.zig:6-9",
+    "review": "Default licensing document and per-file or-later headers differ; preserve all notices and resolve distribution terms before shipping. Modified network-service deployments require AGPL obligations to be assessed. No claim about upstream willingness to accept UA changes."
+  },
+  "reviewed": [
+    { "name": "zig-v8-fork", "commit": "b73e4fa2d0afe5036745ae7d332cc5cb7e7adb53", "license": "MIT", "license_blob": "8d1bac0f3e230947ee20451bab327938968199cb", "source": "https://api.github.com/repos/lightpanda-io/zig-v8-fork/license?ref=b73e4fa2d0afe5036745ae7d332cc5cb7e7adb53", "boundary": "Binding license does not replace V8 and bundled third-party licenses" },
+    { "name": "tiny-skia", "version": "0.12.0", "license": "BSD-3-Clause", "checksum": "47ffee5eaaf5527f630fb0e356b90ebdec84d5d18d937c5e440350f88c5a91ea", "source": "https://crates.io/api/v1/crates/tiny-skia/0.12.0" },
+    { "name": "parley", "version": "0.11.1", "license": "Apache-2.0 OR MIT", "checksum": "22d2ff88bd3f7d68d1d9b09c7e6209f9a8e8c05088295140a2bcf2e9b17038c5", "source": "https://crates.io/api/v1/crates/parley/0.11.1" },
+    { "name": "fontique", "version": "0.11.1", "license": "Apache-2.0 OR MIT", "checksum": "6688bc1294fe7117d788937b6c53480169b29c566954af490830d4c09da9516a", "source": "https://crates.io/api/v1/crates/fontique/0.11.1" },
+    { "name": "skrifa", "version": "0.44.0", "license": "MIT OR Apache-2.0", "checksum": "819ab7d62b1d3e72d9d9dea5650bac30424f9111364bb94928dbf5ecad1baa68", "source": "https://crates.io/api/v1/crates/skrifa/0.44.0" },
+    { "name": "png", "version": "0.18.1", "license": "MIT OR Apache-2.0", "checksum": "60769b8b31b2a9f263dae2776c37b1b28ae246943cf719eb6946a1db05128a61", "source": "https://crates.io/api/v1/crates/png/0.18.1" },
+    { "name": "html5ever", "version": "0.40.0", "license": "MIT OR Apache-2.0", "checksum": "a1fb45cc6b576ff3c8053c7a1a4c14b2b24ae166ab6a3e5bc5856aa45d39de70", "source": "https://crates.io/api/v1/crates/html5ever/0.40.0" },
+    { "name": "DejaVu bundled fonts", "license": "See bundled Bitstream Vera/DejaVu font terms", "source": "src/rust/render/fonts/LICENSE" },
+    { "name": "AppKit + Foundation", "license": "Apple system SDK/runtime terms; no framework source copied", "source": "viewer.swift imports; macOS system frameworks", "boundary": "Diagnostic viewer is macOS-only; not a cross-platform viewer solution" }
+  ],
+  "pinned_native_dependencies_requiring_complete_release_notice_review": [
+    { "name": "V8", "version": "15.5.35.13", "anchor": ".github/actions/install/action.yml:13-20" },
+    { "name": "brotli", "commit": "028fb5a23661f123017c060daa546b55cf4bde29", "anchor": "build.zig.zon:12-15" },
+    { "name": "zlib", "version": "1.3.2", "anchor": "build.zig.zon:17-19" },
+    { "name": "zstd", "version": "1.5.7", "anchor": "build.zig.zon:21-23" },
+    { "name": "nghttp2", "version": "1.70.0", "anchor": "build.zig.zon:25-27" },
+    { "name": "boringssl-zig", "commit": "5b5ad66f65c5cc4323680ab71284403598251678", "anchor": "build.zig.zon:29-31" },
+    { "name": "curl", "version": "8.23.0", "anchor": "build.zig.zon:34-36" },
+    { "name": "sqlite", "version": "3.53.2", "anchor": "build.zig.zon:38-40" },
+    { "name": "zenai", "commit": "8bfbb3e5788d278a63708db8ee5f58aa589f9fff", "anchor": "build.zig.zon:42-44" },
+    { "name": "isocline", "commit": "4a99434bee4a5ed04c1639514224d48cd55e1405", "anchor": "build.zig.zon:46-48" },
+    { "name": "pcre2", "commit": "9ad4a2e956876747a5022bf04614c7e39e71d4ec", "anchor": "build.zig.zon:50-52" },
+    { "name": "translate-c", "commit": "0da7a16c3235b935b82421646076e0657cda21f6", "anchor": "build.zig.zon:54-56" }
+  ],
+  "all_rust_lockfile": "src/rust/Cargo.lock; licenses-rust.json records 98 current aarch64-apple-darwin package declarations. Three local Lightpanda package manifests omit license metadata; repository/file terms and cross-platform release notices still require review.",
+  "all_client_lockfile": "package-lock.json (experiment-only official-example client)"
+}

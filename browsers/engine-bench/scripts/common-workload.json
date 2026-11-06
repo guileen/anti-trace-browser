@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "cpu_iterations": 200000,
+  "dom_nodes": 1000,
+  "expected_checksum": 1265788421,
+  "expression": "(() => { const started = performance.now(); let checksum = 2166136261; for (let i = 0; i < 200000; i++) checksum = Math.imul(checksum ^ i, 16777619) >>> 0; const cpu_ms = performance.now() - started; const domStart = performance.now(); const box = document.createElement('div'); box.id = 'comparison-workload'; document.body.appendChild(box); for (let i = 0; i < 1000; i++) { const item = document.createElement('span'); item.setAttribute('data-item', String(i)); item.textContent = `item-${i}`; box.appendChild(item); } const count = box.querySelectorAll('span').length; const last = box.lastChild.textContent; box.remove(); return { checksum, count, last, cpu_ms, dom_ms: performance.now() - domStart, total_ms: performance.now() - started }; })()"
+}

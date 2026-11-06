@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>TRACE / 同会话查看器</title>
+  <link rel="stylesheet" href="/viewer.css">
+  <script src="/viewer.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">T·</span><div>TRACE <span class="brand-light">/ VIEWER</span><small>同一运行时 · 同一会话</small></div></div>
+    <div class="connection"><span id="connection-dot" class="dot"></span><span id="connection-state">正在连接…</span></div>
+  </header>
+  <main>
+    <section class="control-panel" aria-labelledby="viewer-title">
+      <div><p class="eyebrow">LOCAL SESSION / 本机共享控制</p><h1 id="viewer-title">查看当前环境</h1><p id="owner-status" role="status" aria-live="polite">等待真实运行时画面与控制状态…</p></div>
+      <div class="control-actions"><button id="take-control" class="primary" disabled>请求人工接管</button><button id="resume-agent" disabled>交回 Agent</button><button id="reclaim" disabled>明确恢复 Agent</button></div>
+    </section>
+    <div id="error" class="error" role="alert" hidden></div>
+    <section class="browser-panel" aria-label="真实运行时页面画面">
+      <div class="browser-toolbar"><label for="page-select">标签页</label><select id="page-select" disabled><option>正在读取…</option></select><button id="refresh" disabled>刷新画面</button><button id="focus-page" disabled>聚焦页面输入</button></div>
+      <p id="page-url" class="page-url">仅显示同一运行时的 PNG；此窗口不会执行被测页面。</p>
+      <div id="stage" class="stage" tabindex="0" role="group" aria-label="页面画面；人工接管后点击、滚动或输入">
+        <div id="empty-frame" class="empty-frame"><span class="frame-icon" aria-hidden="true">▧</span><strong id="frame-status">正在等待真实页面画面</strong><span>没有示例图或其他浏览器的替代画面。</span></div>
+        <img id="frame" alt="当前运行时页面的真实画面" draggable="false" hidden>
+      </div>
+      <div class="frame-footer"><span id="frame-meta">尚无画面</span><span id="input-status">当前只读</span></div>
+    </section>
+    <section class="text-panel" aria-labelledby="text-title">
+      <div><h2 id="text-title">文本与中文输入</h2><p>先在画面中点击实际输入框，再直接输入（支持中文 IME），也可在下方提交整段文本。只在人工持有控制权时发送。</p></div>
+      <div class="text-controls"><textarea id="text-entry" rows="2" maxlength="8192" placeholder="输入待提交文本…" aria-label="发送到页面焦点的文本" disabled></textarea><button id="send-text" disabled>发送文本</button></div>
+    </section>
+    <footer><span>人工接管在已下发动作结束后生效；运行中的 Agent 不会与人工同时写入。</span><span>断线保持暂停，需明确恢复。刷新本窗口后请重新打开原始本地链接。</span></footer>
+  </main>
+  <textarea id="input-sink" class="input-sink" aria-label="页面键盘与中文输入" autocomplete="off" autocapitalize="off" spellcheck="false" disabled></textarea>
+</body>
+</html>

@@ -1,0 +1,2031 @@
+{
+  "schema": 1,
+  "source_commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+  "command": "CARGO_NET_OFFLINE=true cargo metadata --locked --offline --format-version 1 --manifest-path src/rust/ffi/Cargo.toml",
+  "packages": [
+    {
+      "name": "ab_glyph_rasterizer",
+      "version": "0.1.10",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ab_glyph_rasterizer-0.1.10/Cargo.toml"
+    },
+    {
+      "name": "ab_glyph",
+      "version": "0.2.32",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ab_glyph-0.2.32/Cargo.toml"
+    },
+    {
+      "name": "adler2",
+      "version": "2.0.1",
+      "license": "0BSD OR MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/adler2-2.0.1/Cargo.toml"
+    },
+    {
+      "name": "alloc-no-stdlib",
+      "version": "2.0.4",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/alloc-no-stdlib-2.0.4/Cargo.toml"
+    },
+    {
+      "name": "arrayref",
+      "version": "0.3.9",
+      "license": "BSD-2-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/arrayref-0.3.9/Cargo.toml"
+    },
+    {
+      "name": "arrayvec",
+      "version": "0.7.8",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/arrayvec-0.7.8/Cargo.toml"
+    },
+    {
+      "name": "autocfg",
+      "version": "1.5.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/autocfg-1.5.1/Cargo.toml"
+    },
+    {
+      "name": "base64",
+      "version": "0.22.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/base64-0.22.1/Cargo.toml"
+    },
+    {
+      "name": "bitflags",
+      "version": "2.13.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/bitflags-2.13.2/Cargo.toml"
+    },
+    {
+      "name": "block-buffer",
+      "version": "0.10.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/block-buffer-0.10.4/Cargo.toml"
+    },
+    {
+      "name": "brotli-decompressor",
+      "version": "5.0.3",
+      "license": "BSD-3-Clause/MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/brotli-decompressor-5.0.3/Cargo.toml"
+    },
+    {
+      "name": "bumpalo",
+      "version": "3.20.3",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/bumpalo-3.20.3/Cargo.toml"
+    },
+    {
+      "name": "bytemuck_derive",
+      "version": "1.12.1",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/bytemuck_derive-1.12.1/Cargo.toml"
+    },
+    {
+      "name": "bytemuck",
+      "version": "1.25.2",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/bytemuck-1.25.2/Cargo.toml"
+    },
+    {
+      "name": "byteorder-lite",
+      "version": "0.1.0",
+      "license": "Unlicense OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/byteorder-lite-0.1.0/Cargo.toml"
+    },
+    {
+      "name": "byteorder",
+      "version": "1.5.0",
+      "license": "Unlicense OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/byteorder-1.5.0/Cargo.toml"
+    },
+    {
+      "name": "bytes",
+      "version": "1.12.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/bytes-1.12.1/Cargo.toml"
+    },
+    {
+      "name": "cc",
+      "version": "1.11.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/cc-1.11.0/Cargo.toml"
+    },
+    {
+      "name": "cfg-if",
+      "version": "1.0.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/cfg-if-1.0.5/Cargo.toml"
+    },
+    {
+      "name": "color_quant",
+      "version": "1.1.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/color_quant-1.1.0/Cargo.toml"
+    },
+    {
+      "name": "core_detect",
+      "version": "1.0.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/core_detect-1.0.0/Cargo.toml"
+    },
+    {
+      "name": "core_maths",
+      "version": "0.1.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/core_maths-0.1.1/Cargo.toml"
+    },
+    {
+      "name": "cosmic-text",
+      "version": "0.14.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source/vendor/cosmic-text/Cargo.toml"
+    },
+    {
+      "name": "cpufeatures",
+      "version": "0.2.17",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/cpufeatures-0.2.17/Cargo.toml"
+    },
+    {
+      "name": "crc32fast",
+      "version": "1.5.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/crc32fast-1.5.4/Cargo.toml"
+    },
+    {
+      "name": "crypto-common",
+      "version": "0.1.7",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/crypto-common-0.1.7/Cargo.toml"
+    },
+    {
+      "name": "cssparser-macros",
+      "version": "0.6.1",
+      "license": "MPL-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/cssparser-macros-0.6.1/Cargo.toml"
+    },
+    {
+      "name": "cssparser",
+      "version": "0.34.0",
+      "license": "MPL-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/cssparser-0.34.0/Cargo.toml"
+    },
+    {
+      "name": "data-url",
+      "version": "0.3.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/data-url-0.3.2/Cargo.toml"
+    },
+    {
+      "name": "derive_more",
+      "version": "0.99.20",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/derive_more-0.99.20/Cargo.toml"
+    },
+    {
+      "name": "digest",
+      "version": "0.10.7",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/digest-0.10.7/Cargo.toml"
+    },
+    {
+      "name": "displaydoc",
+      "version": "0.2.7",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/displaydoc-0.2.7/Cargo.toml"
+    },
+    {
+      "name": "dtoa-short",
+      "version": "0.3.5",
+      "license": "MPL-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/dtoa-short-0.3.5/Cargo.toml"
+    },
+    {
+      "name": "dtoa",
+      "version": "1.0.11",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/dtoa-1.0.11/Cargo.toml"
+    },
+    {
+      "name": "encoding_rs",
+      "version": "0.8.44",
+      "license": "(Apache-2.0 OR MIT) AND BSD-3-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/encoding_rs-0.8.44/Cargo.toml"
+    },
+    {
+      "name": "euclid",
+      "version": "0.22.14",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/euclid-0.22.14/Cargo.toml"
+    },
+    {
+      "name": "fastrand",
+      "version": "2.5.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fastrand-2.5.0/Cargo.toml"
+    },
+    {
+      "name": "fdeflate",
+      "version": "0.3.7",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fdeflate-0.3.7/Cargo.toml"
+    },
+    {
+      "name": "find-msvc-tools",
+      "version": "0.1.15",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/find-msvc-tools-0.1.15/Cargo.toml"
+    },
+    {
+      "name": "flate2",
+      "version": "1.1.10",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/flate2-1.1.10/Cargo.toml"
+    },
+    {
+      "name": "float-cmp",
+      "version": "0.9.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/float-cmp-0.9.0/Cargo.toml"
+    },
+    {
+      "name": "foldhash",
+      "version": "0.2.0",
+      "license": "Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/foldhash-0.2.0/Cargo.toml"
+    },
+    {
+      "name": "font-types",
+      "version": "0.12.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/font-types-0.12.5/Cargo.toml"
+    },
+    {
+      "name": "font-types",
+      "version": "0.8.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/font-types-0.8.4/Cargo.toml"
+    },
+    {
+      "name": "fontdb",
+      "version": "0.16.2",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fontdb-0.16.2/Cargo.toml"
+    },
+    {
+      "name": "fontdb",
+      "version": "0.23.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fontdb-0.23.0/Cargo.toml"
+    },
+    {
+      "name": "fontique",
+      "version": "0.11.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fontique-0.11.1/Cargo.toml"
+    },
+    {
+      "name": "form_urlencoded",
+      "version": "1.2.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/form_urlencoded-1.2.2/Cargo.toml"
+    },
+    {
+      "name": "futures-core",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/futures-core-0.3.34/Cargo.toml"
+    },
+    {
+      "name": "futures-task",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/futures-task-0.3.34/Cargo.toml"
+    },
+    {
+      "name": "futures-util",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/futures-util-0.3.34/Cargo.toml"
+    },
+    {
+      "name": "fxhash",
+      "version": "0.2.1",
+      "license": "Apache-2.0/MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/fxhash-0.2.1/Cargo.toml"
+    },
+    {
+      "name": "generic-array",
+      "version": "0.14.7",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/generic-array-0.14.7/Cargo.toml"
+    },
+    {
+      "name": "getrandom",
+      "version": "0.2.17",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/getrandom-0.2.17/Cargo.toml"
+    },
+    {
+      "name": "gif",
+      "version": "0.14.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/gif-0.14.2/Cargo.toml"
+    },
+    {
+      "name": "glow",
+      "version": "0.16.0",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/glow-0.16.0/Cargo.toml"
+    },
+    {
+      "name": "grid",
+      "version": "1.0.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/grid-1.0.1/Cargo.toml"
+    },
+    {
+      "name": "harfrust",
+      "version": "0.12.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/harfrust-0.12.0/Cargo.toml"
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.17.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/hashbrown-0.17.1/Cargo.toml"
+    },
+    {
+      "name": "html5ever",
+      "version": "0.39.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/html5ever-0.39.0/Cargo.toml"
+    },
+    {
+      "name": "html5ever",
+      "version": "0.40.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/html5ever-0.40.1/Cargo.toml"
+    },
+    {
+      "name": "icu_collections",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_collections-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_locale_core",
+      "version": "2.4.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_locale_core-2.4.0/Cargo.toml"
+    },
+    {
+      "name": "icu_locale_data",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_locale_data-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_locale",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_locale-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_normalizer_data",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_normalizer_data-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_normalizer",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_normalizer-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_properties_data",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_properties_data-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_properties",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_properties-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_provider",
+      "version": "2.4.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_provider-2.4.0/Cargo.toml"
+    },
+    {
+      "name": "icu_segmenter_data",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_segmenter_data-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "icu_segmenter",
+      "version": "2.2.0",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/icu_segmenter-2.2.0/Cargo.toml"
+    },
+    {
+      "name": "idna_adapter",
+      "version": "1.2.2",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/idna_adapter-1.2.2/Cargo.toml"
+    },
+    {
+      "name": "idna",
+      "version": "1.1.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/idna-1.1.0/Cargo.toml"
+    },
+    {
+      "name": "image-webp",
+      "version": "0.2.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/image-webp-0.2.4/Cargo.toml"
+    },
+    {
+      "name": "image",
+      "version": "0.25.10",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/image-0.25.10/Cargo.toml"
+    },
+    {
+      "name": "imagesize",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/imagesize-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "itoa",
+      "version": "1.0.18",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/itoa-1.0.18/Cargo.toml"
+    },
+    {
+      "name": "js-sys",
+      "version": "0.3.106",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/js-sys-0.3.106/Cargo.toml"
+    },
+    {
+      "name": "kurbo",
+      "version": "0.13.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/kurbo-0.13.1/Cargo.toml"
+    },
+    {
+      "name": "libc",
+      "version": "0.2.191",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/libc-0.2.191/Cargo.toml"
+    },
+    {
+      "name": "libm",
+      "version": "0.2.16",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/libm-0.2.16/Cargo.toml"
+    },
+    {
+      "name": "lightpanda-ffi",
+      "version": "0.1.0",
+      "license": "AGPL-3.0-or-later",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/src/rust/ffi/Cargo.toml"
+    },
+    {
+      "name": "lightpanda-html5ever",
+      "version": "0.1.0",
+      "license": "AGPL-3.0-or-later",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/src/rust/html5ever/Cargo.toml"
+    },
+    {
+      "name": "lightpanda-render",
+      "version": "0.1.0",
+      "license": "AGPL-3.0-or-later",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/src/rust/render/Cargo.toml"
+    },
+    {
+      "name": "linebender_resource_handle",
+      "version": "0.1.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/linebender_resource_handle-0.1.1/Cargo.toml"
+    },
+    {
+      "name": "litemap",
+      "version": "0.8.3",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/litemap-0.8.3/Cargo.toml"
+    },
+    {
+      "name": "lock_api",
+      "version": "0.4.14",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/lock_api-0.4.14/Cargo.toml"
+    },
+    {
+      "name": "log",
+      "version": "0.4.35",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/log-0.4.35/Cargo.toml"
+    },
+    {
+      "name": "markup5ever",
+      "version": "0.39.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/markup5ever-0.39.0/Cargo.toml"
+    },
+    {
+      "name": "markup5ever",
+      "version": "0.40.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/markup5ever-0.40.0/Cargo.toml"
+    },
+    {
+      "name": "memchr",
+      "version": "2.8.3",
+      "license": "Unlicense OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/memchr-2.8.3/Cargo.toml"
+    },
+    {
+      "name": "memmap2",
+      "version": "0.9.11",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/memmap2-0.9.11/Cargo.toml"
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.8.9",
+      "license": "MIT OR Zlib OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/miniz_oxide-0.8.9/Cargo.toml"
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.9.1",
+      "license": "MIT OR Zlib OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/miniz_oxide-0.9.1/Cargo.toml"
+    },
+    {
+      "name": "moxcms",
+      "version": "0.8.1",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/moxcms-0.8.1/Cargo.toml"
+    },
+    {
+      "name": "multiversion_no_op",
+      "version": "1.0.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/multiversion_no_op-1.0.0/Cargo.toml"
+    },
+    {
+      "name": "new_debug_unreachable",
+      "version": "1.0.6",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/new_debug_unreachable-1.0.6/Cargo.toml"
+    },
+    {
+      "name": "num-traits",
+      "version": "0.2.19",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/num-traits-0.2.19/Cargo.toml"
+    },
+    {
+      "name": "obscura-dom",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source/crates/obscura-dom/Cargo.toml"
+    },
+    {
+      "name": "obscura-render",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source/crates/obscura-render/Cargo.toml"
+    },
+    {
+      "name": "obscura-ssrf",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source/crates/obscura-ssrf/Cargo.toml"
+    },
+    {
+      "name": "once_cell",
+      "version": "1.21.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/once_cell-1.21.4/Cargo.toml"
+    },
+    {
+      "name": "owned_ttf_parser",
+      "version": "0.25.1",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/owned_ttf_parser-0.25.1/Cargo.toml"
+    },
+    {
+      "name": "parking_lot_core",
+      "version": "0.9.12",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/parking_lot_core-0.9.12/Cargo.toml"
+    },
+    {
+      "name": "parking_lot",
+      "version": "0.12.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/parking_lot-0.12.5/Cargo.toml"
+    },
+    {
+      "name": "parlance",
+      "version": "0.1.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/parlance-0.1.0/Cargo.toml"
+    },
+    {
+      "name": "parley_data",
+      "version": "0.11.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/parley_data-0.11.1/Cargo.toml"
+    },
+    {
+      "name": "parley",
+      "version": "0.11.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/parley-0.11.1/Cargo.toml"
+    },
+    {
+      "name": "percent-encoding",
+      "version": "2.3.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/percent-encoding-2.3.2/Cargo.toml"
+    },
+    {
+      "name": "phf_codegen",
+      "version": "0.11.3",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_codegen-0.11.3/Cargo.toml"
+    },
+    {
+      "name": "phf_codegen",
+      "version": "0.13.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_codegen-0.13.1/Cargo.toml"
+    },
+    {
+      "name": "phf_codegen",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_codegen-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "phf_generator",
+      "version": "0.11.3",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_generator-0.11.3/Cargo.toml"
+    },
+    {
+      "name": "phf_generator",
+      "version": "0.13.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_generator-0.13.1/Cargo.toml"
+    },
+    {
+      "name": "phf_generator",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_generator-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "phf_macros",
+      "version": "0.11.3",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_macros-0.11.3/Cargo.toml"
+    },
+    {
+      "name": "phf_shared",
+      "version": "0.11.3",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_shared-0.11.3/Cargo.toml"
+    },
+    {
+      "name": "phf_shared",
+      "version": "0.13.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_shared-0.13.1/Cargo.toml"
+    },
+    {
+      "name": "phf_shared",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf_shared-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "phf",
+      "version": "0.11.3",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf-0.11.3/Cargo.toml"
+    },
+    {
+      "name": "phf",
+      "version": "0.13.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf-0.13.1/Cargo.toml"
+    },
+    {
+      "name": "phf",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/phf-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "pico-args",
+      "version": "0.5.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/pico-args-0.5.0/Cargo.toml"
+    },
+    {
+      "name": "pin-project-lite",
+      "version": "0.2.17",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/pin-project-lite-0.2.17/Cargo.toml"
+    },
+    {
+      "name": "png",
+      "version": "0.18.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/png-0.18.1/Cargo.toml"
+    },
+    {
+      "name": "polycool",
+      "version": "0.4.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/polycool-0.4.0/Cargo.toml"
+    },
+    {
+      "name": "potential_utf",
+      "version": "0.1.6",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/potential_utf-0.1.6/Cargo.toml"
+    },
+    {
+      "name": "precomputed-hash",
+      "version": "0.1.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/precomputed-hash-0.1.1/Cargo.toml"
+    },
+    {
+      "name": "proc-macro2",
+      "version": "1.0.107",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/proc-macro2-1.0.107/Cargo.toml"
+    },
+    {
+      "name": "pxfm",
+      "version": "0.1.30",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/pxfm-0.1.30/Cargo.toml"
+    },
+    {
+      "name": "quick-error",
+      "version": "2.0.1",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/quick-error-2.0.1/Cargo.toml"
+    },
+    {
+      "name": "quote",
+      "version": "1.0.47",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/quote-1.0.47/Cargo.toml"
+    },
+    {
+      "name": "rand_core",
+      "version": "0.6.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rand_core-0.6.4/Cargo.toml"
+    },
+    {
+      "name": "rand",
+      "version": "0.8.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rand-0.8.6/Cargo.toml"
+    },
+    {
+      "name": "rangemap",
+      "version": "1.8.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rangemap-1.8.0/Cargo.toml"
+    },
+    {
+      "name": "read-fonts",
+      "version": "0.25.3",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/read-fonts-0.25.3/Cargo.toml"
+    },
+    {
+      "name": "read-fonts",
+      "version": "0.41.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/read-fonts-0.41.0/Cargo.toml"
+    },
+    {
+      "name": "redox_syscall",
+      "version": "0.5.18",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/redox_syscall-0.5.18/Cargo.toml"
+    },
+    {
+      "name": "resvg",
+      "version": "0.47.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/resvg-0.47.0/Cargo.toml"
+    },
+    {
+      "name": "rgb",
+      "version": "0.8.53",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rgb-0.8.53/Cargo.toml"
+    },
+    {
+      "name": "ring",
+      "version": "0.17.14",
+      "license": "Apache-2.0 AND ISC",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ring-0.17.14/Cargo.toml"
+    },
+    {
+      "name": "roxmltree",
+      "version": "0.21.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/roxmltree-0.21.1/Cargo.toml"
+    },
+    {
+      "name": "rustc-hash",
+      "version": "1.1.0",
+      "license": "Apache-2.0/MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustc-hash-1.1.0/Cargo.toml"
+    },
+    {
+      "name": "rustls-pki-types",
+      "version": "1.15.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustls-pki-types-1.15.1/Cargo.toml"
+    },
+    {
+      "name": "rustls-webpki",
+      "version": "0.103.16",
+      "license": "ISC",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustls-webpki-0.103.16/Cargo.toml"
+    },
+    {
+      "name": "rustls",
+      "version": "0.23.46",
+      "license": "Apache-2.0 OR ISC OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustls-0.23.46/Cargo.toml"
+    },
+    {
+      "name": "rustversion",
+      "version": "1.0.23",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustversion-1.0.23/Cargo.toml"
+    },
+    {
+      "name": "rustybuzz",
+      "version": "0.20.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/rustybuzz-0.20.1/Cargo.toml"
+    },
+    {
+      "name": "scopeguard",
+      "version": "1.2.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/scopeguard-1.2.0/Cargo.toml"
+    },
+    {
+      "name": "selectors",
+      "version": "0.26.0",
+      "license": "MPL-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/selectors-0.26.0/Cargo.toml"
+    },
+    {
+      "name": "self_cell",
+      "version": "1.3.0",
+      "license": "Apache-2.0 OR GPL-2.0-only",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/self_cell-1.3.0/Cargo.toml"
+    },
+    {
+      "name": "serde_core",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/serde_core-1.0.229/Cargo.toml"
+    },
+    {
+      "name": "serde_derive",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/serde_derive-1.0.229/Cargo.toml"
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.154",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/serde_json-1.0.154/Cargo.toml"
+    },
+    {
+      "name": "serde",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/serde-1.0.229/Cargo.toml"
+    },
+    {
+      "name": "servo_arc",
+      "version": "0.4.3",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/servo_arc-0.4.3/Cargo.toml"
+    },
+    {
+      "name": "sha2",
+      "version": "0.10.9",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/sha2-0.10.9/Cargo.toml"
+    },
+    {
+      "name": "shlex",
+      "version": "2.0.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/shlex-2.0.1/Cargo.toml"
+    },
+    {
+      "name": "simd-adler32",
+      "version": "0.3.10",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/simd-adler32-0.3.10/Cargo.toml"
+    },
+    {
+      "name": "simdutf8",
+      "version": "0.1.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/simdutf8-0.1.5/Cargo.toml"
+    },
+    {
+      "name": "simplecss",
+      "version": "0.2.2",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/simplecss-0.2.2/Cargo.toml"
+    },
+    {
+      "name": "siphasher",
+      "version": "1.0.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/siphasher-1.0.4/Cargo.toml"
+    },
+    {
+      "name": "skrifa",
+      "version": "0.26.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/skrifa-0.26.6/Cargo.toml"
+    },
+    {
+      "name": "skrifa",
+      "version": "0.44.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/skrifa-0.44.0/Cargo.toml"
+    },
+    {
+      "name": "slab",
+      "version": "0.4.12",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/slab-0.4.12/Cargo.toml"
+    },
+    {
+      "name": "slotmap",
+      "version": "1.1.1",
+      "license": "Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/slotmap-1.1.1/Cargo.toml"
+    },
+    {
+      "name": "smallvec",
+      "version": "1.16.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/smallvec-1.16.4/Cargo.toml"
+    },
+    {
+      "name": "smol_str",
+      "version": "0.2.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/smol_str-0.2.2/Cargo.toml"
+    },
+    {
+      "name": "stable_deref_trait",
+      "version": "1.2.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/stable_deref_trait-1.2.1/Cargo.toml"
+    },
+    {
+      "name": "strict-num",
+      "version": "0.1.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/strict-num-0.1.1/Cargo.toml"
+    },
+    {
+      "name": "string_cache_codegen",
+      "version": "0.11.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/string_cache_codegen-0.11.2/Cargo.toml"
+    },
+    {
+      "name": "string_cache_codegen",
+      "version": "0.6.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/string_cache_codegen-0.6.1/Cargo.toml"
+    },
+    {
+      "name": "string_cache",
+      "version": "0.11.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/string_cache-0.11.0/Cargo.toml"
+    },
+    {
+      "name": "string_cache",
+      "version": "0.9.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/string_cache-0.9.0/Cargo.toml"
+    },
+    {
+      "name": "subtle",
+      "version": "2.6.1",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/subtle-2.6.1/Cargo.toml"
+    },
+    {
+      "name": "svgtypes",
+      "version": "0.16.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/svgtypes-0.16.1/Cargo.toml"
+    },
+    {
+      "name": "swash",
+      "version": "0.2.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/swash-0.2.0/Cargo.toml"
+    },
+    {
+      "name": "syn",
+      "version": "2.0.119",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/syn-2.0.119/Cargo.toml"
+    },
+    {
+      "name": "syn",
+      "version": "3.0.9",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/syn-3.0.9/Cargo.toml"
+    },
+    {
+      "name": "synstructure",
+      "version": "0.14.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/synstructure-0.14.0/Cargo.toml"
+    },
+    {
+      "name": "sys-locale",
+      "version": "0.3.2",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/sys-locale-0.3.2/Cargo.toml"
+    },
+    {
+      "name": "taffy",
+      "version": "0.12.1",
+      "license": "MIT",
+      "license_file": null,
+      "source": null,
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/obscura-cost/source/vendor/taffy/Cargo.toml"
+    },
+    {
+      "name": "tendril",
+      "version": "0.5.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tendril-0.5.1/Cargo.toml"
+    },
+    {
+      "name": "thiserror-impl",
+      "version": "2.0.21",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/thiserror-impl-2.0.21/Cargo.toml"
+    },
+    {
+      "name": "thiserror",
+      "version": "2.0.21",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/thiserror-2.0.21/Cargo.toml"
+    },
+    {
+      "name": "tiny-skia-path",
+      "version": "0.12.0",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tiny-skia-path-0.12.0/Cargo.toml"
+    },
+    {
+      "name": "tiny-skia",
+      "version": "0.12.0",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tiny-skia-0.12.0/Cargo.toml"
+    },
+    {
+      "name": "tinystr",
+      "version": "0.8.5",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tinystr-0.8.5/Cargo.toml"
+    },
+    {
+      "name": "tinyvec",
+      "version": "1.13.3",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tinyvec-1.13.3/Cargo.toml"
+    },
+    {
+      "name": "tracing-attributes",
+      "version": "0.1.31",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tracing-attributes-0.1.31/Cargo.toml"
+    },
+    {
+      "name": "tracing-core",
+      "version": "0.1.36",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tracing-core-0.1.36/Cargo.toml"
+    },
+    {
+      "name": "tracing",
+      "version": "0.1.44",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/tracing-0.1.44/Cargo.toml"
+    },
+    {
+      "name": "ttf-parser",
+      "version": "0.20.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ttf-parser-0.20.0/Cargo.toml"
+    },
+    {
+      "name": "ttf-parser",
+      "version": "0.25.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ttf-parser-0.25.1/Cargo.toml"
+    },
+    {
+      "name": "typed-arena",
+      "version": "2.0.2",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/typed-arena-2.0.2/Cargo.toml"
+    },
+    {
+      "name": "typenum",
+      "version": "1.20.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/typenum-1.20.1/Cargo.toml"
+    },
+    {
+      "name": "unicode-bidi-mirroring",
+      "version": "0.4.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-bidi-mirroring-0.4.0/Cargo.toml"
+    },
+    {
+      "name": "unicode-bidi",
+      "version": "0.3.18",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-bidi-0.3.18/Cargo.toml"
+    },
+    {
+      "name": "unicode-ccc",
+      "version": "0.4.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-ccc-0.4.0/Cargo.toml"
+    },
+    {
+      "name": "unicode-ident",
+      "version": "1.0.27",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-ident-1.0.27/Cargo.toml"
+    },
+    {
+      "name": "unicode-linebreak",
+      "version": "0.1.5",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-linebreak-0.1.5/Cargo.toml"
+    },
+    {
+      "name": "unicode-properties",
+      "version": "0.1.4",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-properties-0.1.4/Cargo.toml"
+    },
+    {
+      "name": "unicode-script",
+      "version": "0.5.8",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-script-0.5.8/Cargo.toml"
+    },
+    {
+      "name": "unicode-segmentation",
+      "version": "1.13.3",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-segmentation-1.13.3/Cargo.toml"
+    },
+    {
+      "name": "unicode-vo",
+      "version": "0.1.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/unicode-vo-0.1.0/Cargo.toml"
+    },
+    {
+      "name": "untrusted",
+      "version": "0.9.0",
+      "license": "ISC",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/untrusted-0.9.0/Cargo.toml"
+    },
+    {
+      "name": "ureq",
+      "version": "2.12.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/ureq-2.12.1/Cargo.toml"
+    },
+    {
+      "name": "url",
+      "version": "2.5.8",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/url-2.5.8/Cargo.toml"
+    },
+    {
+      "name": "usvg",
+      "version": "0.47.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/usvg-0.47.0/Cargo.toml"
+    },
+    {
+      "name": "utf_types",
+      "version": "1.0.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/utf_types-1.0.0/Cargo.toml"
+    },
+    {
+      "name": "utf8_iter",
+      "version": "1.1.0",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/utf8_iter-1.1.0/Cargo.toml"
+    },
+    {
+      "name": "version_check",
+      "version": "0.9.5",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/version_check-0.9.5/Cargo.toml"
+    },
+    {
+      "name": "wasi",
+      "version": "0.11.1+wasi-snapshot-preview1",
+      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wasi-0.11.1+wasi-snapshot-preview1/Cargo.toml"
+    },
+    {
+      "name": "wasm-bindgen-macro-support",
+      "version": "0.2.129",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wasm-bindgen-macro-support-0.2.129/Cargo.toml"
+    },
+    {
+      "name": "wasm-bindgen-macro",
+      "version": "0.2.129",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wasm-bindgen-macro-0.2.129/Cargo.toml"
+    },
+    {
+      "name": "wasm-bindgen-shared",
+      "version": "0.2.129",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wasm-bindgen-shared-0.2.129/Cargo.toml"
+    },
+    {
+      "name": "wasm-bindgen",
+      "version": "0.2.129",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wasm-bindgen-0.2.129/Cargo.toml"
+    },
+    {
+      "name": "web_atoms",
+      "version": "0.2.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/web_atoms-0.2.5/Cargo.toml"
+    },
+    {
+      "name": "web_atoms",
+      "version": "0.3.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/web_atoms-0.3.0/Cargo.toml"
+    },
+    {
+      "name": "web-sys",
+      "version": "0.3.106",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/web-sys-0.3.106/Cargo.toml"
+    },
+    {
+      "name": "webpki-roots",
+      "version": "0.26.11",
+      "license": "CDLA-Permissive-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/webpki-roots-0.26.11/Cargo.toml"
+    },
+    {
+      "name": "webpki-roots",
+      "version": "1.0.11",
+      "license": "CDLA-Permissive-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/webpki-roots-1.0.11/Cargo.toml"
+    },
+    {
+      "name": "weezl",
+      "version": "0.1.12",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/weezl-0.1.12/Cargo.toml"
+    },
+    {
+      "name": "windows_aarch64_gnullvm",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_aarch64_gnullvm-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_aarch64_msvc",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_aarch64_msvc-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_i686_gnu",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_i686_gnu-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_i686_gnullvm",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_i686_gnullvm-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_i686_msvc",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_i686_msvc-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_x86_64_gnu",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_x86_64_gnu-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_x86_64_gnullvm",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_x86_64_gnullvm-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows_x86_64_msvc",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows_x86_64_msvc-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "windows-link",
+      "version": "0.2.1",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows-link-0.2.1/Cargo.toml"
+    },
+    {
+      "name": "windows-sys",
+      "version": "0.52.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows-sys-0.52.0/Cargo.toml"
+    },
+    {
+      "name": "windows-targets",
+      "version": "0.52.6",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/windows-targets-0.52.6/Cargo.toml"
+    },
+    {
+      "name": "writeable",
+      "version": "0.6.4",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/writeable-0.6.4/Cargo.toml"
+    },
+    {
+      "name": "wuff",
+      "version": "0.2.8",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/wuff-0.2.8/Cargo.toml"
+    },
+    {
+      "name": "xml5ever",
+      "version": "0.40.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/xml5ever-0.40.0/Cargo.toml"
+    },
+    {
+      "name": "xmlwriter",
+      "version": "0.1.0",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/xmlwriter-0.1.0/Cargo.toml"
+    },
+    {
+      "name": "yazi",
+      "version": "0.2.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/yazi-0.2.1/Cargo.toml"
+    },
+    {
+      "name": "yoke-derive",
+      "version": "0.8.4",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/yoke-derive-0.8.4/Cargo.toml"
+    },
+    {
+      "name": "yoke",
+      "version": "0.8.4",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/yoke-0.8.4/Cargo.toml"
+    },
+    {
+      "name": "zeno",
+      "version": "0.3.3",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zeno-0.3.3/Cargo.toml"
+    },
+    {
+      "name": "zerofrom-derive",
+      "version": "0.1.8",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zerofrom-derive-0.1.8/Cargo.toml"
+    },
+    {
+      "name": "zerofrom",
+      "version": "0.1.8",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zerofrom-0.1.8/Cargo.toml"
+    },
+    {
+      "name": "zeroize",
+      "version": "1.9.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zeroize-1.9.1/Cargo.toml"
+    },
+    {
+      "name": "zerotrie",
+      "version": "0.2.5",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zerotrie-0.2.5/Cargo.toml"
+    },
+    {
+      "name": "zerovec-derive",
+      "version": "0.11.7",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zerovec-derive-0.11.7/Cargo.toml"
+    },
+    {
+      "name": "zerovec",
+      "version": "0.11.9",
+      "license": "Unicode-3.0",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zerovec-0.11.9/Cargo.toml"
+    },
+    {
+      "name": "zlib-rs",
+      "version": "0.6.8",
+      "license": "Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zlib-rs-0.6.8/Cargo.toml"
+    },
+    {
+      "name": "zmij",
+      "version": "1.0.23",
+      "license": "MIT",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zmij-1.0.23/Cargo.toml"
+    },
+    {
+      "name": "zune-core",
+      "version": "0.5.3",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zune-core-0.5.3/Cargo.toml"
+    },
+    {
+      "name": "zune-jpeg",
+      "version": "0.5.15",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "license_file": null,
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "manifest_path": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/src/xget.ipub.io-a8ec416917076a17/zune-jpeg-0.5.15/Cargo.toml"
+    }
+  ]
+}

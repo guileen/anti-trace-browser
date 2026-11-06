@@ -1,0 +1,919 @@
+{
+  "schema": 1,
+  "candidate": "lightpanda",
+  "source_commit": "c5f7bb29b127040c899d4e181b5709f76fc71a6f",
+  "origin_archives": [
+    {
+      "name": "curl-origin",
+      "bytes": 4465093,
+      "sha256": "e3de77cfa6367083c776a26647fc9f633b538c06c3baa73d931a252ac8f72b49"
+    },
+    {
+      "name": "boringssl-origin",
+      "bytes": 74804654,
+      "sha256": "fc626775e800241136e2dc1695c5cd95ca28cfeb53f2c88fff837036fccf3a85"
+    }
+  ],
+  "build_attempts": {
+    "clean-build": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 704522.082541,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/clean-build.json",
+      "stage": "initial_dependency_transport"
+    },
+    "incremental-build": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 540294.6822500001,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/incremental-build.json",
+      "stage": "initial_dependency_transport"
+    },
+    "recovered-clean": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 727562.9994999999,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-clean.json",
+      "stage": "package_transport_and_archive_root_layout"
+    },
+    "recovered-compile": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": null,
+      "signal": "SIGTERM",
+      "elapsed_ms": 900004.464583,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-compile.json",
+      "stage": "native_graph_format_guard_and_Rust_acquisition_wait"
+    },
+    "recovered-rust-offline": {
+      "command": "cargo",
+      "args": [
+        "build",
+        "--offline",
+        "--profile",
+        "release",
+        "--manifest-path",
+        "src/rust/ffi/Cargo.toml",
+        "--target-dir",
+        ".zig-cache/o/bb37bb31062fb7c47afb9c766be92550/rust"
+      ],
+      "status": 101,
+      "signal": null,
+      "elapsed_ms": 35.186916,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-rust-offline.json",
+      "stage": "offline_named_dependency_diagnosis"
+    },
+    "recovered-icu-data": {
+      "command": "curl",
+      "args": [
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "120",
+        "--output",
+        "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/cache/xget.ipub.io-a8ec416917076a17/icu_segmenter_data-2.2.0.crate",
+        "https://static.crates.io/crates/icu_segmenter_data/icu_segmenter_data-2.2.0.crate"
+      ],
+      "status": 28,
+      "signal": null,
+      "elapsed_ms": 120021.97566699999,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-icu-data.json",
+      "stage": "named_Rust_dependency_transport"
+    },
+    "recovered-icu-data-resume": {
+      "command": "curl",
+      "args": [
+        "--fail",
+        "--location",
+        "--continue-at",
+        "-",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--output",
+        "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home/registry/cache/xget.ipub.io-a8ec416917076a17/icu_segmenter_data-2.2.0.crate",
+        "https://static.crates.io/crates/icu_segmenter_data/icu_segmenter_data-2.2.0.crate"
+      ],
+      "status": 28,
+      "signal": null,
+      "elapsed_ms": 180020.15949999998,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-icu-data-resume.json",
+      "stage": "named_Rust_dependency_transport"
+    },
+    "recovered-icu-data-origin": {
+      "command": "curl",
+      "args": [
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--output",
+        "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/icu_segmenter_data-2.2.0-origin.crate",
+        "https://static.crates.io/crates/icu_segmenter_data/2.2.0/download"
+      ],
+      "status": 0,
+      "signal": null,
+      "elapsed_ms": 1539.209959,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-icu-data-origin.json",
+      "stage": "named_Rust_dependency_transport"
+    },
+    "recovered-native": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": 1,
+      "signal": null,
+      "elapsed_ms": 29559.635167,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-native.json",
+      "stage": "recovered_native_compilation_not_clean"
+    },
+    "recovered-native-fixed": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4"
+      ],
+      "status": 0,
+      "signal": null,
+      "elapsed_ms": 159352.652917,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-native-fixed.json",
+      "global_cache_dir": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/zig-global-cache",
+      "cargo_home": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home",
+      "cargo_net_offline": "true",
+      "stage": "recovered_native_compilation_not_clean"
+    },
+    "recovered-clean-final": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4",
+        "--cache-dir",
+        "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/clean-objects"
+      ],
+      "status": 0,
+      "signal": null,
+      "elapsed_ms": 233051.63375,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-clean-final.json",
+      "global_cache_dir": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/clean-global-cache",
+      "cargo_home": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home",
+      "cargo_net_offline": "true",
+      "stage": "clean_native_compilation_with_pinned_dependency_assets"
+    },
+    "recovered-incremental-final": {
+      "command": "zig",
+      "args": [
+        "build",
+        "-Doptimize=fast",
+        "-j4",
+        "--cache-dir",
+        "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/clean-objects"
+      ],
+      "status": 0,
+      "signal": null,
+      "elapsed_ms": 571.037792,
+      "raw_log": "engine-bench/.local/lightpanda-cost/build/recovered-incremental-final.json",
+      "global_cache_dir": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/clean-global-cache",
+      "cargo_home": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/cargo-home",
+      "cargo_net_offline": "true",
+      "stage": "no_change_incremental_compilation"
+    }
+  },
+  "artifact": {
+    "path": "source/zig-out/bin/lightpanda",
+    "bytes": 92785976,
+    "sha256": "7e270f93bea20913088db87d61b1dba323d0462b38e2228bda8a639c661ca0ef"
+  },
+  "patch": {
+    "bytes": 23720,
+    "sha256": "7e478847d80af4129b666dd48167d2f754f6c4a06b37bf4b0c1a201792c87edd",
+    "modules": [
+      "src/Config.zig",
+      "src/browser/Session.zig",
+      "src/browser/webapi/Navigator.zig",
+      "src/browser/webapi/Window.zig",
+      "src/browser/webapi/WorkerNavigator.zig",
+      "src/browser/webapi/storage/idb/Manager.zig",
+      "src/browser/webapi/storage/storage.zig",
+      "src/help.zon",
+      "src/network/HttpClient.zig",
+      "src/server/cdp/domains/emulation.zig",
+      "src/server/cdp/domains/network.zig"
+    ],
+    "added_lines": 137,
+    "removed_lines": 64
+  },
+  "smoke": {
+    "artifact_sha256": "7e270f93bea20913088db87d61b1dba323d0462b38e2228bda8a639c661ca0ef",
+    "started": "2026-11-04T11:57:10.818Z",
+    "finished": "2026-11-04T11:57:14.554Z",
+    "labels": [
+      "A1",
+      "B1",
+      "A2",
+      "B2"
+    ],
+    "raw": "engine-bench/.local/lightpanda-cost/patched-controlled/results.json",
+    "protocol": "engine-bench/.local/lightpanda-cost/patched-controlled/protocol.json",
+    "http": "engine-bench/.local/lightpanda-cost/patched-controlled/http.json"
+  },
+  "remaining": [
+    "Experimental config subset is not complete product EnvironmentSpec receipt or seed generator",
+    "Genuine CSS/image/Canvas/GL rendering remains absent; connected 440/880 Audio input response is observed, but required audio environment differentiation and the complete functional/identity matrix remain outstanding",
+    "Profile locking, abnormal-exit recovery, migration/export/import, sandbox and proxy fail-closed behavior remain unaccepted"
+  ],
+  "cost_card_ownership": "Parent integrates this recovery without losing its shared-workload performance additions; this script never rewrites cost-card.json",
+  "cache_boundary": {
+    "recovered": "Previous owned native outputs may be reused; not reported as clean compilation.",
+    "clean": "recovered-clean-final uses fresh .local/lightpanda-cost/clean-objects and clean-global-cache. Existing pinned source/zig-pkg, prebuilt V8 archive and Cargo source/crate caches are retained; no object cache is borrowed from outside the candidate.",
+    "incremental": "Same commands, source, flags, local/global object caches and install path as clean; no edits between clean and incremental.",
+    "no_full_v8_source_build": "V8 static archive is a retained dependency asset; V8 compiler/toolchain rebuild was not measured."
+  },
+  "seeded_packages": [
+    {
+      "name": "pcre2",
+      "archive": "pcre2.tar.gz",
+      "hash": "pcre2-10.50.0-DEV-IZ6r6yDTrgCmI3jcBntPIdZLWLhNORGZZSi8hxQkc11x",
+      "strip": 1,
+      "archive_sha256": "13347bbcf016d32452df9a6f375b8a3b5e7e72814976dd452525dd4d97598566",
+      "archive_bytes": 4212618,
+      "verify": {
+        "status": 0,
+        "stdout": "pcre2-10.50.0-DEV-IZ6r6yDTrgCmI3jcBntPIdZLWLhNORGZZSi8hxQkc11x\n",
+        "stderr": "warning(fetch): failed to delete temporary directory /Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/zig-global-cache/tmp/.tmp-2d24b71a535fa227: DirNotEmpty\n"
+      },
+      "extract": {
+        "command": "tar",
+        "args": [
+          "-xzf",
+          "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/pcre2.tar.gz",
+          "-C",
+          "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/zig-pkg/pcre2-10.50.0-DEV-IZ6r6yDTrgCmI3jcBntPIdZLWLhNORGZZSi8hxQkc11x",
+          "--strip-components=1"
+        ],
+        "status": 0
+      },
+      "reason": "Avoid Zig0.17 cached Git URL archive wrapper mismatch and separate global-cache roots; seed the package tree only after exact pinned Zig hash verification."
+    },
+    {
+      "name": "boringssl",
+      "archive": "boringssl-origin.tar.gz",
+      "hash": "N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6",
+      "strip": 0,
+      "archive_sha256": "fc626775e800241136e2dc1695c5cd95ca28cfeb53f2c88fff837036fccf3a85",
+      "archive_bytes": 74804654,
+      "verify": {
+        "status": 0,
+        "stdout": "N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6\n",
+        "stderr": ""
+      },
+      "extract": {
+        "command": "tar",
+        "args": [
+          "-xzf",
+          "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/dependency-archives/boringssl-origin.tar.gz",
+          "-C",
+          "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/source/zig-pkg/N-V-__8AAEhRag6gHL85MNqOxGFtJs5Lu9fK22BDYLMwOJs6"
+        ],
+        "status": 0
+      },
+      "reason": "Avoid Zig0.17 cached Git URL archive wrapper mismatch and separate global-cache roots; seed the package tree only after exact pinned Zig hash verification."
+    }
+  ],
+  "verified_Rust_prerequisite": {
+    "name": "icu_segmenter_data",
+    "version": "2.2.0",
+    "bytes": 3390846,
+    "sha256": "e4a2c462a4d927d512f5f882a033ddd62f33a05bb9f230d98f736ac3dc85938f",
+    "expected": "e4a2c462a4d927d512f5f882a033ddd62f33a05bb9f230d98f736ac3dc85938f",
+    "hash_matches": true,
+    "source_url": "https://static.crates.io/crates/icu_segmenter_data/2.2.0/download",
+    "cache": "cargo-home/registry/cache/xget.ipub.io-a8ec416917076a17/icu_segmenter_data-2.2.0.crate"
+  },
+  "release_functional": {
+    "artifact_sha256": "9f3ee749a55d1abc5f8fdda0d9559c3b2abcec5bff5bfe902bc06c0a89538ec4",
+    "observations": [
+      {
+        "label": "A1",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "worker_scope": {
+          "document": "undefined",
+          "window": "undefined",
+          "brand": "[object DedicatedWorkerGlobalScope]"
+        },
+        "audio": [
+          {
+            "frequency": 440,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7025727741973506,
+            "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+          },
+          {
+            "frequency": 880,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7097588919194849,
+            "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+          }
+        ],
+        "webgl": {
+          "status": "unsupported",
+          "context": null
+        },
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage_before": {
+          "cookie": "",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true
+      },
+      {
+        "label": "B1",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "worker_scope": {
+          "document": "undefined",
+          "window": "undefined",
+          "brand": "[object DedicatedWorkerGlobalScope]"
+        },
+        "audio": [
+          {
+            "frequency": 440,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7025727741973506,
+            "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+          },
+          {
+            "frequency": 880,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7097588919194849,
+            "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+          }
+        ],
+        "webgl": {
+          "status": "unsupported",
+          "context": null
+        },
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage_before": {
+          "cookie": "",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true
+      },
+      {
+        "label": "A2",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "en-US",
+          "languages": [
+            "en-US",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "UTC",
+          "locale": "en-US"
+        },
+        "worker_scope": {
+          "document": "undefined",
+          "window": "undefined",
+          "brand": "[object DedicatedWorkerGlobalScope]"
+        },
+        "audio": [
+          {
+            "frequency": 440,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7025727741973506,
+            "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+          },
+          {
+            "frequency": 880,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7097588919194849,
+            "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+          }
+        ],
+        "webgl": {
+          "status": "unsupported",
+          "context": null
+        },
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage_before": {
+          "cookie": "persist=durable",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true
+      },
+      {
+        "label": "B2",
+        "first": {
+          "ua": "Lightpanda/1.0",
+          "language": "fr-FR",
+          "languages": [
+            "fr-FR",
+            "fr",
+            "en"
+          ],
+          "platform": "MacIntel",
+          "hardwareConcurrency": 4,
+          "deviceMemory": 8,
+          "screen": {
+            "width": 1920,
+            "height": 1080,
+            "colorDepth": 24
+          },
+          "timezone": "Europe/Paris",
+          "locale": "fr-FR"
+        },
+        "worker_scope": {
+          "document": "undefined",
+          "window": "undefined",
+          "brand": "[object DedicatedWorkerGlobalScope]"
+        },
+        "audio": [
+          {
+            "frequency": 440,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7025727741973506,
+            "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+          },
+          {
+            "frequency": 880,
+            "status": "observed",
+            "sampleRate": 48000,
+            "length": 512,
+            "rms": 0.7097588919194849,
+            "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+          }
+        ],
+        "webgl": {
+          "status": "unsupported",
+          "context": null
+        },
+        "canvas_pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage_before": {
+          "cookie": "persist=durable",
+          "localStorage": null
+        },
+        "idb_before": null,
+        "idb_committed": true
+      }
+    ],
+    "raw": "engine-bench/.local/lightpanda-cost/release-functional/results.json"
+  },
+  "patched_functional": [
+    {
+      "label": "A1",
+      "first": {
+        "ua": "Mozilla/5.0 CostSlice-A",
+        "language": "en-US",
+        "languages": [
+          "en-US",
+          "en"
+        ],
+        "platform": "MacIntel",
+        "hardwareConcurrency": 4,
+        "deviceMemory": 8,
+        "screen": {
+          "width": 1920,
+          "height": 1080,
+          "colorDepth": 24
+        },
+        "timezone": "UTC",
+        "locale": "en-US"
+      },
+      "worker_scope": {
+        "document": "undefined",
+        "window": "undefined",
+        "brand": "[object DedicatedWorkerGlobalScope]"
+      },
+      "audio": [
+        {
+          "frequency": 440,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7025727741973506,
+          "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+        },
+        {
+          "frequency": 880,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7097588919194849,
+          "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+        }
+      ],
+      "webgl": {
+        "status": "unsupported",
+        "context": null
+      },
+      "canvas_pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "storage_before": {
+        "cookie": "",
+        "localStorage": null
+      },
+      "idb_before": null,
+      "idb_committed": true
+    },
+    {
+      "label": "B1",
+      "first": {
+        "ua": "Mozilla/5.0 CostSlice-B",
+        "language": "fr-FR",
+        "languages": [
+          "fr-FR",
+          "fr",
+          "en"
+        ],
+        "platform": "Linux x86_64",
+        "hardwareConcurrency": 8,
+        "deviceMemory": 4,
+        "screen": {
+          "width": 1920,
+          "height": 1080,
+          "colorDepth": 24
+        },
+        "timezone": "Europe/Paris",
+        "locale": "fr-FR"
+      },
+      "worker_scope": {
+        "document": "undefined",
+        "window": "undefined",
+        "brand": "[object DedicatedWorkerGlobalScope]"
+      },
+      "audio": [
+        {
+          "frequency": 440,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7025727741973506,
+          "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+        },
+        {
+          "frequency": 880,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7097588919194849,
+          "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+        }
+      ],
+      "webgl": {
+        "status": "unsupported",
+        "context": null
+      },
+      "canvas_pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "storage_before": {
+        "cookie": "",
+        "localStorage": null
+      },
+      "idb_before": null,
+      "idb_committed": true
+    },
+    {
+      "label": "A2",
+      "first": {
+        "ua": "Mozilla/5.0 CostSlice-A",
+        "language": "en-US",
+        "languages": [
+          "en-US",
+          "en"
+        ],
+        "platform": "MacIntel",
+        "hardwareConcurrency": 4,
+        "deviceMemory": 8,
+        "screen": {
+          "width": 1920,
+          "height": 1080,
+          "colorDepth": 24
+        },
+        "timezone": "UTC",
+        "locale": "en-US"
+      },
+      "worker_scope": {
+        "document": "undefined",
+        "window": "undefined",
+        "brand": "[object DedicatedWorkerGlobalScope]"
+      },
+      "audio": [
+        {
+          "frequency": 440,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7025727741973506,
+          "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+        },
+        {
+          "frequency": 880,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7097588919194849,
+          "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+        }
+      ],
+      "webgl": {
+        "status": "unsupported",
+        "context": null
+      },
+      "canvas_pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "storage_before": {
+        "cookie": "persist=durable",
+        "localStorage": "durable"
+      },
+      "idb_before": "durable",
+      "idb_committed": true
+    },
+    {
+      "label": "B2",
+      "first": {
+        "ua": "Mozilla/5.0 CostSlice-B",
+        "language": "fr-FR",
+        "languages": [
+          "fr-FR",
+          "fr",
+          "en"
+        ],
+        "platform": "Linux x86_64",
+        "hardwareConcurrency": 8,
+        "deviceMemory": 4,
+        "screen": {
+          "width": 1920,
+          "height": 1080,
+          "colorDepth": 24
+        },
+        "timezone": "Europe/Paris",
+        "locale": "fr-FR"
+      },
+      "worker_scope": {
+        "document": "undefined",
+        "window": "undefined",
+        "brand": "[object DedicatedWorkerGlobalScope]"
+      },
+      "audio": [
+        {
+          "frequency": 440,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7025727741973506,
+          "float32_le_sha256": "d3ac4a898e9e8622079f423f44f29c3bbc7640586c4a0d368871812c9d5bfccc"
+        },
+        {
+          "frequency": 880,
+          "status": "observed",
+          "sampleRate": 48000,
+          "length": 512,
+          "rms": 0.7097588919194849,
+          "float32_le_sha256": "6dfd74ac2d52a81d5d6cb2a02e045bdd2ba45535d6b802a29fbb9e9495ca6e1e"
+        }
+      ],
+      "webgl": {
+        "status": "unsupported",
+        "context": null
+      },
+      "canvas_pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "storage_before": {
+        "cookie": "persist=durable",
+        "localStorage": "durable"
+      },
+      "idb_before": "durable",
+      "idb_committed": true
+    }
+  ],
+  "source_package_version": "1.1.0-dev.1+c5f7bb2 (observed build log and HTTP client hints); source is still pinned at tag1.0.2 commit c5f7bb29b127040c899d4e181b5709f76fc71a6f, not the unchanged release binary",
+  "final_disk": {
+    "command": [
+      "du",
+      "-sk",
+      ".local/lightpanda-cost"
+    ],
+    "allocated_kib": 2887560,
+    "scope": "All owned source checkout, source/package/dependency archives, Cargo caches, recovered and fresh-clean object caches, runtime/viewer artifacts and smoke evidence. Includes duplicate experimental object caches; not an installation-footprint estimate.",
+    "measurement_point": "After clean233.052s, incremental0.571s and final patched-controlled A1/B1/A2/B2 smoke"
+  },
+  "build_CPU_and_peak_memory": "not_measured; elapsed build times do not establish runtime throughput or memory performance",
+  "smoke_matches_final_artifact": true,
+  "final_pixel_observation": {
+    "image": "/Users/gl/miniworks/anti-trace-browser/engine-bench/.local/lightpanda-cost/patched-controlled/A1.png",
+    "width": 1920,
+    "height": 1080,
+    "samples": {
+      "10,10": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "140,115": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "500,115": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "750,130": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "expected_css": {
+      "body": [
+        231,
+        238,
+        249,
+        255
+      ],
+      "button": [
+        255,
+        176,
+        0,
+        255
+      ],
+      "canvas": [
+        0,
+        136,
+        68,
+        255
+      ]
+    },
+    "expected_color_counts": {
+      "body": 0,
+      "button": 0,
+      "canvas": 0
+    },
+    "top_colors": [
+      [
+        "255,255,255,255",
+        2072108
+      ],
+      [
+        "31,31,31,255",
+        289
+      ],
+      [
+        "87,87,87,255",
+        261
+      ],
+      [
+        "199,199,199,255",
+        191
+      ],
+      [
+        "143,143,143,255",
+        167
+      ]
+    ]
+  },
+  "measured_assertions": {
+    "A_restart_identity_stable": true,
+    "B_restart_identity_stable": true,
+    "A_B_configured_fields_differ": true,
+    "page_iframe_worker_common_fields_equal": true,
+    "echo_UA_matches_first_script": true,
+    "cold_Cookie_LocalStorage_IndexedDB_restore": true,
+    "separate_fresh_A_B_stores": true,
+    "Worker_has_no_document_or_window": true,
+    "required_GUI_complete": false,
+    "scope": "Only measured configuration/storage/Worker cases; not a full EnvironmentSpec, realm-isolation, security or identity gate"
+  }
+}
