@@ -7,7 +7,7 @@ import socket
 from pathlib import Path
 from typing import Any
 
-from . import profile
+from mioa_core import profile
 
 
 class EngineError(RuntimeError):

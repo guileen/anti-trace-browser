@@ -1,6 +1,6 @@
 # anti-trace
 
-同一 CLI 管理 Camoufox、Obscura、Lightpanda 三个真实运行时。三者并行接受相同硬门槛，没有预选胜者；可创建、可导航或某个局部检查通过，不等于完整反追踪、持久化、GUI、兼容性与挑战验收通过。完整证据未齐全时严格状态为 **NOT_PASS**，不能视为已完成承诺。版本化要求见 [OpenSpec](../openspec/changes/evaluate-lightweight-runtime/proposal.md)；历史实验报告保留其原始日期与范围。
+同一 CLI 管理 Camoufox、Obscura、Mioa 三个真实运行时。三者并行接受相同硬门槛，没有预选胜者；可创建、可导航或某个局部检查通过，不等于完整反追踪、持久化、GUI、兼容性与挑战验收通过。完整证据未齐全时严格状态为 **NOT_PASS**，不能视为已完成承诺。版本化要求见 [OpenSpec](../openspec/changes/evaluate-lightweight-runtime/proposal.md)；历史实验报告保留其原始日期与范围。
 
 2026-11-04三路已完成同版459项/22场景采集，结论均为`NOT_PASS`；最终结果、已测失败与未测项见[本轮回执](../openspec/changes/evaluate-lightweight-runtime/tasks.md#验证口径与本轮回执)。Obscura的Canvas/Audio语义与Camoufox崩溃租约缺口保持显式；不把真实组件接入称为完整浏览器验收。
 
@@ -16,13 +16,15 @@ uv sync
 ./bin/anti-trace stop work
 ```
 
-`setup` 获取锁定的 Camoufox Python 包对应浏览器，并校准实际宿主字体。Camoufox 默认运行时可用 `ANTI_TRACE_BROWSER` 指定；`create --native-binary PATH` 也可显式指定其可执行文件。Obscura 与 Lightpanda 使用固定上游提交对应的本地源码构建，默认路径与提交见 `anti_trace/native_spec.py` 的 `PINS`。可用 `ANTI_TRACE_OBSCURA_BINARY`、`ANTI_TRACE_LIGHTPANDA_BINARY` 或 `--native-binary PATH` 显式选择可执行文件；缺少可执行文件、字体或真实能力时返回明确错误，不使用替身浏览器。
+`anti-trace` 通过 `[tool.uv.sources]` 固定依赖 `mioa-core` 的完整提交 `fff9c4f3121b5989bf8c5d87ee1f1870be56728c`（`https://github.com/guileen/mioa-core.git` 的 `mioa-core` 子目录）；首次 `uv sync` 需要访问该仓库，`uv.lock` 记录该修订。
+
+`setup` 获取锁定的 Camoufox Python 包对应浏览器，并校准实际宿主字体。Camoufox 默认运行时可用 `ANTI_TRACE_BROWSER` 指定；`create --native-binary PATH` 也可显式指定其可执行文件。Obscura 与 Mioa 使用固定上游提交对应的本地源码构建，默认路径与提交见 `mioa_core.native_spec` 的 `PINS`。可用 `ANTI_TRACE_OBSCURA_BINARY`、`ANTI_TRACE_MIOA_BINARY` 或 `--native-binary PATH` 显式选择可执行文件，显式参数优先于环境变量。非可编辑安装（`anti_trace` 位于 site-packages）的默认构建不再假设 `parents[2]` 是 checkout：以 `cli/pyproject.toml` 中的产品名作为哨兵，从包位置、控制台脚本/解释器与当前目录向上有界（最多32层）确定性查找 ATB checkout，首个验证通过的根生效；因此在 checkout 内调用已安装 CLI 仍使用该 checkout 的固定构建，无 checkout 时返回 `capability_unavailable` 并要求 `--native-binary` 或对应环境变量，不挑选无关二进制。缺少可执行文件、字体或真实能力时返回明确错误，不使用替身浏览器。
 
 ```sh
 ./bin/anti-trace create rust-env --runtime obscura --seed rust-identity \
   --native-binary /absolute/path/to/obscura --allow-private-network
-./bin/anti-trace create zig-env --runtime lightpanda --seed zig-identity \
-  --native-binary /absolute/path/to/lightpanda --allow-private-network
+./bin/anti-trace create zig-env --runtime mioa --seed zig-identity \
+  --native-binary /absolute/path/to/mioa --allow-private-network
 ```
 
 字体来自真实 SFNT/TTC 文件：`--fonts host` 使用资产中的实际家族，`--fonts subset:N` 以种子确定固定子集（N 至少为8）。原生路线可重复 `--font-file PATH` 替换宿主字体集合；例如 `../browsers/engine-bench/candidates/lightpanda/assets/fonts/NotoSansCJKsc-Regular.otf` 是已固定摘要、附OFL-1.1许可的真实Noto CJK 2.004资产。Camoufox不支持直接加载该独立字体文件，宿主字体经过本机校准；同机结果不是跨宿主可移植保证。系统字体的再分发权不随归档自动获得。
@@ -30,7 +32,7 @@ uv sync
 ## 命令面
 
 ```text
-anti-trace create NAME [--runtime camoufox|obscura|lightpanda] [--seed SEED]
+anti-trace create NAME [--runtime camoufox|obscura|mioa] [--seed SEED]
     [--overrides JSON|@FILE] [--native-binary PATH] [--fonts host|subset:N] [--font-file PATH ...]
     [--cores N] [--os macos|windows|linux] [--webrtc spoof|block]
     [--proxy URL|env:VARIABLE|DIRECT] [--egress-policy strict|observe]
@@ -103,9 +105,9 @@ async def main(page, context, tools):
 
 `attach` 保留外部浏览器所有权：`start` 拒绝，`stop` 不关闭外部进程。`run/field/audit` 使用实际附加上下文；附加浏览器的能力与身份声明不等于托管 schema3、跨调用引用或 GUI 验收通过。
 
-### Panda Flow 原生帧接口（LPFR v2）
+### Mioa Headless 原生帧接口（LPFR v2）
 
-`lightpanda-headless --native-socket /private/session/control.sock --frame-shm /private/session/frame`
+`mioa-headless --native-socket /private/session/control.sock --frame-shm /private/session/frame`
 启用独立 UDS 控制面；两个绝对路径须处于同一当前用户所有、权限 `0700` 的短路径目录。
 不传这两个选项时，原有 stdin/stdout NDJSON 客户端及 PNG screenshot API 保持原协议；
 原生模式 stdout 仅输出现有 ready/error 事件，不承载像素。Socket 与帧文件为 `0600`。
@@ -135,10 +137,10 @@ producer-owned slot，不调用 PNG 编码、解码或 Base64；CDP/UDS 都只�
 consumer 初始 front=0，middle=1，back=2；消费 dirty middle 时以 `acq_rel` 交换自己的
 front，直到下次交换前所持 slot 均不可被 producer 改写。`published_seq` 为 release-store
 的发布提示；以取得的 slot header 序号为准。桌面打包可预编译 `frame_atomic.c` 并用绝对路径
-`LIGHTPANDA_FRAME_ATOMICS=/path/to/libframe_atomic.dylib` 指定；此时启动不需要编译器。
+`MIOA_FRAME_ATOMICS=/path/to/libframe_atomic.dylib` 指定；此时启动不需要编译器。
 源码服务默认首次在私有本机 cache 以 `cc -std=c11` 编译，拒绝非 lock-free 32/64 位原子；
 源码随 Python wheel 分发。macOS 打包命令为 `cc -std=c11 -O2 -dynamiclib -fPIC
-lightpanda-headless/lightpanda_headless/frame_atomic.c -o /absolute/path/libframe_atomic.dylib`。
+core/mioa-headless/mioa_headless/frame_atomic.c -o /absolute/path/libframe_atomic.dylib`。
 
 ```text
 control[64], little endian:

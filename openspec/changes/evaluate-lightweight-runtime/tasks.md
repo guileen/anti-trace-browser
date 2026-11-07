@@ -48,13 +48,11 @@
 - [ ] 5.1 Camoufox、Obscura、Lightpanda分别生成同版本完整门槛报告：A1/B1/A2/B2、两schemeful site、重复/刷新/新页/重启、GUI↔Agent、网络失败、迁移、挑战回执、性能。全部22场景逐项映射当前可比证据；缺失/unsupported/error/review_required保持未通过。场景 E1–K3 全集；证据：三路raw/verdict、遗留项、GUI人审；任何一路不借另一条成绩放行。
 - [ ] 5.2 完成依赖/license/安全更新清单与恶意页面隔离评估、干净机器安装构建运行、CLI help/错误/JSON规范、敏感信息扫描、产物 digest 和上游升级演练；更新唯一总入口，实施验收通过后归档 change。场景 K3/T2；证据：发行包、构建日志、端到端记录、签收。
 
-## 6. 独立 Lightpanda Desktop（2026-11-04 用户新增）
+## 6. 独立 Mioa Headless 服务（2026-11-04 用户新增）
 
-本节为2026-11-04历史Tauri制品回执，不代表当前Zig外壳验收。当前切换与验收状态见[`panda-flow-shell/tasks.md`](../../../lightpanda-desktop/openspec/changes/panda-flow-shell/tasks.md)；旧Tauri/Rust桌面实现退役。
+桌面客户端已迁入独立私有仓库维护，本开源仓库仅保留并维护固定提交的 `core/` 子模块（`core/mioa-headless`）无头服务。
 
-- [x] 6.1 `lightpanda-headless/`独立Python3.12/uv项目与protocol=1服务完成；复用单Engine、ControlState、原生适配和持久目录，独立运行无Desktop依赖。13项回归及真实服务11项smoke通过，包含占用冲突、旧帧拒绝、中文输入、history/tabs、持久关闭/重开和EOF退出。修复真实关闭时重复abort导致退出码1；失败原件与通过回执分别保留。场景D2/D3；证据`lightpanda-desktop/.local/evidence/headless-smoke*.json`。
-- [x] 6.2 `lightpanda-desktop/`独立Tauri2/系统WebView应用完成；本地UI单向消费headless，目标网站只在LP运行。真实WebView12项smoke通过：地址/历史/刷新/标签、中文值输入、像素点击、Cmd+L、协议限制及人机交接；独立HTTP fixture收到相应中文输入与计数。原生WKWebView截图与DOM输入一致。测试钩子仅ui-smoke feature存在，默认发行关闭。场景D1/G1/G2；证据`desktop-smoke.json`、`desktop-webview.png`、`server-observations.json`；物理IME/手感另需人审。
-- [x] 6.3 本机`.app`已打包、实际启动并保持可体验。制品含固定LP/字体/许可/补丁/摘要，原生Mach-O minos27.0与.app最低版本一致；局部ad-hoc资源封印通过codesign deep/strict，启动后仍有效且native SHA未变。应用资源只读，源码依赖复制到内容寻址cache，Python环境按代码路径隔离，Profile留在应用数据目录。默认about:blank离线启动真实帧通过，修复通用URL缩写把空白页当hostname的问题。场景D1–D3；证据`bundle-integrity.json`、`production-startup.json`、`blank-startup.json`。已测macOS27+/arm64；Linux/Windows native、发行公证及全量459项继续独立登记，change保持开放。
+- [x] 6.1 `core/mioa-headless`（`mioa-core@fff9c4f` 子模块）独立 Python 3.12 / uv 项目与本地会话服务完成：复用单 Engine、ControlState、原生适配和持久目录，支持 LPFR v2 共享内存原始 RGBA 帧环（C11 acquire/release 原子同步）与 `0600` UDS 控制面，独立运行无桌面端依赖。72 项单元与生命周期回归通过，包含占用冲突、旧帧拒绝、中文输入、history/tabs、100 页并发隔离上下文（0 主世界泄漏）、持久关闭/重开和 EOF 退出。场景 D2/D3。
 
 ## 7. 真实指纹、统计语义与稳定环境（2026-11-04用户修订）
 
@@ -102,7 +100,7 @@
 - F1/F2实际矩阵：[Camoufox](../../../browsers/engine-bench/.local/authenticity/camoufox-1793865475421/report.json)、[Lightpanda](../../../browsers/engine-bench/.local/authenticity/lightpanda-1793866069834/report.json)、[Obscura](../../../browsers/engine-bench/.local/authenticity/obscura-1793866069818/report.json)各32/32格通过。Obscura四个Worker图形稳定项保持optional/unsupported；其余必需HTTP、配置、存储、支持特征稳定、字体因果差异与source/build绑定通过。
 - 已构建native制品：LP `7ce7053e` / patch `be74064a`，Obscura `f5acf336` / patch `866c2822`；完整摘要与实际回执见各候选`current-build.json`。LP真实rgba/DITHER及共享比例/等宽字体修复，Obscura frame绘图/Audio私有receiver/经典Worker导入与原生CH修复均进入实际矩阵，不依赖测试专用输出。
 - 原生回归：Obscura真实性13项、另行实际Arial/Menlo字体1项、isolated-context真实wire1项通过；LP原生Identity、RGBA各1项通过。初次Worker改为multi-thread reactor触发deno_unsync CurrentThread断言；保留失败并修为Deno current-thread加独立I/O reactor，原测试及实际32格通过。
-- 新LP实际Tauri WebView12项通过，独立HTTP收到`桌面中文测试`和计数1；[原生截图](../../../browsers/engine-bench/.local/authenticity/gui-1793862573993/desktop-webview.png)、[动作与输入归档](../../../browsers/engine-bench/.local/authenticity/gui-1793862573993/smoke-inputs.json)、[服务端事件](../../../browsers/engine-bench/.local/authenticity/gui-1793862573993/server-events.json)绑定同一`7ce7053e`制品。原用户窗口/Profile保持原状。
+- 历史桌面专项证据不在本公开文档披露。
 - 最终完整任务按LP→Obscura→Camoufox顺序、相同collector/source/workload执行，每路两预热加十测；实际inner与PNG均1280×800@1。三路任务正确性10/10，两原生预算10/10、Camoufox因RSS预算0/10；全部正确样本保留统计。median/p95/CPU/RSS、冷/热启动、资源、8次操作IPC及6次CLI调用见[交叉绑定汇总](../../../browsers/engine-bench/.local/authenticity/implementation-1793868323575.json)与[README成本表](../../../README.md#512-真实计算与稳定环境2026-11-05)。此前Obscura776px配置失败保留；按既有available-area模型补偿24px后用同源三路完整重测，不改输出或阈值。
 - 最终同制品[独立headless11项smoke](../../../browsers/engine-bench/.local/authenticity/gui-1793862573993/final-headless/headless-smoke.json)通过，含Agent同会话、真实输入、占用冲突、存储重开、stale frame拒绝与EOF/native退出。当前新规则与单机成本已完成；外部网络/挑战、异机迁移、发行和真实IME/手感gate继续独立，不归档change。OpenSpec1.16.0 strict实际通过。
 - 收尾：[执行脚本与清理回执](../../../browsers/engine-bench/.local/authenticity/cleanup-1793868674267/verification.json)保留精确输入，14个尚存自建home先归档后移除、10个已由collector清理；4份临时执行脚本删除、自有GUI fixture停止。所有raw、失败裁定、source快照及native构建缓存保留；既有审计服务、用户窗口与Profile未改动。

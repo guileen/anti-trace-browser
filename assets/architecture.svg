@@ -70,7 +70,7 @@
 
     <rect x="0" y="80" width="184" height="52" rx="8" fill="#1e293b" stroke="#eab308" stroke-width="1.2"/>
     <circle cx="16" cy="100" r="4" fill="#eab308"/>
-    <text x="28" y="104" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700">Lightpanda</text>
+    <text x="28" y="104" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700">Mioa</text>
     <text x="28" y="120" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">Zig + V8 · Low footprint</text>
 
     <rect x="0" y="144" width="184" height="52" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>

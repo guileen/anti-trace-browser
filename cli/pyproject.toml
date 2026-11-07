@@ -19,6 +19,7 @@ dependencies = [
   "playwright==1.62.0",
   "psutil==7.2.2",
   "pysocks==1.7.1",
+  "mioa-core==0.1.0",
 ]
 
 [project.scripts]
@@ -26,6 +27,14 @@ anti-trace = "anti_trace.cli:main"
 
 [tool.uv]
 package = true
+
+[tool.uv.sources]
+mioa-core = { git = "https://github.com/guileen/mioa-core.git", rev = "fff9c4f3121b5989bf8c5d87ee1f1870be56728c", subdirectory = "mioa-core" }
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
 
 [build-system]
 requires = ["setuptools>=77"]

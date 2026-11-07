@@ -115,20 +115,20 @@ The project SHALL implement both Obscura and Lightpanda and evaluate them alongs
 - **WHEN** promoting any of the three runtimes
 - **THEN** its reproducible build, dependency/license inventory, security/sandbox review, clean-install CLI smoke, human GUI sign-off, identity matrix and regression artifacts are linked to its own release. All required product scenarios SHALL have current comparable evidence; component tests or another runtime's pass SHALL NOT substitute. Camoufox security updates use the same pinned-version protocol.
 
-### Requirement: Independent Lightpanda Desktop and headless projects
-The Desktop SHALL depend on a separately runnable headless project through a versioned local process protocol. Headless SHALL own page execution, network, storage, rendering and input state; Desktop SHALL own the application window, navigation controls and OS shortcuts. Desktop-only changes SHALL leave browser-kernel source and standalone headless operation unchanged. Platform claims SHALL identify the shell and native runtime separately.
+### Requirement: Independent Lightpanda headless project
+The headless service SHALL be separately runnable through a versioned local process protocol. Headless SHALL own page execution, network, storage, rendering and input state. Client-only changes SHALL leave browser-kernel source and standalone headless operation unchanged. Platform claims SHALL identify the native runtime separately.
 
-#### Scenario: D1 Native desktop navigation and real page input
-- **WHEN** the user opens the application, enters an HTTP(S) address, navigates history, reloads, creates/selects/closes tabs and types or clicks within the page
-- **THEN** the OS displays a standalone application window with navigation controls, the actual headless page supplies every displayed content pixel, input uses the same page/observation/control revision, and remote page content executes solely in headless.
+#### Scenario: D1 Headless navigation and real page input
+- **WHEN** a local client requests an HTTP(S) address, history navigation, reload, tab creation/selection/closure and page typing or clicking
+- **THEN** the actual headless page supplies every returned content pixel, input uses the same page/observation/control revision, and remote page content executes solely in headless.
 
 #### Scenario: D2 Owned service lifecycle and failure
-- **WHEN** startup fails, another process owns the profile, the child disconnects, the window closes or the application quits
-- **THEN** errors remain explicit, the existing owner remains alive, the application persists and closes only its own service/runtime, and a reopen restores committed profile data. A disconnected human lease stays paused until explicit handover.
+- **WHEN** startup fails, another process owns the profile, the child disconnects or the client exits
+- **THEN** errors remain explicit, the existing owner remains alive, the service closes only its own runtime, and a reopen restores committed profile data. A disconnected human lease stays paused until explicit handover.
 
 #### Scenario: D3 Independent installation and platform evidence
-- **WHEN** running headless alone or building the desktop package on a supported shell platform
-- **THEN** headless starts without a GUI dependency, Desktop uses the declared local protocol and dependency manifests, packaged artifacts identify runtime/font/license inputs, and untested or unavailable native-runtime platforms retain their actual status.
+- **WHEN** running headless on a supported platform
+- **THEN** it starts without a GUI dependency, packaged artifacts identify runtime/font/license inputs, and untested or unavailable native-runtime platforms retain their actual status.
 
 ### Requirement: Authentic and stable fingerprint computation
 Lightweight runtimes SHALL generate Canvas, Audio and WebGL outputs through real rendering and computation. Acceptance SHALL combine input-response semantics, data provenance, input-conditioned statistics, environment stability and reproducible environment differentiation. Chrome provides a compatibility and empirical reference rather than byte-identical output targets.

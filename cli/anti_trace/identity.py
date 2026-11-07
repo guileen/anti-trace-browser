@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from . import profile
+from mioa_core import profile
 
 FONT_CACHE = profile.BASE / "fonts"
 
@@ -289,7 +289,7 @@ def normalize_seed(value: str | None) -> str:
 def generator_version() -> str:
     import camoufox.fingerprints as fingerprints
     from camoufox.fpgen_model import load_fpgen
-    from .native_spec import file_sha256
+    from mioa_core.native_spec import file_sha256
     material = []
     for label, root in (("camoufox", Path(fingerprints.__file__).parent), ("fpgen", Path(load_fpgen().__file__).parent)):
         for path in sorted(root.rglob("*")):
@@ -299,7 +299,7 @@ def generator_version() -> str:
 
 
 def cfox_assets(resolved: dict[str, Any], asset_paths: dict[str, Any]) -> dict[str, str]:
-    from .native_spec import file_sha256
+    from mioa_core.native_spec import file_sha256
     fonts = sorted({file_sha256(path) for path in asset_paths["fonts"]})
     return {"fonts_sha256": hashlib.sha256(json.dumps(fonts, separators=(",", ":")).encode()).hexdigest(),
             "render_config_sha256": hashlib.sha256(profile.canonical_bytes(resolved)).hexdigest()}
@@ -310,7 +310,7 @@ def create_cfox_spec(name: str, *, seed: str, os_name: str, cores: int | None,
                      binary: str, existing: list[dict[str, Any]], environment_id: str | None = None) -> dict[str, Any]:
     from importlib.metadata import version
     from .engine import build_options, decode_config
-    from .native_spec import file_sha256, native_font_assets
+    from mioa_core.native_spec import file_sha256, native_font_assets
     supported = {"user_agent", "platform", "locale", "languages", "timezone", "hardware_concurrency",
                  "screen_width", "screen_height", "avail_width", "avail_height", "color_depth",
                  "pixel_depth", "device_scale_factor", "fonts", "default_sans"}
@@ -380,13 +380,13 @@ def create_cfox_spec(name: str, *, seed: str, os_name: str, cores: int | None,
     cfg["resolved_sha256"] = hashlib.sha256(profile.canonical_bytes(cfg["resolved"])).hexdigest()
     cfg["asset_paths"] = native_font_assets()
     cfg["assets"] = cfox_assets(cfg["resolved"], cfg["asset_paths"])
-    from .native_spec import check_identity_collision
+    from mioa_core.native_spec import check_identity_collision
     check_identity_collision(cfg, existing)
     return cfg
 
 
 def validate_cfox_spec(cfg: dict[str, Any], *, check_artifacts: bool = True) -> None:
-    from .native_spec import file_sha256
+    from mioa_core.native_spec import file_sha256
     from importlib.metadata import version
     if not isinstance(cfg, dict) or cfg.get("schema") != profile.SCHEMA or not isinstance(cfg.get("runtime"), dict) or cfg["runtime"].get("id") != "camoufox":
         raise profile.ProfileError("incompatible_profile: migrate this profile before launch")

@@ -9,5 +9,7 @@ obscura-upstream/
 /cli/build/
 /services/challenges/.wrangler/
 .atb.tar.gz
-lightpanda-desktop/src-tauri/target/
-lightpanda-desktop/src-tauri/gen/
+lightpanda-desktop
+lightpanda-desktop/
+mioa-desktop
+mioa-desktop/

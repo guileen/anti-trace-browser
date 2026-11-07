@@ -13,7 +13,9 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
-from . import audit, client, field, identity, native_spec, net, profile
+from mioa_core import native_spec, net, profile
+
+from . import audit, client, field, identity
 
 EXEC_ARGUMENT_COUNT = {
     "goto": 1, "axtree": 0, "click": 1, "type": 2, "press": 1, "hover": 1,
@@ -165,9 +167,11 @@ def cmd_create(args: argparse.Namespace) -> int:
             overrides.setdefault("fonts", sorted(selected))
             if not isinstance(overrides["fonts"], list) or any(family not in families for family in overrides["fonts"]):
                 raise ValueError("fonts override must contain actual native font families")
+            from .engine import native_binary
             cfg = native_spec.create_native_spec(name, runtime=args.runtime, seed=seed, overrides=overrides,
-                                                 network=network, binary=args.native_binary, existing=existing,
-                                                 asset_paths=assets, storage_path=profile.profile_dir(name) / "data")
+                                                 network=network, binary=native_binary(args.runtime, args.native_binary),
+                                                 existing=existing, asset_paths=assets,
+                                                 storage_path=profile.profile_dir(name) / "data")
         cfg["created_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         try:
             profile.configure_proxy(cfg, args.proxy)
@@ -188,9 +192,7 @@ def cmd_create(args: argparse.Namespace) -> int:
 
 
 def _profile_names() -> list[str]:
-    from . import profile as profile_module
-
-    return [row["name"] for row in profile_module.list_profiles()]
+    return [row["name"] for row in profile.list_profiles()]
 
 
 def _wait_ready(name: str, proc: subprocess.Popen | None, timeout: float) -> dict[str, Any] | None:
@@ -449,24 +451,33 @@ def cmd_rm(args: argparse.Namespace) -> int:
 
 
 def cmd_export(args: argparse.Namespace) -> int:
+    from .runtime_adapter import RUNTIME_ADAPTERS
+
     name = profile.sanitize(args.name)
     profile.require(name)
     target = Path(args.file) if args.file else None
-    out = profile.export(name, target, include_credentials=args.include_credentials)
+    out = profile.export(name, target, include_credentials=args.include_credentials,
+                         runtime_adapters=RUNTIME_ADAPTERS)
     print(json.dumps({"status": "ok", "archive": str(out)}) if args.json else f"[ok] exported to {out}")
     return 0
 
 
 def cmd_import(args: argparse.Namespace) -> int:
+    from .runtime_adapter import RUNTIME_ADAPTERS
+
     archive = Path(args.archive)
-    name = profile.import_archive(archive.expanduser(), rename=args.name, proxy=args.proxy, native_binary=args.native_binary)
+    name = profile.import_archive(archive.expanduser(), rename=args.name, proxy=args.proxy,
+                                  native_binary=args.native_binary, runtime_adapters=RUNTIME_ADAPTERS)
     print(json.dumps({"status": "ok", "environment": name}) if args.json else f"[ok] imported as {name}")
     return 0
 
 def cmd_migrate(args: argparse.Namespace) -> int:
+    from .runtime_adapter import RUNTIME_ADAPTERS
+
     overrides = _json_input(args.overrides, object_only=True) if args.overrides is not None else None
     result = profile.migrate(profile.sanitize(args.name), binary=args.native_binary,
-                             overrides=overrides, rollback=args.rollback)
+                             overrides=overrides, rollback=args.rollback,
+                             runtime_adapters=RUNTIME_ADAPTERS)
     print(json.dumps(_redact(result), indent=2, ensure_ascii=False))
     return 0
 
@@ -765,7 +776,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = add("create", "create an environment with a pinned identity")
     p.add_argument("name")
-    p.add_argument("--runtime", choices=["camoufox", "obscura", "lightpanda"], default="camoufox")
+    p.add_argument("--runtime", choices=["camoufox", "obscura", "lightpanda", "mioa"], default="camoufox")
     p.add_argument("--seed", help="stable seed text or 16..64-byte hexadecimal seed")
     p.add_argument("--overrides", default="{}", help="JSON object or @FILE")
     p.add_argument("--native-binary", help="explicit executable; native defaults may use ANTI_TRACE_<RUNTIME>_BINARY")

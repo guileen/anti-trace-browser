@@ -12,7 +12,10 @@ import time
 from pathlib import Path
 from typing import Any
 
-from . import actions, runner
+from mioa_core.operations import ScriptOperations
+
+from . import actions
+from .runner import run_script
 
 
 def chromium_executable() -> str | None:
@@ -80,7 +83,7 @@ async def measure(
         active = [page]
         async def snapshot(target_page: Any, *, max_elements: int, max_text: int) -> dict[str, Any]:
             return await actions.axtree(target_page, max_elements=max_elements, max_text=max_text)
-        operations = runner.ScriptOperations(context, active_page=lambda: active[0], axtree=snapshot)
+        operations = ScriptOperations(context, active_page=lambda: active[0], axtree=snapshot)
         async def execute(operation: str, parameters: dict[str, Any]) -> Any:
             if operation == "page.screenshot" and (parameters.get("options") or {}).get("path"):
                 destination = Path(parameters["options"]["path"]).expanduser()
@@ -94,8 +97,8 @@ async def measure(
         try:
             metadata = {"user_agent": await page.evaluate("navigator.userAgent"),
                         "webdriver": await page.evaluate("navigator.webdriver")}
-            report = await runner.run_script(path, args, execute=execute, timeout=timeout,
-                                             max_output_bytes=max_output_bytes)
+            report = await run_script(path, args, execute=execute, timeout=timeout,
+                                      max_output_bytes=max_output_bytes)
             report.update(metadata)
             report["target"] = target
         finally:

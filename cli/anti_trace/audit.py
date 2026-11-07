@@ -8,7 +8,9 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
-from . import client, identity, profile
+from mioa_core import profile
+
+from . import client, identity
 
 PROBE = """(async () => {
   const fnv = (a) => { let h = 0x811c9dc5; for (let i = 0; i < a.length; i++) { h ^= a[i]; h = Math.imul(h, 0x01000193) >>> 0; } return h; };

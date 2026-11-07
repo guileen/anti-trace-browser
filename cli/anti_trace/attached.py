@@ -12,7 +12,9 @@ import asyncio
 from pathlib import Path
 from typing import Any
 
-from . import actions, profile
+from mioa_core import profile
+
+from . import actions
 
 RECORDED_HEADERS: list[dict[str, Any]] = []
 
@@ -68,7 +70,8 @@ async def _call(cdp_url: str, action: str, args: dict[str, Any], workdir: Path, 
                 return {"status": "ok", "action": "stop", "message": "attached browser is owned externally"}
 
             if action == "run":
-                from .runner import ScriptOperations, run_script
+                from mioa_core.operations import ScriptOperations
+                from .runner import run_script
                 operations = ScriptOperations(context,active_page=lambda:page,axtree=actions.axtree)
                 return await run_script(args.get("path",""),args.get("args"),execute=operations.execute,
                     timeout=float(args.get("timeout",timeout)),max_output_bytes=int(args.get("max_output_bytes",1048576)))

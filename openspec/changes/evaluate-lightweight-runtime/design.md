@@ -93,7 +93,7 @@ flowchart TD
 
 目标为真实管线、输入响应正确、统计行为可解释、同环境稳定和可复现A/B差异。Chrome/Camoufox作为实测参考，跨引擎像素、PNG编码及音频浮点逐字节一致退出硬门槛。服务端采用像素统计属于威胁模型；本提案用独立语义/统计/负例共同约束实现，全球分布与第三方规则按实际研究覆盖登记。
 
-唯一事实源继续为headless的真实DOM/网络/存储及渲染/音频状态。Desktop只显示同会话像素。真实性证据由源码/backend调用链、实际绘制/计算回执、原始数据和独立输入响应组成，审判器与候选运行时各自维护。
+唯一事实源继续为headless的真实DOM/网络/存储及渲染/音频状态。共享viewer只显示同会话像素，不另行执行页面。真实性证据由源码/backend调用链、实际绘制/计算回执、原始数据和独立输入响应组成，审判器与候选运行时各自维护。
 
 | 对象 | 唯一所有者 | 固定与变化边界 |
 |---|---|---|
@@ -127,7 +127,7 @@ sequenceDiagram
     J->>J: 语义 统计 负例 生命周期交叉验证
 ```
 
-Mind-Test：M34纯白控制图→单色统计正确也应pass；M35像素随机打乱→直方图相同但空间语义失败；M36频率翻倍且gain变化→频谱/能量按真实图响应，固定波形失败；M37一次真实绘制后每次读回改噪→稳定或显示/读回一致性失败；M38A/B绑定不同真实字体→文字输出差异来源可解释，几何/Audio共有值继续单列；M39同环境重启→配置/backend/资产相同且输入固定，稳定性通过后才验A/B差异；M40版本/backend变更→显式迁移与新实验，历史459项保留；M41人工与Agent→沿用同一surface和控制租约，Desktop没有另一份网页执行权。
+Mind-Test：M34纯白控制图→单色统计正确也应pass；M35像素随机打乱→直方图相同但空间语义失败；M36频率翻倍且gain变化→频谱/能量按真实图响应，固定波形失败；M37一次真实绘制后每次读回改噪→稳定或显示/读回一致性失败；M38A/B绑定不同真实字体→文字输出差异来源可解释，几何/Audio共有值继续单列；M39同环境重启→配置/backend/资产相同且输入固定，稳定性通过后才验A/B差异；M40版本/backend变更→显式迁移与新实验，历史459项保留；M41人工与Agent→沿用同一surface和控制租约，GUI viewer没有另一份网页执行权。
 
 首轮优先验证已支持字体/真实资源等低成本差异；screen/DPR差异与Canvas像素差异分别取证。GL后端或DSP路径的高成本扩展先给出原始差异、功能收益和维护预算，再独立评审。实现若破坏功能、稳定或已固定的资源预算，回退该项，不改变检查输入换取通过。
 
@@ -164,7 +164,7 @@ Turnstile：服务端发 `{run_id,nonce,expires_at}`，浏览器提交 `{run_id,
 - 原生输入统一为 `--environment-config FILE`；文件为UTF-8 JSON，含§3.1字段与`name/mode`管理元数据。`resolved`键：`user_agent,platform,locale,languages,timezone,hardware_concurrency,device_memory,screen_width,screen_height,avail_width,avail_height,color_depth,pixel_depth,device_scale_factor,fonts,gl_backend`；`gl_backend`物化默认cgl-default，可选cgl-accelerated/cgl-generic-float，必须对应实际CGL renderer，缺失报错不回退。其他渲染/Audio/GL参数只接受真实支持的命名值，不生成假输出。
 - 环境路径与资源摘要由管理器固定，`storage.path`为绝对隔离data目录，配置文件为其父环境目录的`config.json`；二者不得混用。字体身份摘要按实际文件内容SHA列表，不绑定物理路径；byte-identical资源可重定位。代理应用于全部运行时请求；私有测试地址仅显式允许，strict代理不可直接回退。
 - 原生CDP `Environment.getInfo {}` 返回 `{schema:3,id,revision,environment_sha256,runtime:{id,version},assets,capabilities}`；摘要为加载的原始配置文件bytes的SHA256。页面脚本不能改此宿主回执。输入校验、存储恢复与初始化成功后才能发布ready/CDP可用回执；错误typed且不遗留READY。
-- Python `anti_trace.native.launch_native(name,cfg,headless)`为async，返回`NativeSession`：`.context`提供Playwright风格的已实现子集，`.receipt`为上述原生回执，`await .close()`关闭己方进程及连接。`native_spec.py`负责typed生成、摘要和兼容检查；保留assets/runtime版本，不假装其他GPU/音频后端。
+- Python `mioa_core.native.launch_native(name,cfg,headless)`为async，返回`NativeSession`：`.context`提供Playwright风格的已实现子集，`.receipt`为上述原生回执，`await .close()`关闭己方进程及连接。`mioa_core.native_spec`负责typed生成、摘要和兼容检查；保留assets/runtime版本，不假装其他GPU/音频后端。
 - Context提供`.pages,.on("request",callback),await .new_page(),await .cookies(),await .close()`；Page提供`evaluate/goto/title/screenshot/locator/get_by_role/get_by_text/wait_for_load_state/wait_for_timeout/reload/go_back/bring_to_front/close/is_closed`及`mouse/keyboard`、`url/context`。底层仅一个原生CDP连接，固定target/session/frame；不支持的方法返回capability_unavailable。
 - `anti_trace.runner.run_script(path,args,*,execute,timeout,max_output_bytes,cancel)`异步执行受信本地`async main(page,context,tools)`；`execute(operation,args)`由Engine持有真实对象并检查控制租约。子进程用单个认证socketpair连接，有序请求、JSON结果、错误位置、输出/期限/取消边界；只终止己方脚本，不终止外部浏览器。
 - `anti_trace.viewer.ControlState`统一管理`agent|human|paused`、run/owner/page/observation版本；`begin_run/request_human/resume_agent/reclaim/disconnect/check_write/snapshot`为管理器入口。转人工先等待在途动作边界，断线保持paused。`ViewerServer`仅监听loopback，token鉴权/同源校验，真实像素来自同一runtime；点击携带frame/page/observation版本，过时先拒绝。浏览器仅显示viewer UI，不另执行被测页面。
@@ -173,25 +173,9 @@ Turnstile：服务端发 `{run_id,nonce,expires_at}`，浏览器提交 `{run_id,
 - 资产摘要使用排序键紧凑UTF-8；渲染DPR固定六位小数后去尾零编码为字符串，不能依赖serde_json的Map feature顺序。CDP对象由宿主V8 roots持有，不暴露页面registry、不跨导航重放表达式。移植归档先验证staging实际字节，再重绑物理路径。
 - Parent拥有`cli.py/engine.py/profile.py/actions.py`集成；原生适配、脚本、viewer、两kernel和独立判据分别有唯一编辑者。原生构建与性能由集成后统一执行，编译竞争不混入性能结论。
 
-### 3.5 独立 Lightpanda Desktop（2026-11-04）
+### 3.5 独立 Headless 服务（2026-11-04）
 
-依赖方向：`lightpanda-desktop/` → `lightpanda-headless/` → 既有管理器与Lightpanda原生进程。Desktop采用Tauri 2/系统WebView；headless是独立Python项目，复用已实现的EnvironmentSpec、租约、原生适配和真实像素，桌面代码不进入浏览器源码。外壳只渲染本地UI及PNG，目标网站始终由Lightpanda执行。当前CGL制品限定macOS arm64；桌面跨平台源码、实际构建、实际运行分别登记。
-
-状态：Desktop=`starting|ready|closing|closed|error`；输入所有权继续使用共享`agent|human|paused`。应用启动独占自己的profile，保留已有外部owner；窗口关闭/退出后等待持久化并回收己方service/runtime。EOF触发同样的清理路径。重开复用既有resolved与存储；原生artifact不匹配时显式迁移。
-
-边界唯一协议为UTF-8 NDJSON：服务先发`{event:"ready",protocol:1,profile,runtime:"lightpanda"}`，请求`{id:1,method:"state",params:{}}`，结果`{id:1,result:{...}}`或`{id:1,error:{code:"busy",message:"..."}}`。Desktop使用无shell子进程启动，凭据留在本地进程链；前端只获得有界结构化状态和像素。
-
-| 方法 | 输入 | 输出/副作用 |
-|---|---|---|
-| `state` | `{}` | `{profile,runtime,pages:[{page_id,title,url}],page_id,state}` |
-| `frame` | `{}` | `{png:base64,width,height,viewport,page_id,frame_id,observation_id,image_id,state}`；PNG和元数据来自同一运行时截图 |
-| `control` | `{operation:request_human|resume_agent|reclaim,owner_revision?,run_id?}` | 共享ControlState快照；接管等待在途动作，恢复显式 |
-| `action` | `{operation,args,image_id,page_id,frame_id,observation_id,owner_revision}` | 真实结果；导航、history、刷新、标签及鼠标/键盘共用human租约和所见画面版本 |
-| `shutdown` | `{}` | 完成己方context关闭与存储提交后响应；EOF等价清理 |
-
-`action.operation`允许`navigate/back/forward/reload/new_tab/close_tab/select_tab/mouse.click/mouse.move/mouse.wheel/keyboard.press/keyboard.insert_text/page.focus`；导航目标限制HTTP(S)与about:blank，UI在本地完成裸域名转https。原生能力未提供返回capability_unavailable。旧image、切页或控制版本冲突为stale_reference，不重放点击。page title/URL来自网站，只以文本显示。
-
-Mind-Test：M28首次启动→ready→人工控制→真实导航；M29另一个进程占用同目录→busy且保留对方；M30关闭窗口/父进程断线→己方进程提交退出→重开恢复；M31网站链接/弹窗→headless创建/导航，桌面WebView保留本地UI；M32切tab/动态DOM后排队点击→stale_reference；M33空白页、地址错误或网络失败→保留导航栏、错误和可重新操作入口。桌面层的新增渲染缓存只保存帧，不承担网站DOM或网络。当前验证在tasks D1–D3中分别签收。
+`core/mioa-headless` 是独立可运行的 headless 项目，复用既有管理器、EnvironmentSpec、租约与原生适配；页面执行、网络、存储、渲染和输入状态由真实 headless 运行时唯一拥有，本机客户端只获得有界结构状态与真实像素。服务以版本化本地进程协议工作，关闭时只回收己方 context/runtime，EOF 触发同一清理路径；重开复用既有 resolved 与存储，原生 artifact 不匹配时显式迁移。当前 CGL 制品限定 macOS arm64，平台状态按实际构建与运行证据登记。场景 D2/D3 与历史回执见 [tasks](tasks.md)。
 
 ## 4. Mind-Test：修订与复推
 

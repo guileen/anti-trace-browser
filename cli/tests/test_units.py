@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from anti_trace import identity, net, profile
+from anti_trace import identity
+from mioa_core import net, profile
 
 
 class ProxyTests(unittest.TestCase):
@@ -101,7 +102,8 @@ class AttachTest(unittest.TestCase):
         import tempfile
         from pathlib import Path
 
-        from anti_trace import attached, profile
+        from anti_trace import attached
+        from mioa_core import profile
 
         with tempfile.TemporaryDirectory() as home:
             original = profile.BASE
@@ -259,7 +261,7 @@ class ProfileSecurityTest(unittest.TestCase):
     def test_owned_proxy_is_private_and_survives_rename(self):
         import json
         import stat
-        from anti_trace.native_spec import resolve_proxy
+        from mioa_core.native_spec import resolve_proxy
         value = "http://user:private-password@proxy.example:3128"
         profile.configure_proxy(self.cfg, value)
         reference = self.cfg["network"]["proxy_ref"]
@@ -277,7 +279,7 @@ class ProfileSecurityTest(unittest.TestCase):
     def test_environment_wins_without_being_overwritten(self):
         import os
         from unittest.mock import patch
-        from anti_trace.native_spec import resolve_proxy
+        from mioa_core.native_spec import resolve_proxy
         profile.configure_proxy(self.cfg, "http://stored.example:3128")
         variable = self.cfg["network"]["proxy_ref"][4:]
         with patch.dict(os.environ, {variable: "http://environment.example:3128"}):
@@ -287,7 +289,7 @@ class ProfileSecurityTest(unittest.TestCase):
         self.assertEqual(resolve_proxy(self.cfg), "http://new-store.example:3128")
 
     def test_unowned_environment_reference_never_reads_private_store(self):
-        from anti_trace.native_spec import resolve_proxy, NativeError
+        from mioa_core.native_spec import resolve_proxy, NativeError
         from unittest.mock import patch
         import os
         profile.configure_proxy(self.cfg, "http://stored.example:3128")
@@ -371,7 +373,7 @@ class ProfileSecurityTest(unittest.TestCase):
 
     def test_cold_restore_rebinds_assets_through_symlinked_store(self):
         from pathlib import Path
-        from anti_trace.native_spec import create_native_spec, validate_native_spec
+        from mioa_core.native_spec import create_native_spec, validate_native_spec
         root = Path(self.temporary.name)
         real, alias = root / "real", root / "alias"
         real.mkdir(mode=0o700)
@@ -432,7 +434,7 @@ class ProfileSecurityTest(unittest.TestCase):
 
     def test_collision_uses_resolved_runtime_assets_not_seed(self):
         import copy
-        from anti_trace.native_spec import check_identity_collision, NativeError
+        from mioa_core.native_spec import check_identity_collision, NativeError
         base = {"schema": 3, "id": "one", "name": "one", "seed": "same",
                 "storage": {"path": "/one"}, "runtime": {"id": "obscura", "version": "pinned", "artifact_sha256": "a"},
                 "resolved": {"screen_width": 1280}, "assets": {"fonts_sha256": "fonts"}}

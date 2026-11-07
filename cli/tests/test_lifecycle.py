@@ -11,7 +11,8 @@ import sys
 import tempfile
 import unittest
 
-from anti_trace import cli, client, profile
+from anti_trace import cli, client
+from mioa_core import profile
 
 
 class LifecycleTests(unittest.TestCase):

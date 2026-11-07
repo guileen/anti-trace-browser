@@ -15,7 +15,8 @@ import tempfile
 import textwrap
 import unittest
 
-from anti_trace.runner import ScriptError, run_script
+from anti_trace.runner import run_script
+from mioa_core.operations import ScriptError
 
 
 class ScriptRunnerTests(unittest.IsolatedAsyncioTestCase):

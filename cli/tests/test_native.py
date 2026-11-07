@@ -5,7 +5,7 @@ import hashlib
 import unittest
 from unittest.mock import patch
 
-from anti_trace.native import _WebSocket
+from mioa_core.native import _WebSocket
 
 
 class NativeTransportTest(unittest.IsolatedAsyncioTestCase):
@@ -34,7 +34,7 @@ class NativeTransportTest(unittest.IsolatedAsyncioTestCase):
         server = await asyncio.start_server(peer,"127.0.0.1",0)
         socket = None
         try:
-            with patch("anti_trace.native.secrets.token_bytes",return_value=b"the sample nonce"):
+            with patch("mioa_core.native.secrets.token_bytes",return_value=b"the sample nonce"):
                 socket = await _WebSocket.connect(f"ws://127.0.0.1:{server.sockets[0].getsockname()[1]}/devtools/browser")
             self.assertEqual(await asyncio.wait_for(socket.receive(),2),payload)
         finally:

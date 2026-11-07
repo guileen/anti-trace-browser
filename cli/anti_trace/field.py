@@ -18,7 +18,9 @@ from typing import Any
 from urllib.parse import quote, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from . import client, profile
+from mioa_core import profile
+
+from . import client
 from .measure import chromium_executable
 
 SITES: list[dict[str, str]] = [

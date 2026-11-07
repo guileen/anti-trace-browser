@@ -13,11 +13,99 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from . import actions, identity, net, profile
-from .runner import OPERATION_SPECS, ScriptOperations, run_script
-from .viewer import ControlError, ControlState, ViewerServer
+from mioa_core import net, profile
+from mioa_core.control import ControlError
+from mioa_core.engine import Engine as CoreEngine
+from mioa_core.operations import OPERATION_SPECS, ScriptOperations
+from mioa_core.refs import ActionError
+
+from . import actions, identity
+from .runner import run_script
+from .viewer import ViewerServer
 
 logger = logging.getLogger("anti_trace.engine")
+
+
+_CHECKOUT_SENTINEL = Path("cli") / "pyproject.toml"
+_CHECKOUT_PRODUCT = 'name = "anti-trace"'
+_CHECKOUT_SEARCH_DEPTH = 32
+
+
+def _is_checkout(root: Path) -> bool:
+    """True only for a tree that verifiably is the anti-trace product root."""
+    sentinel = root / _CHECKOUT_SENTINEL
+    try:
+        if not sentinel.is_file():
+            return False
+        return _CHECKOUT_PRODUCT in sentinel.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+
+
+def _checkout_starts() -> tuple[Path, ...]:
+    """Deterministic starts: package location, invocation, then working directory."""
+    starts = [Path(__file__).resolve().parents[2]]
+    for raw in (sys.argv[0] if sys.argv else "", sys.executable):
+        if not raw:
+            continue
+        try:
+            location = Path(raw).expanduser().resolve()
+        except OSError:
+            continue
+        starts.append(location.parent if location.is_file() else location)
+    try:
+        starts.append(Path.cwd().resolve())
+    except OSError:
+        pass
+    return tuple(starts)
+
+
+def checkout_root() -> Path | None:
+    """The ATB checkout holding Core's pinned builds, or ``None`` when absent.
+
+    An editable install lives inside the checkout, but an installed (noneditable)
+    CLI sits in site-packages, so ``parents[2]`` there is not a product root.
+    Search is a bounded ancestor walk from those starts, and only a sentinel
+    verified match is accepted; unrelated ``cli/pyproject.toml`` files never
+    qualify, so no unrelated binary can be selected.
+    """
+    seen: set[Path] = set()
+    for start in _checkout_starts():
+        for depth, directory in enumerate((start, *start.parents)):
+            if depth > _CHECKOUT_SEARCH_DEPTH:
+                break
+            if directory in seen:
+                continue
+            seen.add(directory)
+            if _is_checkout(directory):
+                return directory
+    return None
+
+
+def native_binary(runtime: str, explicit: str | None = None) -> str | Path:
+    """Resolve the native executable this installation can actually run.
+
+    Core's ``PINS`` paths are relative to the ATB checkout, but ``native_spec``
+    lives in the ``core/`` submodule, so its own root cannot find these builds.
+    Explicit selection wins, then ``ANTI_TRACE_<RUNTIME>_BINARY``, then the
+    verified checkout's pinned build. Without an explicit choice and without a
+    reachable checkout, fail as ``capability_unavailable`` instead of guessing.
+    Core validates the chosen file and reports ``capability_unavailable`` when it
+    is missing or not executable.
+    """
+    from mioa_core.native_spec import PINS, NativeError
+
+    override = explicit or os.environ.get(f"ANTI_TRACE_{runtime.upper()}_BINARY")
+    if override:
+        return override
+    root = checkout_root()
+    if root is None:
+        raise NativeError(
+            "capability_unavailable",
+            f"no verifiable anti-trace checkout provides the pinned {runtime} build; "
+            f"pass --native-binary PATH or set ANTI_TRACE_{runtime.upper()}_BINARY",
+        )
+    return root / PINS[runtime][1]
 
 
 def browser_path() -> str:
@@ -48,7 +136,7 @@ def build_options(
     ident = cfg.get("identity") or {}
     network = cfg.get("network") or {}
     egress = network.get("egress") or {}
-    from .native_spec import resolve_proxy
+    from mioa_core.native_spec import resolve_proxy
     proxy = net.parse_proxy(resolve_proxy(cfg) if network.get("proxy_ref") else network.get("proxy"))
 
     config: dict[str, Any] = {"navigator.hardwareConcurrency": int(ident.get("cores") or identity.host_cores())}
@@ -136,167 +224,121 @@ def decode_config(options: dict[str, Any]) -> dict[str, Any]:
         return {}
 
 
-class Engine:
+class Engine(CoreEngine):
     def __init__(self, name: str, headless: bool, initial_url: str | None, verify: bool = True):
-        self.name,self.initial_url,self.verify = name,initial_url,verify
-        self.headless,self.gui = True,not headless
+        super().__init__(name, headless, initial_url, verify)
         self.playwright: Any = None
-        self.native: Any = None
-        self.context: Any = None
-        self.active: Any = None
         self.server: asyncio.AbstractServer | None = None
-        self.stopping = asyncio.Event()
         self.seen_headers: list[dict[str, Any]] = []
-        self.workdir = profile.profile_dir(name)
-        self.control = ControlState()
-        self.operations: ScriptOperations | None = None
-        self.refs = actions.RefStore(lambda page:self.operations.page_id(page),
-                                    lambda:(self.control.run_revision,self.control.owner_revision))
         self.viewer: ViewerServer | None = None
         self.viewer_lock = asyncio.Lock()
         self.run_cancel: asyncio.Event | None = None
         self.run_task: asyncio.Task | None = None
         self.handlers: set[asyncio.Task] = set()
-        self.receipt: dict[str, Any] = {}
-        self.failed_documents: dict[Any,int] = {}
-        self.failure_sequence = 0
-        self.human_selection_epoch = 0
-        self.run_selection_epoch = 0
 
-    def page(self) -> Any:
-        pages = self.context.pages if self.context else []
-        if self.active is not None and not self.active.is_closed():
-            return self.active
-        self.active = pages[-1] if pages else None
-        if self.active is None:
-            raise actions.ActionError("no page available",code="stale_reference")
-        self.control.set_page(self.operations.page_id(self.active),
-                              self.refs.frame_id(getattr(self.active,"main_frame",self.active)))
-        return self.active
+    # --- lifecycle seams -------------------------------------------------
 
-    async def refresh_pages(self) -> None:
-        refresh = getattr(self.context,"refresh_pages",None)
-        if refresh:
-            await refresh()
+    async def _launch(self, cfg: dict[str, Any]) -> None:
+        if (cfg.get("runtime") or {}).get("id") == "camoufox":
+            await self._launch_camoufox(cfg)
+            return
+        await super()._launch(cfg)
+        # ATB attached this to every context; without it the ``headers`` action
+        # silently returns an empty list.
+        self.context.on("request", self._record)
+
+    async def _launch_camoufox(self, cfg: dict[str, Any]) -> None:
+        from camoufox.async_api import AsyncNewBrowser
+        from playwright.async_api import async_playwright
+        identity.validate_cfox_spec(cfg)
+        options = build_options(cfg, cfg["runtime"]["binary"], self.headless, self.workdir / "data")
+        self.playwright = await async_playwright().start()
+        self.context = await AsyncNewBrowser(self.playwright, from_options=options, persistent_context=True)
+        self.context.on("requestfailed", self._record_failure)
+        self.context.on("request", self._record)
+        await self.activate()
+
+    async def start(self) -> None:
+        # The old initial navigation went through ``actions.run(..., "goto")``,
+        # which prepends the scheme for a URL without one.
+        if self.initial_url and "://" not in self.initial_url and self.initial_url != "about:blank":
+            self.initial_url = "https://" + self.initial_url
+        socket_file = profile.socket_path(self.name)
+        socket_file.unlink(missing_ok=True)
+        self.server = await asyncio.start_unix_server(self._handle, path=str(socket_file), limit=1024 * 1024)
+        os.chmod(socket_file, 0o600)
+        try:
+            # Core writes READY once; state_extra makes the manager socket part
+            # of that same atomic write, so READY is never visible without it.
+            await super().start(state_extra={"socket": str(socket_file)})
+        except BaseException:
+            self.server.close()
+            await self.server.wait_closed()
+            self.server = None
+            socket_file.unlink(missing_ok=True)
+            raise
+        if self.gui:
+            await self._viewer()
+        logger.info("ready pid=%s socket=%s runtime=%s", os.getpid(), socket_file,
+                    (profile.load_state(self.name) or {}).get("runtime"))
+
+    async def shutdown(self) -> None:
+        if self.server:
+            self.server.close()
+            await self.server.wait_closed()
+            self.server = None
+        if self.run_cancel:
+            self.run_cancel.set()
+        if self.run_task and self.run_task is not asyncio.current_task():
+            await asyncio.wait({self.run_task}, timeout=3)
+        for handler in tuple(self.handlers):
+            if handler is not asyncio.current_task():
+                handler.cancel()
+        if self.viewer:
+            await self.viewer.close()
+            self.viewer = None
+        try:
+            await super().shutdown()
+        finally:
+            if self.playwright:
+                await self.playwright.stop()
+                self.playwright = None
+            profile.socket_path(self.name).unlink(missing_ok=True)
+
+    # --- ATB product methods ---------------------------------------------
 
     def _record(self, request: Any) -> None:
         if request.resource_type == "document":
-            self.seen_headers.append({"url":request.url,"headers":dict(request.headers)})
+            self.seen_headers.append({"url": request.url, "headers": dict(request.headers)})
             del self.seen_headers[:-20]
+
     def _record_failure(self, request: Any) -> None:
         if request.resource_type == "document":
             self.failure_sequence += 1
             self.failed_documents[request.frame.page] = self.failure_sequence
 
-    async def _navigation(self, page: Any, execute: Any) -> Any:
-        previous = self.failed_documents.get(page)
-        try:
-            return await execute()
-        except Exception as exc:
-            if self.failed_documents.get(page) != previous:
-                error = actions.ActionError("document transport failed; no navigation retry was attempted",code="network_unavailable")
-                error.side_effects = "unknown"
-                raise error from exc
-            raise
-
-
-    async def _launch(self, cfg: dict[str, Any]) -> None:
-        runtime = (cfg.get("runtime") or {}).get("id")
-        if runtime in {"obscura","lightpanda"}:
-            from .native import launch_native
-            self.native = await launch_native(self.name,cfg,self.headless)
-            self.context, self.receipt = self.native.context,self.native.receipt
-        elif runtime == "camoufox":
-            from camoufox.async_api import AsyncNewBrowser
-            from playwright.async_api import async_playwright
-            identity.validate_cfox_spec(cfg)
-            options = build_options(cfg,cfg["runtime"]["binary"],self.headless,self.workdir/"data")
-            self.playwright = await async_playwright().start()
-            self.context = await AsyncNewBrowser(self.playwright,from_options=options,persistent_context=True)
-            self.context.on("requestfailed",self._record_failure)
-        else:
-            raise profile.ProfileError("incompatible_profile: explicit migration to a pinned schema3 runtime is required")
-        self.context.on("request",self._record)
-        self.active = self.context.pages[0] if self.context.pages else await self.context.new_page()
-        self.operations = ScriptOperations(self.context,active_page=self.page,axtree=self._axtree)
-        self.control.set_page(self.operations.page_id(self.active),
-                              self.refs.frame_id(getattr(self.active,"main_frame",self.active)))
-
-    async def _observe_egress(self) -> dict[str, Any] | None:
-        probe = await self.context.new_page()
-        try:
-            return await net.browser_geography(probe)
-        finally:
-            await probe.close()
-
-    async def start(self) -> None:
-        cfg = profile.require(self.name)
-        await self._launch(cfg)
-        observed = None
-        network = cfg.get("network") or {}
-        if self.verify:
-            try:
-                observed = await self._observe_egress()
-            except Exception as exc:
-                if (network.get("proxy_ref") or network.get("proxy")) and network.get("egress_policy","strict") == "strict":
-                    raise actions.ActionError("declared proxy egress could not be verified",code="network_unavailable") from exc
-                logger.warning("egress observation unavailable: %s",type(exc).__name__)
-        if self.initial_url:
-            await self._navigation(self.page(),lambda:actions.run(
-                self.page(),"goto",{"url":self.initial_url},self.workdir,refs=self.refs))
-        socket_path = profile.socket_path(self.name)
-        socket_path.unlink(missing_ok=True)
-        self.server = await asyncio.start_unix_server(self._handle,path=str(socket_path),limit=1024*1024)
-        os.chmod(socket_path,0o600)
-        resolved = cfg.get("resolved") or {}
-        coherent = None if not observed else observed.get("timezone") == resolved.get("timezone")
-        profile.save_state(self.name,{
-            "pid":os.getpid(),"process_start":profile.process_start(os.getpid()),"status":"READY",
-            "socket":str(socket_path),"started_at":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),
-            "headless":self.headless,"gui":self.gui,"observed_egress":(observed or {}).get("ip"),
-            "egress_consistent":coherent,"timezone":resolved.get("timezone"),"locale":resolved.get("locale"),
-            "url":self.page().url,"runtime":(cfg.get("runtime") or {}).get("id"),
-            "native_pid":self.native.pid if self.native else None,"receipt":self.receipt,
-        })
-        if self.gui:
-            await self._viewer()
-        logger.info("ready pid=%s socket=%s runtime=%s",os.getpid(),socket_path,(cfg.get("runtime") or {}).get("id"))
-
-    async def _axtree(self, page: Any, **kwargs: Any) -> dict[str, Any]:
-        result = await actions.axtree(page,refs=self.refs,**kwargs)
-        self.control.set_observation(result["page_id"],result["frame_id"],result["observation_id"])
-        return result
-
-    async def _select(self, page: Any) -> None:
-        if page is not self.active:
-            await self.refs.clear()
-            self.active = page
-            self.control.set_page(self.operations.page_id(page),
-                                  self.refs.frame_id(getattr(page,"main_frame",page)))
-            await page.bring_to_front()
-
     async def _script_execute(self, run_id: str, operation: str, args: dict[str, Any]) -> Any:
         await self.refresh_pages()
-        if operation in {"page.wait_for_timeout","page.wait_for_load_state","locator.wait_for"}:
+        if operation in {"page.wait_for_timeout", "page.wait_for_load_state", "locator.wait_for"}:
             await self.control.wait_agent(run_id)
-            return await self.operations.execute(operation,args)
-        async with self.control.action("agent",run_id):
+            return await self.operations.execute(operation, args)
+        async with self.control.action("agent", run_id):
             if args.get("page_id"):
                 target = self.operations.page(args["page_id"])
                 if self.run_selection_epoch != self.human_selection_epoch and target is not self.page():
-                    raise actions.ActionError("selected page changed during human handover; start a fresh run",code="stale_reference")
+                    raise ActionError("selected page changed during human handover; start a fresh run", code="stale_reference")
                 await self._select(target)
-            if operation.startswith("locator.") and len(args.get("locator",[])) == 1:
+            if operation.startswith("locator.") and len(args.get("locator", [])) == 1:
                 step = args["locator"][0]
-                if step.get("kind") == "css" and str(step.get("selector","")).startswith("@"):
-                    node = await self.refs.resolve(self.page(),step["selector"])
-                    method = operation.split(".",1)[1]
-                    function = getattr(node,method,None)
+                if step.get("kind") == "css" and str(step.get("selector", "")).startswith("@"):
+                    node = await self.refs.resolve(self.page(), step["selector"])
+                    method = operation.split(".", 1)[1]
+                    function = getattr(node, method, None)
                     if not function:
-                        raise actions.ActionError("operation unavailable on original node",code="capability_unavailable")
-                    return await function(*[args[key] for key in OPERATION_SPECS[operation]],**args.get("options",{}))
-            result = await self._navigation(self.page(),lambda:self.operations.execute(operation,args)) if operation in {
-                "page.goto","page.reload","page.go_back"} else await self.operations.execute(operation,args)
+                        raise ActionError("operation unavailable on original node", code="capability_unavailable")
+                    return await function(*[args[key] for key in OPERATION_SPECS[operation]], **args.get("options", {}))
+            result = await self._navigation(self.page(), lambda: self.operations.execute(operation, args)) if operation in {
+                "page.goto", "page.reload", "page.go_back"} else await self.operations.execute(operation, args)
             if operation == "session.describe":
                 result["run_id"] = run_id
             elif operation == "context.new_page":
@@ -305,117 +347,89 @@ class Engine:
 
     async def _run_script(self, args: dict[str, Any]) -> dict[str, Any]:
         if self.run_task is not None:
-            raise ControlError("busy","a script is already running")
-        run_id = "run-"+uuid.uuid4().hex
-        self.control.begin_run(run_id,page_id=self.operations.page_id(self.page()),
-                               frame_id=self.refs.frame_id(getattr(self.page(),"main_frame",self.page())))
+            raise ControlError("busy", "a script is already running")
+        run_id = "run-" + uuid.uuid4().hex
+        self.control.begin_run(run_id, page_id=self.operations.page_id(self.page()),
+                               frame_id=self.refs.frame_id(getattr(self.page(), "main_frame", self.page())))
         self.run_selection_epoch = self.human_selection_epoch
-        self.run_task,self.run_cancel = asyncio.current_task(),asyncio.Event()
+        self.run_task, self.run_cancel = asyncio.current_task(), asyncio.Event()
         try:
-            report = await run_script(args.get("path",""),args.get("args"),
-                execute=lambda op,parameters:self._script_execute(run_id,op,parameters),
-                timeout=float(args.get("timeout",300)),max_output_bytes=int(args.get("max_output_bytes",1048576)),
+            report = await run_script(args.get("path", ""), args.get("args"),
+                execute=lambda op, parameters: self._script_execute(run_id, op, parameters),
+                timeout=float(args.get("timeout", 300)), max_output_bytes=int(args.get("max_output_bytes", 1048576)),
                 cancel=self.run_cancel)
-            if report.get("side_effects",{}).get("state") == "unknown" or (report.get("error") or {}).get("code") in {"timeout","cancelled"}:
+            if report.get("side_effects", {}).get("state") == "unknown" or (report.get("error") or {}).get("code") in {"timeout", "cancelled"}:
                 self.control.pause("script_interrupted")
             return report
         finally:
-            self.run_task,self.run_cancel = None,None
+            self.run_task, self.run_cancel = None, None
             self.control.finish_run(run_id)
             await self.refs.clear()
 
     async def _viewer(self) -> ViewerServer:
         async with self.viewer_lock:
             if self.viewer is None:
-                self.viewer = ViewerServer(self.control,self._viewer_execute,title=f"{self.name} · 同会话")
+                self.viewer = ViewerServer(self.control, self._viewer_execute, title=f"{self.name} · 同会话")
                 await self.viewer.start()
             return self.viewer
 
-    async def _viewer_execute(self, operation: str, args: dict[str, Any]) -> Any:
-        await self.refresh_pages()
-        if operation == "viewer.pages":
-            return {"pages":[{"page_id":self.operations.page_id(page),"url":page.url,"title":await page.title()}
-                             for page in self.context.pages],"page_id":self.operations.page_id(self.page())}
-        if operation == "viewer.frame":
-            return await self.refs.viewport(self.page())
-        page = self.page()
-        try:
-            await self.refs.validate(self.refs.visual,page)
-        except actions.ActionError as exc:
-            raise ControlError(exc.code,str(exc)) from exc
-        if operation == "context.select_page":
-            target = self.operations.page(args["target_page_id"])
-            if target is not page:
-                self.human_selection_epoch += 1
-            await self._select(target)
-        elif operation == "page.focus":
-            await page.bring_to_front()
-        else:
-            family,method = operation.split(".",1)
-            values = [args[key] for key in OPERATION_SPECS[operation]]
-            options = {key:value for key,value in args.items() if key not in {
-                "page_id","frame_id","observation_id","owner_revision","viewer_id","image_id",*OPERATION_SPECS[operation]}}
-            await getattr(getattr(page,family),method)(*values,**options)
-        self.control.invalidate_observation()
-        return {"status":"ok","operation":operation}
-
     async def _dispatch(self, action: str, args: dict[str, Any]) -> dict[str, Any]:
         if action == "control":
-            command = args.get("command","status")
+            command = args.get("command", "status")
             if command == "pause":
                 self.control.pause()
-            elif command in {"resume","reclaim"}:
+            elif command in {"resume", "reclaim"}:
                 await (self.control.resume_agent if command == "resume" else self.control.reclaim)()
             elif command == "cancel":
                 if self.run_cancel:
                     self.run_cancel.set()
                 self.control.pause("explicit_cancel")
             elif command != "status":
-                raise ControlError("invalid_config","unknown control command")
-            return {"status":"ok","state":self.control.snapshot()}
+                raise ControlError("invalid_config", "unknown control command")
+            return {"status": "ok", "state": self.control.snapshot()}
         if action == "viewer":
             viewer = await self._viewer()
-            return {"status":"ok","url":viewer.url,"state":self.control.snapshot()}
+            return {"status": "ok", "url": viewer.url, "state": self.control.snapshot()}
         if action == "run":
             return await self._run_script(args)
         if action == "headers":
-            return {"status":"ok","action":"headers","requests":list(self.seen_headers[-10:])}
+            return {"status": "ok", "action": "headers", "requests": list(self.seen_headers[-10:])}
         if action == "info":
             page = self.page()
-            return {"status":"ok","name":self.name,"pid":os.getpid(),"headless":self.headless,"gui":self.gui,
-                    "url":page.url,"title":await page.title(),"pages":len(self.context.pages),
-                    "control":self.control.snapshot(),"receipt":self.receipt}
+            return {"status": "ok", "name": self.name, "pid": os.getpid(), "headless": self.headless, "gui": self.gui,
+                    "url": page.url, "title": await page.title(), "pages": len(self.context.pages),
+                    "control": self.control.snapshot(), "receipt": self.receipt}
         if action == "stop":
             state = profile.load_state(self.name) or {}
             state["status"] = "STOPPING"
-            profile.save_state(self.name,state)
+            profile.save_state(self.name, state)
             if self.run_cancel:
                 self.run_cancel.set()
-            return {"status":"ok","message":"stopping"}
+            return {"status": "ok", "message": "stopping"}
         if self.control.run_id is not None:
-            raise ControlError("busy","a script owns this session")
+            raise ControlError("busy", "a script owns this session")
         if self.control.owner != "agent":
-            raise ControlError("paused","explicit resume or reclaim required")
-        async with self.control.action("agent","cli"):
+            raise ControlError("paused", "explicit resume or reclaim required")
+        async with self.control.action("agent", "cli"):
             await self.refresh_pages()
             if action == "use":
-                index = int(args.get("index",-1))
+                index = int(args.get("index", -1))
                 pages = self.context.pages
                 if not 0 <= index < len(pages):
-                    raise actions.ActionError("tab does not exist")
+                    raise ActionError("tab does not exist")
                 await self._select(pages[index])
-                return {"status":"ok","action":"use","index":index,"url":self.page().url}
+                return {"status": "ok", "action": "use", "index": index, "url": self.page().url}
             if action == "axtree":
-                return await self._axtree(self.page(),frame=args.get("frame"))
+                return await self._axtree(self.page(), frame=args.get("frame"))
             page = self.page()
-            result = await self._navigation(page,lambda:actions.run(page,action,args,self.workdir,refs=self.refs)) if action in {
-                "goto","reload","back"} else await actions.run(page,action,args,self.workdir,refs=self.refs)
+            result = await self._navigation(page, lambda: actions.run(page, action, args, self.workdir, refs=self.refs)) if action in {
+                "goto", "reload", "back"} else await actions.run(page, action, args, self.workdir, refs=self.refs)
             if action == "tab_new":
                 await self._select(self.context.pages[result["index"]])
             state = profile.load_state(self.name) or {}
             if state.get("url") != self.page().url:
                 state["url"] = self.page().url
-                profile.save_state(self.name,state)
+                profile.save_state(self.name, state)
             return result
 
     async def _handle(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
@@ -425,17 +439,17 @@ class Engine:
         try:
             async with asyncio.timeout(10):
                 request = json.loads(await reader.readline())
-            action,args = request.get("action"),request.get("args") or {}
-            if not isinstance(action,str) or not isinstance(args,dict):
-                raise actions.ActionError("invalid manager request")
-            response = await self._dispatch(action,args)
+            action, args = request.get("action"), request.get("args") or {}
+            if not isinstance(action, str) or not isinstance(args, dict):
+                raise ActionError("invalid manager request")
+            response = await self._dispatch(action, args)
         except Exception as exc:
-            response = {"status":"error","code":getattr(exc,"code","operation_failed"),"message":str(exc)}
-            logger.warning("action %s failed: %s",action,type(exc).__name__)
+            response = {"status": "error", "code": getattr(exc, "code", "operation_failed"), "message": str(exc)}
+            logger.warning("action %s failed: %s", action, type(exc).__name__)
         try:
-            writer.write(json.dumps(response,ensure_ascii=False,default=str).encode()+b"\n")
+            writer.write(json.dumps(response, ensure_ascii=False, default=str).encode() + b"\n")
             await writer.drain()
-        except (ConnectionError,BrokenPipeError):
+        except (ConnectionError, BrokenPipeError):
             pass
         finally:
             if action == "stop":
@@ -443,39 +457,13 @@ class Engine:
             writer.close()
             try:
                 await writer.wait_closed()
-            except (ConnectionError,BrokenPipeError):
+            except (ConnectionError, BrokenPipeError):
                 pass
             self.handlers.discard(task)
 
     async def run_forever(self) -> None:
         await self.start()
         await self.stopping.wait()
-
-    async def shutdown(self) -> None:
-        if self.server:
-            self.server.close()
-            await self.server.wait_closed()
-        if self.run_cancel:
-            self.run_cancel.set()
-        if self.run_task and self.run_task is not asyncio.current_task():
-            await asyncio.wait({self.run_task},timeout=3)
-        for handler in tuple(self.handlers):
-            if handler is not asyncio.current_task():
-                handler.cancel()
-        await self.refs.clear()
-        if self.viewer:
-            await self.viewer.close()
-        try:
-            if self.native:
-                await self.native.close()
-            elif self.context:
-                await self.context.close()
-        finally:
-            if self.playwright:
-                await self.playwright.stop()
-            self.context = self.active = None
-            profile.socket_path(self.name).unlink(missing_ok=True)
-            profile.clear_state(self.name)
 
 
 def run_cli() -> int:

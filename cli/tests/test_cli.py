@@ -6,12 +6,15 @@ import contextlib
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from anti_trace import cli, client, profile
+from anti_trace import cli, client, engine
+from mioa_core import native_spec, profile
 
 
 class CLIContractsTest(unittest.TestCase):
@@ -101,6 +104,133 @@ class CLIContractsTest(unittest.TestCase):
         with contextlib.redirect_stdout(output):
             code = cli._startup_failure(args, "work", failed)
         self.assertEqual((code, json.loads(output.getvalue())["code"]), (1, "startup_failed"))
+
+class NativeBinaryResolutionTest(unittest.TestCase):
+    ENV = "ANTI_TRACE_OBSCURA_BINARY"
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        self.saved = {key: value for key, value in os.environ.items()
+                      if key.startswith("ANTI_TRACE_") and key.endswith("_BINARY")}
+        self.addCleanup(self._restore_environment)
+        for key in self.saved:
+            os.environ.pop(key, None)
+        previous = os.getcwd()
+        self.addCleanup(os.chdir, previous)
+
+    def _restore_environment(self):
+        for key in [key for key in os.environ
+                    if key.startswith("ANTI_TRACE_") and key.endswith("_BINARY") and key not in self.saved]:
+            os.environ.pop(key, None)
+        os.environ.update(self.saved)
+
+    def checkout(self, name="checkout", product='name = "anti-trace"'):
+        root = self.root / name
+        (root / "cli").mkdir(parents=True)
+        (root / "cli" / "pyproject.toml").write_text(f'[project]\n{product}\n', encoding="utf-8")
+        return root
+
+    @contextlib.contextmanager
+    def installed(self, cwd, *, argv=("/usr/local/bin/anti-trace",), executable="/usr/local/bin/python3"):
+        store = self.root / "venv" / "lib" / "python3.12" / "site-packages"
+        module = store / "anti_trace" / "engine.py"
+        module.parent.mkdir(parents=True, exist_ok=True)
+        module.write_text("", encoding="utf-8")
+        previous = os.getcwd()
+        os.chdir(cwd)
+        try:
+            with patch.object(engine, "__file__", str(module)), \
+                 patch.object(sys, "argv", list(argv)), \
+                 patch.object(sys, "executable", executable):
+                yield store
+        finally:
+            os.chdir(previous)
+
+    def test_editable_install_uses_its_own_checkout(self):
+        checkout = self.checkout()
+        module = checkout / "cli" / "anti_trace" / "engine.py"
+        module.parent.mkdir(parents=True)
+        module.write_text("", encoding="utf-8")
+        with patch.object(engine, "__file__", str(module)), \
+             patch.object(sys, "argv", ["anti-trace"]), \
+             patch.object(sys, "executable", "/usr/local/bin/python3"):
+            self.assertEqual(engine.checkout_root(), checkout)
+            self.assertEqual(Path(engine.native_binary("obscura")), checkout / native_spec.PINS["obscura"][1])
+            self.assertEqual(Path(engine.native_binary("mioa")), checkout / native_spec.PINS["mioa"][1])
+
+    def test_installed_cli_resolves_checkout_from_working_directory(self):
+        checkout = self.checkout()
+        work = checkout / "openspec" / "changes" / "evaluate-lightweight-runtime"
+        work.mkdir(parents=True)
+        with self.installed(work):
+            self.assertEqual(engine.checkout_root(), checkout)
+            self.assertEqual(Path(engine.native_binary("obscura")), checkout / native_spec.PINS["obscura"][1])
+
+    def test_installed_cli_without_checkout_requests_explicit_binary(self):
+        elsewhere = self.root / "elsewhere"
+        elsewhere.mkdir()
+        with self.installed(elsewhere) as store:
+            self.assertIsNone(engine.checkout_root())
+            with self.assertRaises(native_spec.NativeError) as caught:
+                engine.native_binary("obscura")
+        self.assertEqual(caught.exception.code, "capability_unavailable")
+        self.assertIn("--native-binary", caught.exception.message)
+        self.assertIn(self.ENV, caught.exception.message)
+        self.assertNotIn(str(store), caught.exception.message)
+
+    def test_installed_cli_rejects_unrelated_project_sentinel(self):
+        impostor = self.root / "other-project"
+        (impostor / "cli").mkdir(parents=True)
+        (impostor / "cli" / "pyproject.toml").write_text('[project]\nname = "unrelated"\n', encoding="utf-8")
+        work = impostor / "src"
+        work.mkdir()
+        with self.installed(work):
+            self.assertIsNone(engine.checkout_root())
+            with self.assertRaises(native_spec.NativeError) as caught:
+                engine.native_binary("obscura")
+        self.assertEqual(caught.exception.code, "capability_unavailable")
+
+    def test_installed_cli_prefers_install_checkout_over_working_directory(self):
+        install = self.checkout("install-checkout")
+        working = self.checkout("cwd-checkout")
+        python = install / "cli" / ".venv" / "bin" / "python3"
+        python.parent.mkdir(parents=True)
+        python.write_text("", encoding="utf-8")
+        work = working / "work"
+        work.mkdir()
+        with self.installed(work, executable=str(python)):
+            self.assertEqual(engine.checkout_root(), install)
+            self.assertEqual(Path(engine.native_binary("obscura")), install / native_spec.PINS["obscura"][1])
+
+    def test_explicit_then_environment_win_without_a_checkout(self):
+        elsewhere = self.root / "elsewhere"
+        elsewhere.mkdir()
+        explicit = str(self.root / "explicit-binary")
+        environment = str(self.root / "environment-binary")
+        with self.installed(elsewhere):
+            os.environ[self.ENV] = environment
+            try:
+                self.assertEqual(engine.native_binary("obscura"), environment)
+                self.assertEqual(engine.native_binary("obscura", explicit), explicit)
+            finally:
+                os.environ.pop(self.ENV, None)
+
+    def test_checkout_without_pinned_build_reports_capability_unavailable(self):
+        checkout = self.checkout()
+        module = checkout / "cli" / "anti_trace" / "engine.py"
+        module.parent.mkdir(parents=True)
+        module.write_text("", encoding="utf-8")
+        with patch.object(engine, "__file__", str(module)), \
+             patch.object(sys, "argv", ["anti-trace"]), \
+             patch.object(sys, "executable", "/usr/local/bin/python3"):
+            selected = engine.native_binary("obscura")
+            with self.assertRaises(native_spec.NativeError) as caught:
+                native_spec.resolve_binary("obscura", selected)
+        self.assertEqual(caught.exception.code, "capability_unavailable")
+        self.assertIn(str(selected), caught.exception.message)
+
 
 if __name__ == "__main__":
     unittest.main()

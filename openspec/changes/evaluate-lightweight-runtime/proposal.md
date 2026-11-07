@@ -15,17 +15,17 @@
 - 保留 CLI，run 升级为熟悉的 Python Playwright 异步脚本入口，单次会话内完成循环、分支、等待和结果提取；axtree 引用绑定页面与观察版本，人工接管具有独占写权限。
 - 自有 fingerprint-test.ipub.io 用 Turnstile 服务端回执提供挑战证据；SEO 说明页、合成门禁和真实挑战分别标识。账号凭据与生产 WAF 规则保持独立。
 - Camoufox 转入基准维护，固定每轮实验版本；安全更新、回归和已确认缺陷继续维护。
-- 新增独立 `lightpanda-desktop/` 桌面应用，单向依赖独立 `lightpanda-headless/` 服务；外壳提供导航栏、历史、标签、快捷键与人机控制，headless 保持页面、网络、存储和像素的唯一所有者。
+- 新增独立 `core/mioa-headless/` headless 服务；页面、网络、存储与像素保持单一所有者，供本机 CLI 与自动化客户端复用。
 
 ## Scope
 
 本 change 覆盖判据修正、双候选完整实现、三路统一CLI接入、基本 GUI、人机共享会话、脚本自动化和自有靶场验收。两路实现不依赖先选主线；最终选型是验收后的决策，不阻断开发。
 
-首轮平台为macOS arm64。新增Lightpanda Desktop使用跨平台系统WebView外壳；当前定制headless的真实GL后端依赖macOS CGL，平台状态按实际构建与运行证据登记。MCP、完整历史浏览器兼容、Chromium/Gecko全量自编译、生产账号试错和通用商业风控通行承诺均在本change范围之外。Moli/Fury保留历史或外部对照入口。
+首轮平台为macOS arm64。当前定制headless的真实GL后端依赖macOS CGL，平台状态按实际构建与运行证据登记。MCP、完整历史浏览器兼容、Chromium/Gecko全量自编译、生产账号试错和通用商业风控通行承诺均在本change范围之外。Moli/Fury保留历史或外部对照入口。
 
 ## 本次提案：真实指纹与稳定环境
 
-状态：提案与验收设计已修订；新增判据及运行时改造待实施。当前Desktop、headless与三路历史验收保持原状。
+状态：提案与验收设计已修订；新增判据及运行时改造待实施。当前headless与三路历史验收保持原状。
 
 ### 决策与目标
 
@@ -44,7 +44,7 @@
 
 - 复用已有真实渲染/DSP/GL能力，先审查软件声明与真实功能的一致性；Chrome与Camoufox提供参考样本。
 - seed选择受支持配置并持久化实际结果；网页只获得正常Web API，内部seed与管理器能力留在宿主。
-- 每路仅一个DOM、网络和存储所有者。Desktop继续只显示真实headless像素并转发受租约保护的输入。
+- 每路仅一个DOM、网络和存储所有者。共享viewer只显示真实headless像素并转发受租约保护的输入。
 - 环境组合需要整体自洽；某些真实物理输出可共享，A/B可区分以预先声明的真实差异组合验收。
 - 精确复制某版Chrome的全部像素、编码和浮点结果、为已知探针专门返回答案、生产账号试错及商业风控通行保证列为非目标。
 
@@ -72,8 +72,7 @@
 - `browsers/engine-bench/`：两候选源码锁定、补丁/构建/任务/资源成本测量；源码、产物置于本项目 `.local/`，可复现补丁纳入版本控制。
 - `services/challenges/`：受控挑战验证、报告隐私与部署隔离。
 - `browsers/obscura-runtime/`、`lightpanda-runtime/`：分别交付两条可重放原生实现；从产品路径移除旧注入和模拟实现，历史原始报告保留。共享管理与测试契约，不共享独立环境的可变状态。
-- `lightpanda-headless/`：独立服务项目，复用现有管理器/原生适配，以版本化本地协议提供启动、帧、输入、导航、标签、控制和关闭。
-- `lightpanda-desktop/`：独立Tauri应用与打包资源；应用窗口只显示受信外壳及headless像素，桌面专属代码留在本项目。
+- `core/mioa-headless/`：独立服务项目，复用现有管理器/原生适配，以版本化本地协议提供启动、帧、输入、导航、标签、控制和关闭。
 - `browsers/camoufox-baseline/`、README、skills：基准证据范围与当前计划入口同步。
 
 **验收状态**：执行中，保持change开放。结构校验、源码构建、局部模块、真实组合场景与人工GUI签收分别记账；全部required gate完成后归档。入口见[tasks](tasks.md)与候选成本卡。

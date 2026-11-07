@@ -36,7 +36,8 @@ const overrides={
  A:{hardware_concurrency:4,device_memory:4,locale:'en-US',languages:['en-US','en'],screen_width:1280,screen_height:720,avail_width:1280,avail_height:696,user_agent:'ObscuraCost/A'},
  B:{hardware_concurrency:12,device_memory:8,locale:'de-DE',languages:['de-DE','de'],screen_width:1920,screen_height:1080,avail_width:1920,avail_height:1056,user_agent:'ObscuraCost/B'},
 };
-const schemaSource="import json,sys; sys.path.insert(0,sys.argv[1]); from anti_trace.native_spec import create_native_spec,native_config_bytes; value=create_native_spec(sys.argv[2],runtime='obscura',storage_path=sys.argv[3],seed=sys.argv[4],overrides=json.loads(sys.argv[5]),network={'allow_private_network':True},binary=sys.argv[6]); sys.stdout.buffer.write(native_config_bytes(value))";
+const corePython=resolve(root,'../../core/mioa-core');
+const schemaSource="import json,sys; sys.path.insert(0,sys.argv[1]); from mioa_core.native_spec import create_native_spec,native_config_bytes; value=create_native_spec(sys.argv[2],runtime='obscura',storage_path=sys.argv[3],seed=sys.argv[4],overrides=json.loads(sys.argv[5]),network={'allow_private_network':True},binary=sys.argv[6]); sys.stdout.buffer.write(native_config_bytes(value))";
 const safe=async(fn)=>{try{return {status:'observed',value:await fn()};}catch(e){return {status:'error',error:String(e)};}};
 for(const label of ['A1','B1','A2','B2']){
  const env=label[0],frames=[],run={label,frames_file:`smoke-${mode}-${label}-frames.json`,operations:{}};result.runs.push(run);
@@ -45,7 +46,7 @@ for(const label of ['A1','B1','A2','B2']){
  if(!configs[env]){
   if(mode==='release')configs[env]={overrides:overrides[env]};
   else{
-   const generated=spawnSync('python3',['-c',schemaSource,resolve(root,'../../cli'),env,storage,createHash('sha256').update(`native-schema3-${env}`).digest('hex'),JSON.stringify(overrides[env]),binary],{encoding:'utf8'});
+   const generated=spawnSync('python3',['-c',schemaSource,corePython,env,storage,createHash('sha256').update(`native-schema3-${env}`).digest('hex'),JSON.stringify(overrides[env]),binary],{encoding:'utf8'});
    if(generated.status!==0)throw new Error(generated.stderr||'schema3 generator failed');
    configs[env]=JSON.parse(generated.stdout);
   }
